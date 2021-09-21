@@ -3,7 +3,8 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
-import ProductCard from "./components/product-card";
+import BottomNavigation from "./components/navigations/bottom-navigation";
+import HomeScreen from "./screens/home";
 import theme from "./shared/theme";
 
 export default function App() {
@@ -33,7 +34,8 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <SafeAreaView style={{ flex: 1, padding: 10 }}>
-        <ProductCard data="product" />
+        <HomeScreen />
+        <BottomNavigation />
         <StatusBar style="auto" />
       </SafeAreaView>
     </PaperProvider>
