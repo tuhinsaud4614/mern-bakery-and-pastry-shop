@@ -10,6 +10,7 @@ declare global {
     }
     interface ThemeColors {
       palette: {
+        accent: string;
         common: {
           black: string;
           white: string;
@@ -72,14 +73,15 @@ const theme: ReactNativePaper.Theme = {
   colors: {
     ...DefaultTheme.colors,
     palette: {
+      accent: "#e8f5e9",
       common: {
         black: "#000",
         white: "#fff",
       },
       primary: {
-        light: "#7986cb",
-        main: "#3f51b5",
-        dark: "#303f9f",
+        light: "#33ab9f",
+        main: "#009688",
+        dark: "#00695f",
         contrastText: "#fff",
       },
       secondary: {

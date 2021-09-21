@@ -7,6 +7,19 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: "#b9f6ca",
   },
+  banner: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  innerBanner: {
+    display: "flex",
+    flex: 1,
+  },
+  textButton: {
+    padding: theme.spacing / 2,
+    // width: "fit-content"
+  },
   featured: {
     position: "absolute",
     top: theme.spacing,
@@ -17,6 +30,9 @@ const styles = StyleSheet.create({
     color: theme.colors.palette.secondary.contrastText,
     paddingHorizontal: theme.spacing,
     paddingVertical: theme.spacing / 2,
+  },
+  price: {
+    paddingHorizontal: theme.spacing / 2,
   },
 });
 

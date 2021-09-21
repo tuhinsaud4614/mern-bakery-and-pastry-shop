@@ -1,7 +1,7 @@
 import { FontDisplay, useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { View } from "react-native";
+import { SafeAreaView } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import ProductCard from "./components/product-card";
 import theme from "./shared/theme";
@@ -32,10 +32,10 @@ export default function App() {
 
   return (
     <PaperProvider theme={theme}>
-      <View style={{ margin: 10 }}>
+      <SafeAreaView style={{ flex: 1, padding: 10 }}>
         <ProductCard data="product" />
         <StatusBar style="auto" />
-      </View>
+      </SafeAreaView>
     </PaperProvider>
   );
 }
