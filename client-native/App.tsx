@@ -11,7 +11,7 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
-import TabBarContainer from "./components/navigators/tab-bar";
+import RootStackNavigator from "./shared/routes/stack-navigation";
 import theme from "./shared/theme";
 
 export default function App() {
@@ -29,7 +29,7 @@ export default function App() {
     <PaperProvider theme={theme}>
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
-          <TabBarContainer />
+          <RootStackNavigator />
         </NavigationContainer>
         <StatusBar style="auto" />
       </SafeAreaView>

@@ -1,4 +1,5 @@
 import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Text, View } from "react-native";
 import {
@@ -9,6 +10,7 @@ import {
   TouchableRipple,
   useTheme,
 } from "react-native-paper";
+import { RootNavigationProps } from "../../shared/routes";
 import { breakpoints } from "../../shared/utils";
 import { typographyStyles } from "../../shared/utils/common.styles";
 import Ratings from "../ratings";
@@ -25,11 +27,11 @@ export const NewText = () => {
 };
 
 const ProductCard = ({ data }: Props) => {
+  const { navigate }: RootNavigationProps = useNavigation();
   const {
     spacing,
     colors: { palette },
   } = useTheme();
-
   const [rating, setRating] = useState(0);
 
   return (
@@ -41,7 +43,11 @@ const ProductCard = ({ data }: Props) => {
       >
         Hot
       </Typography>
-      <TouchableRipple onPress={() => console.log("press")}>
+      <TouchableRipple
+        onPress={() =>
+          navigate("Detail", { productId: "123", title: "Product1" })
+        }
+      >
         <Card.Cover
           source={require("../../assets/cake.jpeg")}
           style={{ minHeight: 155, resizeMode: "center" }}
@@ -52,7 +58,7 @@ const ProductCard = ({ data }: Props) => {
           <View style={styles.innerBanner}>
             <Text>
               <TouchableRipple
-                onPress={() => console.log("press")}
+                // onPress={() => navigate("Detail")}
                 style={styles.textButton}
               >
                 <Typography

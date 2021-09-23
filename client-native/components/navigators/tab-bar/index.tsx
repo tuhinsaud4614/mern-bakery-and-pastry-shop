@@ -88,29 +88,21 @@ const TabBar = ({ state, navigation }: BottomTabBarProps) => {
       )}
       <TabBarItem
         onPress={() => {
-          onPress(
-            state.index === (isSmUp ? 1 : 0),
-            state.routes[isSmUp ? 1 : 0].key,
-            state.routes[isSmUp ? 1 : 0].name
-          );
+          onPress(state.index === 1, state.routes[1].key, state.routes[1].name);
         }}
         color={
-          state.index === (isSmUp ? 1 : 0) || (isSmUp && state.index === 0)
+          state.index === 1 || state.index === 0
             ? theme.colors.palette.warning.main
             : theme.colors.palette.common.white
         }
         isSmUp={isSmUp}
-        text={
-          state.index === (isSmUp ? 1 : 0) || (isSmUp && state.index === 0)
-            ? "Home"
-            : undefined
-        }
+        text={state.index === 1 || state.index === 0 ? "Home" : undefined}
       >
         <AntDesign
           name="home"
           size={24}
           color={
-            state.index === (isSmUp ? 1 : 0) || (isSmUp && state.index === 0)
+            state.index === 1 || state.index === 0
               ? theme.colors.palette.warning.main
               : theme.colors.palette.common.white
           }
@@ -118,25 +110,21 @@ const TabBar = ({ state, navigation }: BottomTabBarProps) => {
       </TabBarItem>
       <TabBarItem
         onPress={() => {
-          onPress(
-            state.index === (isSmUp ? 2 : 1),
-            state.routes[isSmUp ? 2 : 1].key,
-            state.routes[isSmUp ? 2 : 1].name
-          );
+          onPress(state.index === 2, state.routes[2].key, state.routes[2].name);
         }}
         color={
-          state.index === (isSmUp ? 2 : 1)
+          state.index === 2
             ? theme.colors.palette.warning.main
             : theme.colors.palette.common.white
         }
         isSmUp={isSmUp}
-        text={state.index === (isSmUp ? 2 : 1) ? "Search" : undefined}
+        text={state.index === 2 ? "Search" : undefined}
       >
         <AntDesign
           name="search1"
           size={24}
           color={
-            state.index === (isSmUp ? 2 : 1)
+            state.index === 2
               ? theme.colors.palette.warning.main
               : theme.colors.palette.common.white
           }
@@ -144,25 +132,21 @@ const TabBar = ({ state, navigation }: BottomTabBarProps) => {
       </TabBarItem>
       <TabBarItem
         onPress={() => {
-          onPress(
-            state.index === (isSmUp ? 3 : 2),
-            state.routes[isSmUp ? 3 : 2].key,
-            state.routes[isSmUp ? 3 : 2].name
-          );
+          onPress(state.index === 3, state.routes[3].key, state.routes[3].name);
         }}
         color={
-          state.index === (isSmUp ? 3 : 2)
+          state.index === 3
             ? theme.colors.palette.warning.main
             : theme.colors.palette.common.white
         }
         isSmUp={isSmUp}
-        text={state.index === (isSmUp ? 3 : 2) ? "Wishlist" : undefined}
+        text={state.index === 3 ? "Wishlist" : undefined}
       >
         <AntDesign
           name="heart"
           size={24}
           color={
-            state.index === (isSmUp ? 3 : 2)
+            state.index === 3
               ? theme.colors.palette.warning.main
               : theme.colors.palette.common.white
           }
@@ -172,25 +156,25 @@ const TabBar = ({ state, navigation }: BottomTabBarProps) => {
         <TabBarItem
           onPress={() => {
             onPress(
-              state.index === (isSmUp ? 4 : 3),
-              state.routes[isSmUp ? 4 : 3].key,
-              state.routes[isSmUp ? 4 : 3].name
+              state.index === 4,
+              state.routes[4].key,
+              state.routes[4].name
             );
           }}
           color={
-            state.index === (isSmUp ? 4 : 3)
+            state.index === 4
               ? theme.colors.palette.warning.main
               : theme.colors.palette.common.white
           }
           isSmUp={isSmUp}
-          text={state.index === (isSmUp ? 4 : 3) ? "Cart" : undefined}
+          text={state.index === 4 ? "Cart" : undefined}
         >
           <View style={{ position: "relative" }}>
             <Entypo
               name="shopping-bag"
               size={24}
               color={
-                state.index === (isSmUp ? 4 : 3)
+                state.index === 4
                   ? theme.colors.palette.warning.main
                   : theme.colors.palette.common.white
               }
@@ -210,25 +194,21 @@ const TabBar = ({ state, navigation }: BottomTabBarProps) => {
       )}
       <TabBarItem
         onPress={() => {
-          onPress(
-            state.index === (isSmUp ? 5 : 3),
-            state.routes[isSmUp ? 5 : 3].key,
-            state.routes[isSmUp ? 5 : 3].name
-          );
+          onPress(state.index === 5, state.routes[5].key, state.routes[5].name);
         }}
         color={
-          state.index === (isSmUp ? 5 : 3)
+          state.index === 5
             ? theme.colors.palette.warning.main
             : theme.colors.palette.common.white
         }
         isSmUp={isSmUp}
-        text={state.index === (isSmUp ? 5 : 3) ? "User" : undefined}
+        text={state.index === 5 ? "User" : undefined}
       >
         <AntDesign
           name="user"
           size={24}
           color={
-            state.index === (isSmUp ? 5 : 3)
+            state.index === 5
               ? theme.colors.palette.warning.main
               : theme.colors.palette.common.white
           }
@@ -241,7 +221,8 @@ const TabBar = ({ state, navigation }: BottomTabBarProps) => {
 const tabOptions = (
   theme: ReactNativePaper.Theme,
   hide: boolean,
-  navigation?: any
+  navigation?: any,
+  title: string = ""
 ): BottomTabNavigationOptions => {
   if (hide) {
     return {
@@ -259,7 +240,7 @@ const tabOptions = (
         variant="h6"
         style={{ color: theme.colors.palette.common.white }}
       >
-        {children}
+        {title || children}
       </Typography>
     ),
     headerRight: () => (
@@ -302,7 +283,7 @@ const TabBarContainer = () => {
         name="Logo"
         component={HomeScreen}
         options={({ navigation }) => {
-          return tabOptions(theme, isSmUp, navigation);
+          return tabOptions(theme, isSmUp, navigation, "Home");
         }}
       />
 
