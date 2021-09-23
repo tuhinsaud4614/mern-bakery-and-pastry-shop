@@ -40,7 +40,7 @@ const Typography = ({
         {
           textAlign: textAlign,
           textTransform: textTransform,
-          [`margin${gutter}`]: theme.spacing,
+          ...(!!gutter && { [`margin${gutter}`]: theme.spacing }),
         },
 
         typographyStyles[variant],

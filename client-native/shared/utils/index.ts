@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import { useMediaQuery } from "react-responsive";
 import { DeviceType } from "./types";
 
@@ -23,3 +24,18 @@ export const breakpoints = {
     return isValid;
   },
 } as const;
+
+export const boxShadow = (base: number, offset: number = 2) => {
+  if (Platform.OS === "android") {
+    return { elevation: base } as const;
+  }
+  return {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: offset,
+    },
+    shadowOpacity: 0.24,
+    shadowRadius: base,
+  } as const;
+};

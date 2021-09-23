@@ -48,19 +48,19 @@ declare global {
 
 const fontConfig: ReactNativePaper.ThemeFonts = {
   light: {
-    fontFamily: "RalewayLight",
+    fontFamily: "Raleway_300Light",
     fontWeight: "300",
   },
   medium: {
-    fontFamily: "RalewayMedium",
+    fontFamily: "Raleway_500Medium",
     fontWeight: "500",
   },
   regular: {
-    fontFamily: "RalewayRegular",
+    fontFamily: "Raleway_400Regular",
     fontWeight: "400",
   },
   thin: {
-    fontFamily: "RalewayThin",
+    fontFamily: "Raleway_100Thin",
     fontWeight: "100",
   },
 };
@@ -97,9 +97,9 @@ const theme: ReactNativePaper.Theme = {
         contrastText: "#fff",
       },
       warning: {
-        light: "#ff9800",
-        main: "#ED6C02",
-        dark: "#e65100",
+        light: "#ffef62",
+        main: "#ffeb3b",
+        dark: "#b2a429",
         contrastText: "#fff",
       },
       info: {

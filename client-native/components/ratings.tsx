@@ -18,6 +18,7 @@ interface Props {
   percentage?: boolean;
   showText?: boolean;
   size?: number;
+  disabled?: boolean;
   onRatingComplete?(rating: number): void;
   classes?: {
     root?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
@@ -36,6 +37,7 @@ const Ratings = ({
   classes,
   percentage = false,
   showText = false,
+  disabled = false,
   size = 24,
   onRatingComplete,
 }: Props) => {
@@ -104,7 +106,11 @@ const Ratings = ({
                 styles.item,
               ])}
               key={index}
-              onPress={() => onChange(index + 1)}
+              onPress={() => {
+                if (!disabled) {
+                  onChange(index + 1);
+                }
+              }}
             >
               {({ pressed }) => (
                 <AntDesign

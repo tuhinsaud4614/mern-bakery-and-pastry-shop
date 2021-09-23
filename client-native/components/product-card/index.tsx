@@ -20,8 +20,6 @@ interface Props {
   data: string;
 }
 
-const image = require("../../assets/cake.jpeg");
-
 export const NewText = () => {
   return <Text>hello</Text>;
 };
@@ -33,7 +31,6 @@ const ProductCard = ({ data }: Props) => {
   } = useTheme();
 
   const [rating, setRating] = useState(0);
-  console.log(rating);
 
   return (
     <Card style={styles.container} elevation={3}>
@@ -46,8 +43,8 @@ const ProductCard = ({ data }: Props) => {
       </Typography>
       <TouchableRipple onPress={() => console.log("press")}>
         <Card.Cover
-          source={{ uri: image }}
-          style={{ minHeight: "155", resizeMode: "center" }}
+          source={require("../../assets/cake.jpeg")}
+          style={{ minHeight: 155, resizeMode: "center" }}
         />
       </TouchableRipple>
       <Card.Content style={{ paddingTop: spacing * 2 }}>

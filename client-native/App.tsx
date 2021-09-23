@@ -1,41 +1,36 @@
-import { FontDisplay, useFonts } from "expo-font";
+import {
+  Raleway_100Thin,
+  Raleway_300Light,
+  Raleway_400Regular,
+  Raleway_500Medium,
+  useFonts,
+} from "@expo-google-fonts/raleway";
+import { NavigationContainer } from "@react-navigation/native";
+import AppLoading from "expo-app-loading";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
-import BottomNavigation from "./components/navigations/bottom-navigation";
-import HomeScreen from "./screens/home";
+import TabBarContainer from "./components/navigators/tab-bar";
 import theme from "./shared/theme";
 
 export default function App() {
   const [loaded] = useFonts({
-    RalewayLight: {
-      uri: require("./assets/fonts/Raleway/Raleway-Light.ttf"),
-      display: FontDisplay.SWAP,
-    },
-    RalewayMedium: {
-      uri: require("./assets/fonts/Raleway/Raleway-Medium.ttf"),
-      display: FontDisplay.SWAP,
-    },
-    RalewayRegular: {
-      uri: require("./assets/fonts/Raleway/Raleway-Regular.ttf"),
-      display: FontDisplay.SWAP,
-    },
-    RalewayThin: {
-      uri: require("./assets/fonts/Raleway/Raleway-Thin.ttf"),
-      display: FontDisplay.SWAP,
-    },
+    Raleway_300Light,
+    Raleway_500Medium,
+    Raleway_400Regular,
+    Raleway_100Thin,
   });
 
   if (!loaded) {
-    return null;
+    return <AppLoading />;
   }
-
   return (
     <PaperProvider theme={theme}>
-      <SafeAreaView style={{ flex: 1, padding: 10 }}>
-        <HomeScreen />
-        <BottomNavigation />
+      <SafeAreaView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <TabBarContainer />
+        </NavigationContainer>
         <StatusBar style="auto" />
       </SafeAreaView>
     </PaperProvider>

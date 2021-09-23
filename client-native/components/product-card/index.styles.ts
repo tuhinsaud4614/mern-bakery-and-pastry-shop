@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   },
   textButton: {
     padding: theme.spacing / 2,
-    // width: "fit-content"
   },
   featured: {
     position: "absolute",
