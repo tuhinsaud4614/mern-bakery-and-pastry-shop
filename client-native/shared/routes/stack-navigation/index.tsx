@@ -11,7 +11,7 @@ export const RootStack = createNativeStackNavigator<RootStackParamList>();
 const RootStackNavigator = () => {
   const theme = useTheme();
   return (
-    <RootStack.Navigator initialRouteName="Tabs">
+    <RootStack.Navigator initialRouteName="Detail">
       <RootStack.Screen
         name="Tabs"
         component={TabBarContainer}

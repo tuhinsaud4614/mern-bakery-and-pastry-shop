@@ -1,73 +1,45 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Image, Pressable, StyleSheet, View } from "react-native";
-import { IconButton, useTheme } from "react-native-paper";
+import { Image, StyleSheet, useWindowDimensions, View } from "react-native";
+import { useTheme } from "react-native-paper";
+import Carousel from "../../components/carousel";
 import { RootStackParamList } from "../../shared/routes";
-import ProductImage from "./product-image";
+
+const images = [
+  require("../../assets/cake-300w.jpeg"),
+  require("../../assets/others.jpeg"),
+  require("../../assets/pastry-cup-pastry-tart.jpeg"),
+];
 
 const DetailScreen = () => {
   const { navigate, goBack }: NavigationProp<RootStackParamList> =
     useNavigation();
   const theme = useTheme();
   const styles = makeStyles(theme);
+  const { width: windowWidth, height } = useWindowDimensions();
 
   return (
     <View style={StyleSheet.flatten([styles.root])}>
       <View style={styles.info}>
-        <View style={{ display: "flex", flex: 1, position: "relative" }}>
-          <View style={{ position: "relative" }}>
-            <ProductImage image={require("../../assets/cake-300w.jpeg")} />
-            <View
+        <Carousel
+          data={images}
+          itemWidth={windowWidth - theme.spacing * 4}
+          pageItem={(value) => (
+            <Image
+              source={value}
               style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
+                height: 40,
+                width: 50,
+                borderRadius: theme.spacing * 0.5,
               }}
-            >
-              <IconButton
-                onPress={() => console.log("pressed")}
-                icon="chevron-left"
-                color={theme.colors.palette.primary.main}
-              />
-              <IconButton
-                onPress={() => console.log("pressed")}
-                icon="chevron-right"
-                color={theme.colors.palette.primary.main}
-              />
-            </View>
-          </View>
-          <View
-            style={{
-              marginTop: theme.spacing * 1.25,
-              display: "flex",
-              flexDirection: "row",
-            }}
-          >
-            <Pressable style={{ marginRight: theme.spacing * 1.25 }}>
-              <Image
-                source={require("../../assets/cake-300w.jpeg")}
-                style={{
-                  height: 50,
-                  width: 50,
-                }}
-                resizeMode="contain"
-              />
-            </Pressable>
-            <Pressable onPress={() => console.log("pressed")}>
-              <Image
-                source={require("../../assets/cake-300w.jpeg")}
-                style={{ height: 50, width: 50 }}
-                resizeMode="contain"
-              />
-            </Pressable>
-          </View>
-        </View>
+              resizeMode="cover"
+            />
+          )}
+          slide={(value) => (
+            <Image source={value} style={{ width: "100%", height: "100%" }} />
+          )}
+          classes={{ slide: { padding: theme.spacing } }}
+        />
       </View>
     </View>
   );
