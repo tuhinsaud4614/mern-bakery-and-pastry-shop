@@ -146,12 +146,9 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginTop: -theme.spacing,
-    marginLeft: -theme.spacing,
     flexWrap: "wrap",
   },
   item: {
-    paddingLeft: theme.spacing,
-    paddingTop: theme.spacing,
+    padding: theme.spacing * 0.5,
   },
 });

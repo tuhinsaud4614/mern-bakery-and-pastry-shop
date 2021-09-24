@@ -3,6 +3,7 @@ import {
   Raleway_300Light,
   Raleway_400Regular,
   Raleway_500Medium,
+  Raleway_700Bold,
   useFonts,
 } from "@expo-google-fonts/raleway";
 import { NavigationContainer } from "@react-navigation/native";
@@ -20,6 +21,7 @@ export default function App() {
     Raleway_500Medium,
     Raleway_400Regular,
     Raleway_100Thin,
+    Raleway_700Bold,
   });
 
   if (!loaded) {

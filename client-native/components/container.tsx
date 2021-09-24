@@ -27,7 +27,8 @@ const Container = ({
       style={StyleSheet.flatten([
         {
           padding: theme.spacing * 2,
-          overflow: "hidden",
+          backgroundColor: theme.colors.palette.common.white,
+          maxWidth: Breakpoints.lg,
           ...(isLgUp && { marginHorizontal: (width - Breakpoints.lg) / 2 }),
         },
         classes && classes,

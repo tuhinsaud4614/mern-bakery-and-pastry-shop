@@ -8,6 +8,9 @@ declare global {
       spacing: number;
       fontSize: number;
     }
+    interface ThemeFonts {
+      bold: ThemeFont;
+    }
     interface ThemeColors {
       palette: {
         accent: string;
@@ -58,6 +61,10 @@ const fontConfig: ReactNativePaper.ThemeFonts = {
   regular: {
     fontFamily: "Raleway_400Regular",
     fontWeight: "400",
+  },
+  bold: {
+    fontFamily: "Raleway_700Bold",
+    fontWeight: "700",
   },
   thin: {
     fontFamily: "Raleway_100Thin",

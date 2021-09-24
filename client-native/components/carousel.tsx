@@ -214,7 +214,7 @@ const Carousel = ({
                   {
                     borderColor:
                       index === current
-                        ? theme.colors.palette.primary.main
+                        ? theme.colors.palette.secondary.main
                         : "transparent",
                   },
                   classes?.pageAction && classes?.pageAction,
