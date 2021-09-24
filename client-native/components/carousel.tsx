@@ -37,43 +37,55 @@ const Carousel = ({
   pageItem,
   hideActionButton = false,
   itemWidth,
-  itemPerSlide = 2,
+  itemPerSlide = 1,
   slide,
   classes,
   actionBtnSize = 30,
 }: Props) => {
   const theme = useTheme();
   let scrollRef: MutableRefObject<FlatList<any> | null> = useRef(null);
-  let debounceTimer = useRef<number>(0);
+  let debounceTimer = useRef<NodeJS.Timeout | null>(null);
+  let debounceTimerX = useRef<NodeJS.Timeout | null>(null);
   const [current, setCurrent] = useState(0);
   const itemHeight = (itemWidth / 16) * 9;
   const styles = makeStyles(theme, itemWidth, itemHeight, actionBtnSize);
-  const totalPage = Math.ceil(data.length / itemPerSlide);
+  const totalPage = data.length - itemPerSlide + 1;
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollToOffset({
-        offset: itemWidth * current,
-        animated: true,
-      });
-    }
     return () => {
       if (debounceTimer.current) {
         clearTimeout(debounceTimer.current);
+      }
+      if (debounceTimerX.current) {
+        clearTimeout(debounceTimerX.current);
       }
     };
   }, [current, scrollRef]);
 
   // Action handling
+  const scrollToOffset = (index: number) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollToOffset({
+        offset: (itemWidth / itemPerSlide) * index,
+      });
+    }
+  };
 
   const actionHandler = (action: "next" | "prev") => {
-    if (action === "next" && current < totalPage - 1) {
-      return setCurrent((prev) => prev + 1);
+    if (debounceTimerX.current) {
+      clearTimeout(debounceTimerX.current);
     }
+    debounceTimerX.current = setTimeout(() => {
+      if (action === "next" && current < totalPage - 1) {
+        scrollToOffset(current + 1);
+        return setCurrent((prev) => prev + 1);
+      }
 
-    if (action === "prev" && current > 0) {
-      return setCurrent((prev) => prev - 1);
-    }
+      if (action === "prev" && current > 0) {
+        scrollToOffset(current - 1);
+        return setCurrent((prev) => prev - 1);
+      }
+    }, 200);
   };
 
   // Handling Scroll end
@@ -83,14 +95,17 @@ const Carousel = ({
     }
     const { nativeEvent } = e;
     if (nativeEvent && nativeEvent.contentOffset) {
+      let currentSlide = 0;
       if (nativeEvent.contentOffset.x === 0) {
-        setCurrent(0);
+        currentSlide = 0;
+        setCurrent(currentSlide);
       } else {
         const approxCurrentSlide =
-          nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width;
-        const currentSlide = Math.ceil(+approxCurrentSlide.toFixed(2));
+          nativeEvent.contentOffset.x / (itemWidth / itemPerSlide);
+        currentSlide = Math.ceil(+approxCurrentSlide.toFixed(2));
         setCurrent(currentSlide);
       }
+      scrollToOffset(currentSlide);
     }
   };
 
@@ -152,9 +167,9 @@ const Carousel = ({
               if (debounceTimer.current) {
                 clearTimeout(debounceTimer.current);
               }
-              debounceTimer.current = window.setTimeout(() => {
+              debounceTimer.current = setTimeout(() => {
                 handleScrollEnd(e);
-              }, 100);
+              }, 150);
             }
           }}
           renderItem={({ index, item }) => (
@@ -189,7 +204,10 @@ const Carousel = ({
               key={index}
             >
               <Pressable
-                onPress={() => setCurrent(index)}
+                onPress={() => {
+                  scrollToOffset(index);
+                  setCurrent(index);
+                }}
                 key={index}
                 style={StyleSheet.flatten([
                   styles.paginationItem,
