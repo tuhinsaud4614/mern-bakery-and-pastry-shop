@@ -127,7 +127,7 @@ const Carousel = ({
             <IconButton
               onPress={() => actionHandler("prev")}
               icon="chevron-left"
-              color={theme.colors.palette.warning.main}
+              color={theme.colors.palette.secondary.main}
               style={StyleSheet.flatten([
                 styles.actionButton,
                 { left: 0 },
@@ -139,7 +139,7 @@ const Carousel = ({
             <IconButton
               onPress={() => actionHandler("next")}
               icon="chevron-right"
-              color={theme.colors.palette.warning.main}
+              color={theme.colors.palette.secondary.main}
               size={actionBtnSize}
               disabled={current === totalPage - 1}
               style={StyleSheet.flatten([

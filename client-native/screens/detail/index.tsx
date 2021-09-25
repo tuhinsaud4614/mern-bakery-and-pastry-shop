@@ -2,6 +2,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
   Image,
+  Platform,
   StyleSheet,
   Text,
   useWindowDimensions,
@@ -28,7 +29,7 @@ const DetailScreen = () => {
   const isSmUp = breakpoints.up("sm");
   const infoSmUpWidth = windowWidth * 0.4 - theme.spacing * 4;
   return (
-    <Container>
+    <Container keyBoardAvoiding={Platform.OS !== "web"}>
       <View style={styles.main}>
         <View
           style={{
