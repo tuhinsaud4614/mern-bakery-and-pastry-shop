@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import {
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleProp,
   StyleSheet,
@@ -36,7 +37,11 @@ const Container = ({
         showsVerticalScrollIndicator={false}
         style={{ flex: 1, backgroundColor: theme.colors.palette.common.white }}
       >
-        <KeyboardAvoidingView behavior={"position"} style={style}>
+        <KeyboardAvoidingView
+          enabled
+          behavior={Platform.OS === "ios" ? "position" : undefined}
+          style={style}
+        >
           {children}
         </KeyboardAvoidingView>
       </ScrollView>

@@ -13,18 +13,15 @@ import {
 import { RootNavigationProps } from "../../shared/routes";
 import { breakpoints } from "../../shared/utils";
 import { typographyStyles } from "../../shared/utils/common.styles";
+import { IProduct } from "../../shared/utils/interfaces";
 import Ratings from "../ratings";
 import Typography from "../typography";
 import styles from "./index.styles";
 // import { NewText } from "./NewText";
 
 interface Props {
-  data: string;
+  data: IProduct;
 }
-
-export const NewText = () => {
-  return <Text>hello</Text>;
-};
 
 const ProductCard = ({ data }: Props) => {
   const { navigate }: RootNavigationProps = useNavigation();
@@ -36,16 +33,22 @@ const ProductCard = ({ data }: Props) => {
 
   return (
     <Card style={styles.container} elevation={3}>
-      <Typography
-        style={styles.featured}
-        variant="caption"
-        textTransform="uppercase"
-      >
-        Hot
-      </Typography>
+      {data.feature && (
+        <Typography
+          style={styles.featured}
+          variant="caption"
+          textTransform="uppercase"
+        >
+          Hot
+        </Typography>
+      )}
       <TouchableRipple
         onPress={() =>
-          navigate("Detail", { productId: "123", title: "Product1" })
+          navigate("Detail", {
+            productId: data.id,
+            title: data.title,
+            categoryId: data.category.id,
+          })
         }
       >
         <Card.Cover
@@ -67,7 +70,7 @@ const ProductCard = ({ data }: Props) => {
                   style={{ color: "#7B4B94" }}
                   textTransform="uppercase"
                 >
-                  category
+                  {data.category.title}
                 </Typography>
               </TouchableRipple>
             </Text>
@@ -83,7 +86,7 @@ const ProductCard = ({ data }: Props) => {
                   style={{ color: palette.info.main }}
                   textTransform="uppercase"
                 >
-                  Title
+                  {data.title}
                 </Typography>
               </TouchableRipple>
             </Text>
@@ -96,6 +99,7 @@ const ProductCard = ({ data }: Props) => {
         </View>
         <Divider />
         <Ratings
+          initialValue={0}
           count={5}
           onRatingComplete={(rating) => setRating(rating)}
           percentage
@@ -105,7 +109,9 @@ const ProductCard = ({ data }: Props) => {
           variant={breakpoints.up("sm") ? "h5" : "h6"}
           style={styles.price}
         >
-          120৳
+          {typeof data.price !== "number"
+            ? `${data.price.small}৳ - ${data.price.extraLarge}৳`
+            : `${data.price}৳`}
         </Typography>
       </Card.Content>
       <Card.Actions>

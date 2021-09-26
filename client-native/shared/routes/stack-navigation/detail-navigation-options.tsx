@@ -21,7 +21,7 @@ const detailNavigationOptions = (
         ellipsizeMode="tail"
         numberOfLines={1}
       >
-        {route.params.title}
+        Detail
       </Typography>
     ),
   };

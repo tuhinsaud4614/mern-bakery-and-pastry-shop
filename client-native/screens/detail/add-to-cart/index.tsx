@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { Button, Divider, useTheme } from "react-native-paper";
 import { typographyStyles } from "../../../shared/utils/common.styles";
+import { IProduct } from "../../../shared/utils/interfaces";
 import Counter from "./counter";
 import PickerBox from "./picker-box";
 
@@ -13,7 +14,11 @@ const sizes = [
   { title: "small - 1000৳", value: "small" },
 ];
 
-const AddToCart = () => {
+interface Props {
+  product: IProduct;
+}
+
+const AddToCart = ({ product }: Props) => {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const [count, setCount] = useState<number>(1);

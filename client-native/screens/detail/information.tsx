@@ -3,13 +3,15 @@ import { StyleSheet, View } from "react-native";
 import { Divider, useTheme } from "react-native-paper";
 import Ratings from "../../components/ratings";
 import Typography from "../../components/typography";
+import { IProduct } from "../../shared/utils/interfaces";
 import AddToCart from "./add-to-cart";
 
 interface Props {
   isSmUp: boolean;
+  product: IProduct;
 }
 
-const Information = ({ isSmUp }: Props) => {
+const Information = ({ isSmUp, product }: Props) => {
   const theme = useTheme();
   const styles = makeStyles(theme);
 
@@ -21,7 +23,7 @@ const Information = ({ isSmUp }: Props) => {
       ])}
     >
       <Typography variant={isSmUp ? "h4" : "h5"} style={styles.title}>
-        CHOCOLATE DAKER CAKE
+        {product.title}
       </Typography>
       <Ratings
         count={5}
@@ -30,18 +32,24 @@ const Information = ({ isSmUp }: Props) => {
         percentage
       />
       <Divider style={{ marginVertical: theme.spacing, maxWidth: 100 }} />
-      <Typography variant={isSmUp ? "h5" : "h6"}>1000৳ – 2900৳</Typography>
-      <Typography
-        variant={isSmUp ? "body1" : "body2"}
-        style={{
-          paddingTop: theme.spacing,
-          color: theme.colors.palette.text.secondary,
-        }}
-      >
-        Ingredients - Chocolate moist sponge, Chocolate cream, Chocolate bar
-        decoration
+      <Typography variant={isSmUp ? "h5" : "h6"}>
+        {typeof product.price === "number"
+          ? `${product.price}৳`
+          : `${product.price.small}৳ - ${product.price.extraLarge}৳`}
       </Typography>
-      <AddToCart />
+      {product.ingredients && product.ingredients.length && (
+        <Typography
+          variant={isSmUp ? "body1" : "body2"}
+          style={{
+            paddingTop: theme.spacing,
+            color: theme.colors.palette.text.secondary,
+          }}
+          textTransform="capitalize"
+        >
+          Ingredients - {product.ingredients.join(", ")}
+        </Typography>
+      )}
+      <AddToCart product={product} />
     </View>
   );
 };

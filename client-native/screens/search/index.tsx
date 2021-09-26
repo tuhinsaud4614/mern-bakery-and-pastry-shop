@@ -1,11 +1,11 @@
 import React from "react";
-import ProductCard from "../../components/product-card";
+import { Text } from "react-native";
 import ScreenSpacer from "../../components/screen-spacer";
 
 const SearchScreen = () => {
   return (
     <ScreenSpacer>
-      <ProductCard data="product" />
+      <Text>Search</Text>
     </ScreenSpacer>
   );
 };

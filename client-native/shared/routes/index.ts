@@ -15,7 +15,7 @@ export type BottomTabParamList = {
 
 export type RootStackParamList = {
   Tabs: NavigatorScreenParams<BottomTabParamList>;
-  Detail: { productId?: string; title?: string };
+  Detail: { productId?: string; title?: string; categoryId?: string };
 };
 export type RootNavigationProps = NavigationProp<RootStackParamList>;
 export type TabsNavigationProps = NativeStackScreenProps<

@@ -14,6 +14,7 @@ import Typography from "./typography";
 
 interface Props {
   count: number;
+  initialValue?: number;
   position?: "left" | "center" | "right";
   percentage?: boolean;
   showText?: boolean;
@@ -31,9 +32,10 @@ interface Props {
   };
 }
 
-const Ratings = ({
+const RatingsComponent = ({
   count,
   position,
+  initialValue = 0,
   classes,
   percentage = false,
   showText = false,
@@ -41,7 +43,7 @@ const Ratings = ({
   size = 24,
   onRatingComplete,
 }: Props) => {
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(initialValue);
   const theme = useTheme();
 
   const onChange = (value: number) => {
@@ -135,8 +137,9 @@ const Ratings = ({
   );
 };
 
-Ratings.displayName = "Ratings";
-export default memo(Ratings);
+RatingsComponent.displayName = "Ratings";
+const Ratings = memo(RatingsComponent);
+export default Ratings;
 
 const styles = StyleSheet.create({
   wrapper: {

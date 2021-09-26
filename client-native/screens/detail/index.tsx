@@ -1,18 +1,18 @@
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
   Image,
   Platform,
   StyleSheet,
-  Text,
   useWindowDimensions,
   View,
 } from "react-native";
 import { useTheme } from "react-native-paper";
 import Carousel from "../../components/carousel";
 import Container from "../../components/container";
-import { RootStackParamList } from "../../shared/routes";
+import { dummyProducts } from "../../dummy-data";
+import { DetailNavigationProps } from "../../shared/routes";
 import { breakpoints } from "../../shared/utils";
+import ExtraInformation from "./extra-information";
 import Information from "./information";
 
 const images = [
@@ -20,14 +20,23 @@ const images = [
   require("../../assets/others.jpeg"),
 ];
 
-const DetailScreen = () => {
-  const { navigate, goBack }: NavigationProp<RootStackParamList> =
-    useNavigation();
+const DetailScreen = ({
+  route: {
+    params: { categoryId, productId = "1", title },
+  },
+}: DetailNavigationProps) => {
+  // const { navigate, goBack,getState }: NavigationProp<RootStackParamList> =
+  //   useNavigation();
+
   const theme = useTheme();
   const styles = makeStyles(theme);
   const { width: windowWidth } = useWindowDimensions();
   const isSmUp = breakpoints.up("sm");
   const infoSmUpWidth = windowWidth * 0.4 - theme.spacing * 4;
+  const product =
+    dummyProducts.find((product) => product.id === "1") || dummyProducts[0];
+  // console.log(product);
+
   return (
     <Container keyBoardAvoiding={Platform.OS !== "web"}>
       <View style={styles.main}>
@@ -58,9 +67,9 @@ const DetailScreen = () => {
             }}
           />
         </View>
-        <Information isSmUp={isSmUp} />
+        <Information isSmUp={isSmUp} product={product} />
       </View>
-      <Text>Hello</Text>
+      <ExtraInformation product={product} />
     </Container>
   );
 };

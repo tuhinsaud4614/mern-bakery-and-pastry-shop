@@ -20,3 +20,31 @@ export interface IColorShade {
   A400: string;
   A700: string;
 }
+
+export interface IProductImage {
+  small: string;
+  medium: string;
+  large: string;
+}
+
+export interface IProduct {
+  id: string;
+  title: string;
+  category: {
+    id: string;
+    title: string;
+  };
+  feature: boolean;
+  price:
+    | number
+    | {
+        small: number;
+        medium: number;
+        large: number;
+        extraLarge: number;
+      };
+  ingredients?: string[];
+  images: IProductImage[];
+  description?: string;
+  ratings: { id: string; point: number }[];
+}
