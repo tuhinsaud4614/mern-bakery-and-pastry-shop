@@ -36,14 +36,13 @@ const Typography = ({
   return (
     <Text
       style={StyleSheet.flatten([
-        style && style,
+        typographyStyles[variant],
         {
           textAlign: textAlign,
           textTransform: textTransform,
           ...(!!gutter && { [`margin${gutter}`]: theme.spacing }),
         },
-
-        typographyStyles[variant],
+        style && style,
       ])}
       {...rest}
     >

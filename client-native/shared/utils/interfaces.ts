@@ -48,3 +48,13 @@ export interface IProduct {
   description?: string;
   ratings: { id: string; point: number }[];
 }
+
+export interface IReview {
+  id: string;
+  reviewer: {
+    id: string;
+    name: string;
+  };
+  text: string;
+  ratings: number;
+}

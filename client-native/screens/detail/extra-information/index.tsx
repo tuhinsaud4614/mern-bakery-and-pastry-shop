@@ -11,7 +11,8 @@ import {
 import { Divider, TouchableRipple, useTheme } from "react-native-paper";
 import Typography from "../../../components/typography";
 import { IProduct } from "../../../shared/utils/interfaces";
-import Reviews from "../reviews";
+import Description from "./description";
+import Reviews from "./reviews";
 
 interface Props {
   product: IProduct;
@@ -99,7 +100,9 @@ const ExtraInformation = ({ product }: Props) => {
           </Typography>
         </TouchableRipple>
       </View>
-      <Divider />
+      <Divider
+        style={{ backgroundColor: theme.colors.palette.primary.light }}
+      />
       <VirtualizedList
         ref={scrollRef}
         data={[]}
@@ -113,14 +116,7 @@ const ExtraInformation = ({ product }: Props) => {
           if (index === 0) {
             return (
               <View style={styles.tabContainer}>
-                <Typography
-                  variant="body2"
-                  style={{ color: theme.colors.palette.text.primary }}
-                >
-                  {product.description
-                    ? product.description
-                    : "This product has no description"}
-                </Typography>
+                <Description />
               </View>
             );
           }

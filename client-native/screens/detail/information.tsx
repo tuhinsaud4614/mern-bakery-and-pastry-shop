@@ -31,8 +31,17 @@ const Information = ({ isSmUp, product }: Props) => {
         classes={{ wrapper: { paddingHorizontal: 0 } }}
         percentage
       />
-      <Divider style={{ marginVertical: theme.spacing, maxWidth: 100 }} />
-      <Typography variant={isSmUp ? "h5" : "h6"}>
+      <Divider
+        style={{
+          marginVertical: theme.spacing,
+          maxWidth: 100,
+          backgroundColor: theme.colors.palette.primary.light,
+        }}
+      />
+      <Typography
+        variant={isSmUp ? "h5" : "h6"}
+        style={{ color: theme.colors.palette.text.primary }}
+      >
         {typeof product.price === "number"
           ? `${product.price}৳`
           : `${product.price.small}৳ - ${product.price.extraLarge}৳`}
