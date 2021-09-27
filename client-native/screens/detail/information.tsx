@@ -22,7 +22,11 @@ const Information = ({ isSmUp, product }: Props) => {
         isSmUp && { flex: 1, paddingLeft: theme.spacing * 2 },
       ])}
     >
-      <Typography variant={isSmUp ? "h4" : "h5"} style={styles.title}>
+      <Typography
+        variant={isSmUp ? "h4" : "h5"}
+        style={styles.title}
+        textTransform="capitalize"
+      >
         {product.title}
       </Typography>
       <Ratings

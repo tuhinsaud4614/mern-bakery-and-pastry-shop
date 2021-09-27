@@ -1,4 +1,4 @@
-import { Platform } from "react-native";
+import { Platform, useWindowDimensions } from "react-native";
 import { useMediaQuery } from "react-responsive";
 import { DeviceType } from "./types";
 
@@ -24,6 +24,23 @@ export const breakpoints = {
     return isValid;
   },
 } as const;
+
+export const deviceRange = (): DeviceType => {
+  let size: DeviceType = "xs";
+  const { width } = useWindowDimensions();
+
+  if (width >= Breakpoints.xl) {
+    size = "xl";
+  } else if (width >= Breakpoints.lg) {
+    size = "lg";
+  } else if (width >= Breakpoints.md) {
+    size = "md";
+  } else if (width >= Breakpoints.sm) {
+    size = "sm";
+  }
+
+  return size;
+};
 
 export const boxShadow = (base: number, offset: number = 2) => {
   if (Platform.OS === "android") {

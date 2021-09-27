@@ -113,16 +113,13 @@ const ExtraInformation = ({ product }: Props) => {
         keyExtractor={(_, index) => index.toString()}
         getItem={(item) => item["name"]}
         renderItem={({ index }) => {
-          if (index === 0) {
-            return (
-              <View style={styles.tabContainer}>
-                <Description />
-              </View>
-            );
-          }
           return (
             <View style={styles.tabContainer}>
-              <Reviews productId={product.id} />
+              {index === 0 ? (
+                <Description />
+              ) : (
+                <Reviews productId={product.id} />
+              )}
             </View>
           );
         }}

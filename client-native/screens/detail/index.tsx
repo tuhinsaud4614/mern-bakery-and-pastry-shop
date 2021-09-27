@@ -9,6 +9,9 @@ import {
 import { useTheme } from "react-native-paper";
 import Carousel from "../../components/carousel";
 import Container from "../../components/container";
+import Grid from "../../components/grid";
+import ProductBox from "../../components/product-box";
+import ProductCard from "../../components/product-card";
 import { dummyProducts } from "../../dummy-data";
 import { DetailNavigationProps } from "../../shared/routes";
 import { breakpoints } from "../../shared/utils";
@@ -35,7 +38,6 @@ const DetailScreen = ({
   const infoSmUpWidth = windowWidth * 0.4 - theme.spacing * 4;
   const product =
     dummyProducts.find((product) => product.id === "1") || dummyProducts[0];
-  // console.log(product);
 
   return (
     <Container keyBoardAvoiding={Platform.OS !== "web"}>
@@ -70,6 +72,25 @@ const DetailScreen = ({
         <Information isSmUp={isSmUp} product={product} />
       </View>
       <ExtraInformation product={product} />
+      <ProductBox
+        classes={{ root: styles.relatedProducts }}
+        title="related products"
+      >
+        <Grid>
+          {Array.from({ length: 8 }).map((_, index) => (
+            <Grid
+              xs={6}
+              sm={4}
+              md={3}
+              item
+              style={{ padding: theme.spacing }}
+              key={index}
+            >
+              <ProductCard data={product} />
+            </Grid>
+          ))}
+        </Grid>
+      </ProductBox>
     </Container>
   );
 };
@@ -91,6 +112,9 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
     },
     infoTitle: {
       color: theme.colors.palette.primary.main,
+    },
+    relatedProducts: {
+      marginTop: theme.spacing * 2,
     },
   });
 };
