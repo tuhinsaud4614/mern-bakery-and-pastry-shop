@@ -11,7 +11,7 @@ import Carousel from "../../components/carousel";
 import Container from "../../components/container";
 import Grid from "../../components/grid";
 import ProductBox from "../../components/product-box";
-import ProductCard from "../../components/product-card";
+import ProductCardSkeleton from "../../components/product-card/index.skeleton";
 import { dummyProducts } from "../../dummy-data";
 import { DetailNavigationProps } from "../../shared/routes";
 import { breakpoints } from "../../shared/utils";
@@ -77,7 +77,7 @@ const DetailScreen = ({
         title="related products"
       >
         <Grid>
-          {Array.from({ length: 8 }).map((_, index) => (
+          {Array.from({ length: 4 }).map((_, index) => (
             <Grid
               xs={6}
               sm={4}
@@ -86,7 +86,8 @@ const DetailScreen = ({
               style={{ padding: theme.spacing }}
               key={index}
             >
-              <ProductCard data={product} />
+              {/* <ProductCard data={product} /> */}
+              <ProductCardSkeleton />
             </Grid>
           ))}
         </Grid>
