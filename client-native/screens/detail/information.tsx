@@ -34,6 +34,7 @@ const Information = ({ isSmUp, product }: Props) => {
         // onRatingComplete={(rating) => setRating(rating)}
         classes={{ wrapper: { paddingHorizontal: 0 } }}
         percentage
+        size={20}
       />
       <Divider
         style={{

@@ -18,7 +18,16 @@ const AddReview = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={StyleSheet.flatten([
+        styles.container,
+        {
+          borderColor: focus
+            ? theme.colors.palette.primary.dark
+            : theme.colors.palette.primary.light,
+        },
+      ])}
+    >
       <TextInput
         ref={ref}
         onFocus={() => setFocus(true)}
@@ -28,19 +37,10 @@ const AddReview = () => {
         onChangeText={(value) => setValue(value)}
         returnKeyType={"send"}
         onSubmitEditing={submitHandler}
-        style={StyleSheet.flatten([
-          typographyStyles.body1,
-          {
-            borderColor: focus
-              ? theme.colors.palette.primary.dark
-              : theme.colors.palette.primary.light,
-          },
-          styles.input,
-        ])}
+        style={StyleSheet.flatten([typographyStyles.body1, styles.input])}
       />
       <IconButton
         onPress={submitHandler}
-        style={styles.icon}
         disabled={!value}
         size={16}
         color={
@@ -61,19 +61,18 @@ export default AddReview;
 
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
-    container: { position: "relative" },
-    input: {
-      padding: theme.spacing,
-      paddingRight: theme.spacing * 4,
+    container: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
       borderWidth: 1,
-      backgroundColor: theme.colors.palette.accent,
       borderRadius: theme.spacing * 0.5,
-      color: theme.colors.palette.text.primary,
+      backgroundColor: theme.colors.palette.accent,
     },
-    icon: {
-      position: "absolute",
-      top: 1,
-      right: 0,
+    input: {
+      flex: 1,
+      padding: theme.spacing,
+      color: theme.colors.palette.text.primary,
     },
   });
 };

@@ -1,22 +1,20 @@
-import { Entypo } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import { Text, View } from "react-native";
+import React from "react";
+import { TouchableHighlight, View } from "react-native";
 import {
   Button,
   Card,
   Divider,
   IconButton,
-  TouchableRipple,
   useTheme,
 } from "react-native-paper";
 import { RootNavigationProps } from "../../shared/routes";
 import { breakpoints } from "../../shared/utils";
 import { typographyStyles } from "../../shared/utils/common.styles";
 import { IProduct } from "../../shared/utils/interfaces";
-import Ratings from "../ratings";
 import Typography from "../typography";
-import styles from "./index.styles";
+import makeStyles from "./index.styles";
 // import { NewText } from "./NewText";
 
 interface Props {
@@ -25,11 +23,10 @@ interface Props {
 
 const ProductCard = ({ data }: Props) => {
   const { navigate }: RootNavigationProps = useNavigation();
-  const {
-    spacing,
-    colors: { palette },
-  } = useTheme();
-  const [rating, setRating] = useState(0);
+  const theme = useTheme();
+  const styles = makeStyles(theme);
+
+  const isSmUp = breakpoints.up("sm");
 
   return (
     <Card style={styles.container} elevation={3}>
@@ -42,73 +39,77 @@ const ProductCard = ({ data }: Props) => {
           Hot
         </Typography>
       )}
-      <TouchableRipple
-        onPress={() =>
+      <TouchableHighlight
+        onPress={() => {
           navigate("Detail", {
             productId: data.id,
             title: data.title,
             categoryId: data.category.id,
-          })
-        }
+          });
+        }}
       >
         <Card.Cover
           source={require("../../assets/cake.jpeg")}
-          style={{ minHeight: 155, resizeMode: "center" }}
+          style={{
+            resizeMode: "cover",
+            backgroundColor: "transparent",
+            ...(!isSmUp && { height: 130 }),
+          }}
         />
-      </TouchableRipple>
-      <Card.Content style={{ paddingTop: spacing * 2 }}>
-        <View style={styles.banner}>
-          <View style={styles.innerBanner}>
-            <Text>
-              <TouchableRipple
-                // onPress={() => navigate("Detail")}
-                style={styles.textButton}
-              >
-                <Typography
-                  onPress={() => console.log("press")}
-                  variant={breakpoints.up("sm") ? "body2" : "caption"}
-                  style={{ color: "#7B4B94" }}
-                  textTransform="uppercase"
-                >
-                  {data.category.title}
-                </Typography>
-              </TouchableRipple>
-            </Text>
-            <Text>
-              <TouchableRipple
-                rippleColor={palette.action.hover}
-                onPress={() => console.log("press")}
-                style={styles.textButton}
-              >
-                <Typography
-                  onPress={() => console.log("press")}
-                  variant={breakpoints.up("sm") ? "h5" : "h6"}
-                  style={{ color: palette.info.main }}
-                  textTransform="uppercase"
-                >
-                  {data.title}
-                </Typography>
-              </TouchableRipple>
-            </Text>
+      </TouchableHighlight>
+      <Card.Content style={{ paddingTop: theme.spacing * 2 }}>
+        <Typography
+          onPress={() => console.log("press")}
+          variant="caption"
+          style={{ color: "#7B4B94" }}
+          textTransform="uppercase"
+        >
+          {data.category.title}
+        </Typography>
+        <Typography
+          onPress={() =>
+            navigate("Detail", {
+              productId: data.id,
+              title: data.title,
+              categoryId: data.category.id,
+            })
+          }
+          variant={isSmUp ? "body1" : "body2"}
+          style={{
+            color: theme.colors.palette.info.main,
+            fontWeight: "700",
+            marginTop: theme.spacing * 0.5,
+          }}
+          textTransform="uppercase"
+        >
+          {data.title}
+        </Typography>
+        <Divider style={{ marginTop: theme.spacing * 0.5 }} />
+        <View style={styles.ratingAndFav}>
+          <View style={styles.ratingBox}>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <AntDesign
+                key={index}
+                name={data.totalRatings >= index + 1 ? "star" : "staro"}
+                size={16}
+                color={
+                  data.totalRatings >= index + 1
+                    ? theme.colors.palette.secondary.main
+                    : theme.colors.palette.text.secondary
+                }
+              />
+            ))}
           </View>
           <IconButton
             icon={true ? "heart-outline" : "heart"}
-            color={palette.secondary.main}
+            color={theme.colors.palette.secondary.main}
+            size={isSmUp ? 20 : 18}
+            style={{ margin: theme.spacing * 0.5 }}
             onPress={() => console.log("press")}
           />
         </View>
         <Divider />
-        <Ratings
-          initialValue={0}
-          count={5}
-          onRatingComplete={(rating) => setRating(rating)}
-          percentage
-        />
-        <Divider />
-        <Typography
-          variant={breakpoints.up("sm") ? "h5" : "h6"}
-          style={styles.price}
-        >
+        <Typography variant={isSmUp ? "h6" : "body1"} style={styles.price}>
           {typeof data.price !== "number"
             ? `${data.price.small}৳ - ${data.price.extraLarge}৳`
             : `${data.price}৳`}
@@ -118,18 +119,18 @@ const ProductCard = ({ data }: Props) => {
         <Button
           style={{
             flex: 1,
-            ...typographyStyles.h6,
           }}
+          labelStyle={typographyStyles.button}
           icon={({ color, size }) => (
             <Entypo
               name="shopping-bag"
               color={color}
               size={size}
-              style={{ marginRight: spacing }}
+              style={{ marginRight: theme.spacing }}
             />
           )}
           mode="contained"
-          color={palette.secondary.main}
+          color={theme.colors.palette.secondary.main}
           onPress={() => console.log("Pressed")}
         >
           Add to cart

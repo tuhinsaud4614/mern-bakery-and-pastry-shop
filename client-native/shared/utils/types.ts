@@ -1,4 +1,5 @@
 export type DeviceType = "xs" | "sm" | "md" | "lg" | "xl";
+export type SkeletonVariantType = "text" | "circular" | "rectangular";
 export type TextTransformType =
   | "none"
   | "uppercase"

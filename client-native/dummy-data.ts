@@ -26,7 +26,7 @@ const categories = [
 export const dummyProducts: IProduct[] = [
   {
     category: categories[0],
-    feature: false,
+    feature: true,
     id: "1",
     images: [
       {
@@ -36,6 +36,7 @@ export const dummyProducts: IProduct[] = [
       },
     ],
     price: 120,
+    totalRatings: 3,
     ratings: [{ id: "abc", point: 3 }],
     title: "A pastry",
     description: "This is pastry",

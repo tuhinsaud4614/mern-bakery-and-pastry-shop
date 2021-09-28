@@ -46,6 +46,7 @@ export interface IProduct {
   ingredients?: string[];
   images: IProductImage[];
   description?: string;
+  totalRatings: number;
   ratings: { id: string; point: number }[];
 }
 

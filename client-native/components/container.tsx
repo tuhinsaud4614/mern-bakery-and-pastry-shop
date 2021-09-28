@@ -1,13 +1,12 @@
 import React, { ReactNode } from "react";
 import {
-  KeyboardAvoidingView,
-  Platform,
   ScrollView,
   StyleProp,
   StyleSheet,
   useWindowDimensions,
   ViewStyle,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useTheme } from "react-native-paper";
 import { Breakpoints, breakpoints } from "../shared/utils";
 
@@ -32,19 +31,12 @@ const Container = ({
 
   if (keyBoardAvoiding) {
     return (
-      <ScrollView
-        showsHorizontalScrollIndicator={false}
+      <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1, backgroundColor: theme.colors.palette.common.white }}
+        style={style}
       >
-        <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS === "ios" ? "position" : undefined}
-          style={style}
-        >
-          {children}
-        </KeyboardAvoidingView>
-      </ScrollView>
+        {children}
+      </KeyboardAwareScrollView>
     );
   }
 
@@ -69,7 +61,7 @@ const makeStyles = (
 ) => {
   return StyleSheet.create({
     root: {
-      flex: 1,
+      // flex: 1,
       padding: theme.spacing * 2,
       backgroundColor: theme.colors.palette.common.white,
       maxWidth: Breakpoints.lg,
