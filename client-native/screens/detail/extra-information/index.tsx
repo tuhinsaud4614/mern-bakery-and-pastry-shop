@@ -26,6 +26,8 @@ const ExtraInformation = ({ product }: Props) => {
   const theme = useTheme();
   const { width } = useWindowDimensions();
   const containerWidth = width - theme.spacing * 4;
+  console.log(containerWidth);
+
   const styles = makeStyles(theme, containerWidth);
 
   useEffect(() => {
@@ -157,6 +159,7 @@ const makeStyles = (theme: ReactNativePaper.Theme, width: number) => {
     },
     tabContainer: {
       width: width,
+      maxWidth: 1200 - theme.spacing * 4,
       padding: theme.spacing,
     },
   });

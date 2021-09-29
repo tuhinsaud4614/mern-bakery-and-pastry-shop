@@ -1,7 +1,13 @@
 import { AntDesign, Entypo } from "@expo/vector-icons";
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import { IconButton, useTheme } from "react-native-paper";
+import React, { useState } from "react";
+import { Platform, StyleSheet, View } from "react-native";
+import {
+  IconButton,
+  Modal,
+  Portal,
+  TouchableRipple,
+  useTheme,
+} from "react-native-paper";
 import Typography from "../../../../components/typography";
 import { IReview } from "../../../../shared/utils/interfaces";
 
@@ -12,6 +18,7 @@ interface Props {
 const Review = ({ data }: Props) => {
   const theme = useTheme();
   const styles = makeStyles(theme);
+  const [openMore, setOpenMore] = useState(false);
   return (
     <View style={styles.item}>
       <View>
@@ -41,12 +48,52 @@ const Review = ({ data }: Props) => {
         </View>
       </View>
       <IconButton
+        onPress={() => setOpenMore(true)}
         size={16}
         color={theme.colors.palette.secondary.main}
         icon={({ size, color }) => (
           <Entypo name="dots-three-vertical" size={size} color={color} />
         )}
       />
+      <Portal>
+        <Modal
+          style={styles.modal}
+          contentContainerStyle={styles.modalContent}
+          visible={openMore}
+          onDismiss={() => setOpenMore(false)}
+        >
+          <TouchableRipple
+            onPress={() => {}}
+            style={Platform.OS !== "web" && { width: "100%" }}
+          >
+            <View style={styles.modalItem}>
+              <Entypo
+                size={24}
+                color={theme.colors.palette.error.main}
+                name="trash"
+              />
+              <Typography variant="h6" style={styles.modalItemText}>
+                Delete
+              </Typography>
+            </View>
+          </TouchableRipple>
+          <TouchableRipple
+            onPress={() => {}}
+            style={Platform.OS !== "web" && { width: "100%" }}
+          >
+            <View style={styles.modalItem}>
+              <AntDesign
+                size={24}
+                color={theme.colors.palette.warning.main}
+                name="edit"
+              />
+              <Typography variant="h6" style={styles.modalItemText}>
+                Edit
+              </Typography>
+            </View>
+          </TouchableRipple>
+        </Modal>
+      </Portal>
     </View>
   );
 };
@@ -75,5 +122,25 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
       flexDirection: "row",
       alignItems: "center",
     },
+    modal: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    modalContent: {
+      maxWidth: 400,
+      minWidth: 150,
+      backgroundColor: theme.colors.palette.common.white,
+      borderRadius: theme.spacing * 0.5,
+      paddingVertical: theme.spacing,
+    },
+    modalItem: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      width: "80%",
+      padding: theme.spacing,
+    },
+    modalItemText: { flex: 1, paddingLeft: theme.spacing * 2 },
   });
 };
