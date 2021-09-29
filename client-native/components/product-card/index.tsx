@@ -54,6 +54,7 @@ const ProductCard = ({ data }: Props) => {
             resizeMode: "cover",
             backgroundColor: "transparent",
             ...(!isSmUp && { height: 130 }),
+            ...(isSmUp && { maxHeight: 150 }),
           }}
         />
       </TouchableHighlight>
@@ -61,7 +62,7 @@ const ProductCard = ({ data }: Props) => {
         <Typography
           onPress={() => console.log("press")}
           variant="caption"
-          style={{ color: "#7B4B94" }}
+          style={{ color: theme.colors.palette.text.secondary }}
           textTransform="uppercase"
         >
           {data.category.title}
@@ -76,7 +77,7 @@ const ProductCard = ({ data }: Props) => {
           }
           variant={isSmUp ? "body1" : "body2"}
           style={{
-            color: theme.colors.palette.info.main,
+            color: theme.colors.palette.secondary.light,
             fontWeight: "700",
             marginTop: theme.spacing * 0.5,
           }}

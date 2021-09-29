@@ -1,21 +1,16 @@
 import React from "react";
-import {
-  Image,
-  Platform,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import { Image, Platform, useWindowDimensions, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import Carousel from "../../components/carousel";
 import Container from "../../components/container";
 import Grid from "../../components/grid";
 import ProductBox from "../../components/product-box";
-import ProductCardSkeleton from "../../components/product-card/index.skeleton";
+import ProductCard from "../../components/product-card";
 import { dummyProducts } from "../../dummy-data";
 import { DetailNavigationProps } from "../../shared/routes";
 import { breakpoints } from "../../shared/utils";
 import ExtraInformation from "./extra-information";
+import makeStyles from "./index.styles";
 import Information from "./information";
 
 const images = [
@@ -38,7 +33,11 @@ const DetailScreen = ({
   const infoSmUpWidth = windowWidth * 0.4 - theme.spacing * 4;
   const product =
     dummyProducts.find((product) => product.id === "1") || dummyProducts[0];
-
+  // return (
+  //   <Container keyBoardAvoiding={Platform.OS !== "web"}>
+  //     <DetailSkeleton />
+  //   </Container>
+  // );
   return (
     <Container keyBoardAvoiding={Platform.OS !== "web"}>
       <View style={styles.main}>
@@ -86,8 +85,8 @@ const DetailScreen = ({
               style={{ padding: theme.spacing }}
               key={index}
             >
-              {/* <ProductCard data={product} /> */}
-              <ProductCardSkeleton />
+              <ProductCard data={product} />
+              {/* <ProductCardSkeleton /> */}
             </Grid>
           ))}
         </Grid>
@@ -98,24 +97,3 @@ const DetailScreen = ({
 
 DetailScreen.displayName = "DetailScreen";
 export default DetailScreen;
-
-const makeStyles = (theme: ReactNativePaper.Theme) => {
-  return StyleSheet.create({
-    main: {
-      flex: 1,
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap",
-    },
-    info: {
-      backgroundColor: theme.colors.palette.accent,
-      display: "flex",
-    },
-    infoTitle: {
-      color: theme.colors.palette.primary.main,
-    },
-    relatedProducts: {
-      marginTop: theme.spacing * 2,
-    },
-  });
-};

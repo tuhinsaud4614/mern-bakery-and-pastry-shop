@@ -32,6 +32,7 @@ const makeStyles = (theme: ReactNativePaper.Theme) =>
     price: {
       paddingHorizontal: theme.spacing / 2,
       fontWeight: "700",
+      color: theme.colors.palette.text.primary,
     },
   });
 

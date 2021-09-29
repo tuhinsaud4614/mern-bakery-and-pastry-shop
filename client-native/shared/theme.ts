@@ -80,7 +80,8 @@ const theme: ReactNativePaper.Theme = {
   colors: {
     ...DefaultTheme.colors,
     palette: {
-      accent: "#e8f5e9",
+      // accent: "#e8f5e9",
+      accent: "#f0fbf3",
       common: {
         black: "#000",
         white: "#fff",
