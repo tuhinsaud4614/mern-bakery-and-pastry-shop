@@ -1,5 +1,11 @@
 import React, { ReactNode } from "react";
-import { StyleProp, StyleSheet, TextStyle, ViewStyle } from "react-native";
+import {
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native";
 import { Divider, Surface, useTheme } from "react-native-paper";
 import { breakpoints } from "../../shared/utils";
 import Typography from "../typography";
@@ -27,7 +33,7 @@ const ProductBox = ({ title, classes, children }: Props) => {
         {title}
       </Typography>
       <Divider />
-      {children}
+      <View style={{ padding: theme.spacing }}>{children}</View>
     </Surface>
   );
 };

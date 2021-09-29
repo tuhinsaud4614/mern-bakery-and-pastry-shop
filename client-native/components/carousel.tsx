@@ -17,6 +17,7 @@ interface Props {
   pageItem?(pageValue: any): JSX.Element;
   hideActionButton?: boolean;
   itemWidth: number;
+  itemHeight?: number;
   itemPerSlide?: number;
   slide?(value: any): JSX.Element;
   actionBtnSize?: number;
@@ -37,6 +38,7 @@ const Carousel = ({
   pageItem,
   hideActionButton = false,
   itemWidth,
+  itemHeight: newItemHeight,
   itemPerSlide = 1,
   slide,
   classes,
@@ -47,7 +49,7 @@ const Carousel = ({
   let debounceTimer = useRef<NodeJS.Timeout | null>(null);
   let debounceTimerX = useRef<NodeJS.Timeout | null>(null);
   const [current, setCurrent] = useState(0);
-  const itemHeight = (itemWidth / 16) * 9;
+  const itemHeight = newItemHeight || (itemWidth / 16) * 9;
   const styles = makeStyles(theme, itemWidth, itemHeight, actionBtnSize);
   const totalPage = data.length - itemPerSlide + 1;
 

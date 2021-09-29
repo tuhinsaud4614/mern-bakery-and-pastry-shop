@@ -14,9 +14,11 @@ const Container = ({
   children,
   classes,
   keyBoardAvoiding = false,
+  contentContainerStyle,
 }: {
   children?: ReactNode;
   classes?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
+  contentContainerStyle?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
   keyBoardAvoiding?: boolean;
 }) => {
   const isLgUp = breakpoints.up("lg");
@@ -34,6 +36,10 @@ const Container = ({
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         style={style}
+        contentContainerStyle={StyleSheet.flatten([
+          contentContainerStyle,
+          { padding: theme.spacing * 2 },
+        ])}
       >
         {children}
       </KeyboardAwareScrollView>
@@ -45,6 +51,10 @@ const Container = ({
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       style={style}
+      contentContainerStyle={StyleSheet.flatten([
+        contentContainerStyle,
+        { padding: theme.spacing * 2 },
+      ])}
     >
       {children}
     </ScrollView>
@@ -61,8 +71,6 @@ const makeStyles = (
 ) => {
   return StyleSheet.create({
     root: {
-      // flex: 1,
-      padding: theme.spacing * 2,
       backgroundColor: theme.colors.palette.common.white,
       maxWidth: Breakpoints.lg,
       ...(isLgUp && { marginHorizontal: (dimWidth - Breakpoints.lg) / 2 }),

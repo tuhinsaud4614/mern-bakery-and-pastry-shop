@@ -25,7 +25,7 @@ export const breakpoints = {
   },
 } as const;
 
-export const deviceRange = (): DeviceType => {
+export const deviceRange = (): { range: DeviceType; deviceWidth: number } => {
   let size: DeviceType = "xs";
   const { width } = useWindowDimensions();
 
@@ -39,7 +39,7 @@ export const deviceRange = (): DeviceType => {
     size = "sm";
   }
 
-  return size;
+  return { range: size, deviceWidth: width };
 };
 
 export const boxShadow = (base: number, offset: number = 2) => {

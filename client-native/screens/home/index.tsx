@@ -1,26 +1,25 @@
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { Button } from "react-native-paper";
-import ProductCard from "../../components/product-card";
-import ScreenSpacer from "../../components/screen-spacer";
-import { dummyProducts } from "../../dummy-data";
+import { useTheme } from "react-native-paper";
+import Container from "../../components/container";
 import { TabsNavigationProps } from "../../shared/routes";
+import { breakpoints } from "../../shared/utils";
+import BannerAndCategory from "./banner-and-category";
+import FeaturedProducts from "./featured-products";
 
 const HomeScreen = ({ navigation }: TabsNavigationProps) => {
+  const tabBarHeight = useBottomTabBarHeight();
+  const isSmUp = breakpoints.up("sm");
+  const theme = useTheme();
   return (
-    <ScreenSpacer>
-      <Button
-        onPress={() =>
-          navigation.navigate("Detail", {
-            categoryId: dummyProducts[0].category.id,
-            productId: dummyProducts[0].id,
-            title: dummyProducts[0].title,
-          })
-        }
-      >
-        Detail
-      </Button>
-      <ProductCard data={dummyProducts[0]} />
-    </ScreenSpacer>
+    <Container
+      contentContainerStyle={
+        isSmUp && { paddingTop: tabBarHeight + theme.spacing * 3 }
+      }
+    >
+      <BannerAndCategory />
+      <FeaturedProducts />
+    </Container>
   );
 };
 HomeScreen.displayName = "HomeScreen";

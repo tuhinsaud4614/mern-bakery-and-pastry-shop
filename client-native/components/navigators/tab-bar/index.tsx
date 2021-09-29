@@ -14,48 +14,25 @@ import UserScreen from "../../../screens/user";
 import WishlistScreen from "../../../screens/wishlist";
 import { BottomTabParamList } from "../../../shared/routes";
 import theme from "../../../shared/theme";
-import { boxShadow, breakpoints } from "../../../shared/utils";
+import { boxShadow, Breakpoints, deviceRange } from "../../../shared/utils";
+import { DeviceType } from "../../../shared/utils/types";
 import Typography from "../../typography";
 import TabBarItem from "./tabBar-item";
 import TabBarLogo from "./tabBar-logo";
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-interface Metadata {
-  label: string;
-  icon: "home" | "search1" | "heart" | "user" | "shoppingcart";
-}
-
-function getMetaData(index: number, isSmUp: boolean): Metadata {
-  let newIndex = 0;
-  if (isSmUp) {
-    newIndex = 1;
-  }
-
-  switch (index) {
-    case ++newIndex:
-      return {
-        label: "Search",
-        icon: "search1",
-      };
-    case ++newIndex:
-      return {
-        label: "Wishlist",
-        icon: "heart",
-      };
-    case ++newIndex:
-      return { label: "Cart", icon: "shoppingcart" };
-    case ++newIndex:
-      return { label: "User", icon: "user" };
-    default:
-      return { label: "Home", icon: "home" };
-  }
-}
-
-const TabBar = ({ state, navigation }: BottomTabBarProps) => {
+const TabBar = ({
+  state,
+  navigation,
+  deviceWidth,
+  range,
+}: BottomTabBarProps & {
+  deviceWidth: number;
+  range: DeviceType;
+}) => {
   const theme = useTheme();
-  const isSmUp = breakpoints.up("sm");
-
+  const isSmUp = range !== "xs";
   const onPress = (isFocused: boolean, key: string, name: string) => {
     const event = navigation.emit({
       type: "tabPress",
@@ -71,12 +48,21 @@ const TabBar = ({ state, navigation }: BottomTabBarProps) => {
   return (
     <View
       style={StyleSheet.flatten([
-        styles(theme).tabBar,
-        isSmUp && { position: "absolute", top: 0, left: 0, right: 0 },
+        styles(theme, isSmUp).tabBar,
+        isSmUp && {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+        },
+        (range === "lg" || range === "xl") && {
+          paddingHorizontal: (deviceWidth - Breakpoints.lg) / 2,
+        },
       ])}
     >
       {isSmUp && (
         <TabBarLogo
+          image={require("../../../assets/logo.svg")}
           onPress={() => {
             onPress(
               state.index === 0,
@@ -86,6 +72,7 @@ const TabBar = ({ state, navigation }: BottomTabBarProps) => {
           }}
         />
       )}
+
       <TabBarItem
         onPress={() => {
           onPress(state.index === 1, state.routes[1].key, state.routes[1].name);
@@ -276,9 +263,14 @@ const tabOptions = (
 };
 
 const TabBarContainer = () => {
-  const isSmUp = breakpoints.up("sm");
+  const { range, deviceWidth } = deviceRange();
+  const isSmUp = range !== "xs";
   return (
-    <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
+    <Tab.Navigator
+      tabBar={(props) => (
+        <TabBar {...props} deviceWidth={deviceWidth} range={range} />
+      )}
+    >
       <Tab.Screen
         name="Logo"
         component={HomeScreen}
@@ -333,14 +325,14 @@ const TabBarContainer = () => {
 TabBarContainer.displayName = "TabBarContainer";
 export default TabBarContainer;
 
-const styles = (theme: ReactNativePaper.Theme) =>
+const styles = (theme: ReactNativePaper.Theme, isSmUp: boolean = false) =>
   StyleSheet.create({
     tabBar: {
       display: "flex",
       flexDirection: "row",
       alignItems: "stretch",
       padding: theme.spacing,
-      backgroundColor: theme.colors.palette.primary.light,
+      backgroundColor: theme.colors.palette.primary[isSmUp ? "dark" : "light"],
       ...boxShadow(3, -2),
     },
     badge: {

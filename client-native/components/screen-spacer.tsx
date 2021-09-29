@@ -16,7 +16,7 @@ const ScreenSpacer = ({ children }: { children?: ReactNode }) => {
         ...(isSmUp && { paddingTop: tabBarHeight + theme.spacing }),
       }}
     >
-      <View style={{ flex: 1, padding: theme.spacing * 2 }}>{children}</View>
+      {children}
     </View>
   );
 };

@@ -33,7 +33,7 @@ const GridProvider = ({
   xs = 1,
   children,
 }: IGridPartitionProps & { children?: ReactNode }) => {
-  const device = deviceRange();
+  const device = deviceRange().range;
 
   if (lg) {
     xl = xl || lg;
