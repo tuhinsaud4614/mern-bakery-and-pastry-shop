@@ -24,6 +24,7 @@ interface Props {
   classes?: {
     wrapper?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
     sliders?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
+    actionBtn?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
     actionLeft?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
     actionRight?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
     slide?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
@@ -133,7 +134,8 @@ const Carousel = ({
               style={StyleSheet.flatten([
                 styles.actionButton,
                 { left: 0 },
-                classes?.actionLeft && classes.actionLeft,
+                classes?.actionBtn,
+                classes?.actionLeft,
               ])}
               disabled={current === 0}
               size={actionBtnSize}
@@ -147,7 +149,8 @@ const Carousel = ({
               style={StyleSheet.flatten([
                 styles.actionButton,
                 { right: 0 },
-                classes?.actionRight && classes.actionRight,
+                classes?.actionBtn,
+                classes?.actionRight,
               ])}
             />
           </>

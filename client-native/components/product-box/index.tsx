@@ -6,7 +6,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { Divider, Surface, useTheme } from "react-native-paper";
+import { Divider, useTheme } from "react-native-paper";
 import { breakpoints } from "../../shared/utils";
 import Typography from "../typography";
 
@@ -24,7 +24,7 @@ const ProductBox = ({ title, classes, children }: Props) => {
   const styles = makeStyles(theme);
   const isSmUp = breakpoints.up("sm");
   return (
-    <Surface style={StyleSheet.flatten([styles.root, classes?.root])}>
+    <View style={StyleSheet.flatten([styles.root, classes?.root])}>
       <Typography
         variant={isSmUp ? "h5" : "h6"}
         textTransform="capitalize"
@@ -34,7 +34,7 @@ const ProductBox = ({ title, classes, children }: Props) => {
       </Typography>
       <Divider />
       <View style={{ padding: theme.spacing }}>{children}</View>
-    </Surface>
+    </View>
   );
 };
 
@@ -45,7 +45,6 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     root: {
       backgroundColor: theme.colors.palette.accent,
-      elevation: 3,
       borderRadius: theme.spacing * 0.5,
       overflow: "hidden",
     },

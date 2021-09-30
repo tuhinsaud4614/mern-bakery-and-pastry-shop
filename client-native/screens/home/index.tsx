@@ -4,7 +4,8 @@ import { useTheme } from "react-native-paper";
 import Container from "../../components/container";
 import { TabsNavigationProps } from "../../shared/routes";
 import { breakpoints } from "../../shared/utils";
-import BannerAndCategory from "./banner-and-category";
+import { BannerAndCategorySkeleton } from "./banner-and-category";
+import CategorizedProducts from "./categorized-products";
 import FeaturedProducts from "./featured-products";
 
 const HomeScreen = ({ navigation }: TabsNavigationProps) => {
@@ -17,8 +18,10 @@ const HomeScreen = ({ navigation }: TabsNavigationProps) => {
         isSmUp && { paddingTop: tabBarHeight + theme.spacing * 3 }
       }
     >
-      <BannerAndCategory />
+      {/* <BannerAndCategory /> */}
+      <BannerAndCategorySkeleton />
       <FeaturedProducts />
+      <CategorizedProducts />
     </Container>
   );
 };

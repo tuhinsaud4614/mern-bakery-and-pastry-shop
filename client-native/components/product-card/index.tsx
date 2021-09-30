@@ -53,8 +53,7 @@ const ProductCard = ({ data }: Props) => {
           style={{
             resizeMode: "cover",
             backgroundColor: "transparent",
-            ...(!isSmUp && { height: 130 }),
-            ...(isSmUp && { maxHeight: 150 }),
+            height: isSmUp ? 150 : 130,
           }}
         />
       </TouchableHighlight>

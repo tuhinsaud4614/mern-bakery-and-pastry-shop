@@ -1,5 +1,4 @@
 import { Platform, useWindowDimensions } from "react-native";
-import { useMediaQuery } from "react-responsive";
 import { DeviceType } from "./types";
 
 export enum Breakpoints {
@@ -12,16 +11,12 @@ export enum Breakpoints {
 
 export const breakpoints = {
   up(device: DeviceType): boolean {
-    const isValid = useMediaQuery({
-      query: `(min-width: ${Breakpoints[device]}px)`,
-    });
-    return isValid;
+    const { width } = useWindowDimensions();
+    return width >= Breakpoints[device];
   },
   down(device: DeviceType): boolean {
-    const isValid = useMediaQuery({
-      query: `(max-width: ${Breakpoints[device]}px)`,
-    });
-    return isValid;
+    const { width } = useWindowDimensions();
+    return width <= Breakpoints[device];
   },
 } as const;
 
