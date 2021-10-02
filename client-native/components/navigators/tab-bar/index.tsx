@@ -267,6 +267,7 @@ const TabBarContainer = () => {
   const isSmUp = range !== "xs";
   return (
     <Tab.Navigator
+      initialRouteName="Search"
       tabBar={(props) => (
         <TabBar {...props} deviceWidth={deviceWidth} range={range} />
       )}

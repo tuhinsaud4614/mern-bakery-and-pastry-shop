@@ -28,3 +28,10 @@ export type TypographyVariantType =
   | "overline"
   | "subtitle1"
   | "subtitle2";
+
+export type SortByFilterType =
+  | "PRICE_LOW_TO_HIGH"
+  | "PRICE_HIGH_TO_LOW"
+  | "AVERAGE_RATED"
+  | "FEATURED"
+  | "NEWEST";

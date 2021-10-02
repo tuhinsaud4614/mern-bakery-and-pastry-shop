@@ -64,7 +64,7 @@ export const BannerAndCategorySkeleton = () => {
   const theme = useTheme();
   const isSmUp = range !== "xs";
   return (
-    <View style={{ flexDirection: "row", maxHeight: 300 }}>
+    <View style={{ flexDirection: "row", maxHeight: 200 }}>
       <View
         style={{
           width: theme.spacing * (isSmUp ? 33 : 17),
@@ -88,8 +88,7 @@ export const BannerAndCategorySkeleton = () => {
       <View
         style={{
           flex: 1,
-          ...(isSmUp && { paddingLeft: theme.spacing }),
-          height: isSmUp ? "100%" : 180,
+          height: "100%",
         }}
       >
         <Skeleton

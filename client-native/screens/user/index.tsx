@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
-import ScreenSpacer from "../../components/screen-spacer";
+import ScreenSpacer from "../../components/tab-screen-wrapper";
 
 const UserScreen = () => {
   return (

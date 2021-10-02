@@ -1,4 +1,4 @@
-import { Platform, useWindowDimensions } from "react-native";
+import { useWindowDimensions } from "react-native";
 import { DeviceType } from "./types";
 
 export enum Breakpoints {
@@ -38,15 +38,13 @@ export const deviceRange = (): { range: DeviceType; deviceWidth: number } => {
 };
 
 export const boxShadow = (base: number, offset: number = 2) => {
-  if (Platform.OS === "android") {
-    return { elevation: base } as const;
-  }
   return {
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: offset,
     },
+    elevation: offset,
     shadowOpacity: 0.24,
     shadowRadius: base,
   } as const;
