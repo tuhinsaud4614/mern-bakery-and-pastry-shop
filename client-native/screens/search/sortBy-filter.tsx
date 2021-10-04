@@ -66,6 +66,7 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     anchor: {
       marginLeft: theme.spacing,
+      marginTop: theme.spacing,
       borderColor: theme.colors.palette.secondary.light,
     },
     sortByOptionTitle: {

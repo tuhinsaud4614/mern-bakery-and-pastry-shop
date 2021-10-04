@@ -5,5 +5,12 @@
     "source.fixAll.tslint": true,
     "source.organizeImports": true
   },
-  "cSpell.words": ["Entypo", "Formik", "Pressable", "Raleway", "Searchbar"]
+  "cSpell.words": [
+    "Entypo",
+    "Formik",
+    "Moti",
+    "Pressable",
+    "Raleway",
+    "Searchbar"
+  ]
 }

@@ -11,6 +11,12 @@ import {
   View,
   ViewStyle,
 } from "react-native";
+import {
+  GestureEvent,
+  HandlerStateChangeEvent,
+  PanGestureHandler,
+  PanGestureHandlerEventPayload,
+} from "react-native-gesture-handler";
 import { Divider, IconButton, Portal, useTheme } from "react-native-paper";
 import { boxShadow } from "../shared/utils";
 
@@ -40,10 +46,42 @@ const BottomSheet = memo(
     showCloseIcon = true,
   }: Props) => {
     const { height } = useWindowDimensions();
+    const maxHeight = height * 0.5;
     const theme = useTheme();
-    const styles = makeStyles(theme, height + 10);
+    const styles = makeStyles(theme, maxHeight);
     const [open, setOpen] = useState(show);
-    const bottom = useRef(new Animated.Value(-(height + 10))).current;
+    const bottom = useRef(new Animated.Value(-(maxHeight + 10))).current;
+    const gestureHandler = (
+      event: GestureEvent<PanGestureHandlerEventPayload>
+    ) => {
+      if (event.nativeEvent.translationY > 0) {
+        bottom.setValue(-event.nativeEvent.translationY);
+      }
+    };
+
+    const gestureEndHandler = (
+      event: HandlerStateChangeEvent<Record<string, unknown>>
+    ) => {
+      if (
+        typeof event.nativeEvent["translationY"] === "number" &&
+        event.nativeEvent["translationY"] > 100 &&
+        onDismiss
+      ) {
+        Animated.timing(bottom, {
+          toValue: -(maxHeight + 10),
+          useNativeDriver: false,
+          duration: 200,
+        }).start(({ finished }) => {
+          finished && onDismiss();
+        });
+      } else {
+        Animated.timing(bottom, {
+          toValue: 0,
+          useNativeDriver: false,
+          duration: 200,
+        }).start();
+      }
+    };
 
     useEffect(() => {
       if (show) {
@@ -55,7 +93,7 @@ const BottomSheet = memo(
         }).start();
       } else if (!show) {
         Animated.timing(bottom, {
-          toValue: -(height + 10),
+          toValue: -(maxHeight + 10),
           duration: 500,
           useNativeDriver: false,
         }).start(() => {
@@ -72,50 +110,56 @@ const BottomSheet = memo(
             style={{
               ...StyleSheet.absoluteFillObject,
               zIndex: 450,
-              backgroundColor: theme.colors.palette.action.active,
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
             }}
           />
         )}
-        <Animated.View
-          style={StyleSheet.flatten([
-            styles.root,
-            {
-              bottom: bottom,
-            },
-            classes?.root,
-          ])}
+        <PanGestureHandler
+          onGestureEvent={gestureHandler}
+          onEnded={gestureEndHandler}
         >
-          <View style={StyleSheet.flatten([styles.header, classes?.header])}>
-            <View
-              style={StyleSheet.flatten([
-                styles.headerContainer,
-                classes?.headerContainer,
-              ])}
-            >
-              <Divider
-                style={StyleSheet.flatten([
-                  styles.headerBar,
-                  classes?.headerBar,
-                ])}
-              />
-            </View>
-            {showCloseIcon && (
-              <IconButton
-                color={theme.colors.palette.secondary.main}
-                size={14}
-                onPress={onDismiss}
-                icon={(props) => <AntDesign {...props} name="close" />}
-                style={StyleSheet.flatten([styles.close, classes?.closeBtn])}
-              />
-            )}
-          </View>
-          <ScrollView
-            style={StyleSheet.flatten([styles.content, classes?.content])}
-            showsVerticalScrollIndicator={Platform.OS === "web"}
+          <Animated.View
+            style={StyleSheet.flatten([
+              styles.root,
+              {
+                ...(!onBackdropDismiss && boxShadow(4, -3)),
+                bottom: bottom,
+              },
+              classes?.root,
+            ])}
           >
-            {children}
-          </ScrollView>
-        </Animated.View>
+            <View style={StyleSheet.flatten([styles.header, classes?.header])}>
+              <View
+                style={StyleSheet.flatten([
+                  styles.headerContainer,
+                  classes?.headerContainer,
+                ])}
+              >
+                <Divider
+                  style={StyleSheet.flatten([
+                    styles.headerBar,
+                    classes?.headerBar,
+                  ])}
+                />
+              </View>
+              {showCloseIcon && (
+                <IconButton
+                  color={theme.colors.palette.secondary.main}
+                  size={14}
+                  onPress={onDismiss}
+                  icon={(props) => <AntDesign {...props} name="close" />}
+                  style={StyleSheet.flatten([styles.close, classes?.closeBtn])}
+                />
+              )}
+            </View>
+            <ScrollView
+              style={StyleSheet.flatten([styles.content, classes?.content])}
+              showsVerticalScrollIndicator={Platform.OS === "web"}
+            >
+              {children}
+            </ScrollView>
+          </Animated.View>
+        </PanGestureHandler>
       </Portal>
     ) : null;
   },
@@ -135,15 +179,17 @@ const makeStyles = (
       right: 0,
       zIndex: 500,
       backgroundColor: theme.colors.palette.background.paper,
-      ...boxShadow(4, -3),
-      borderTopLeftRadius: theme.spacing,
-      borderTopRightRadius: theme.spacing,
+      borderTopLeftRadius: theme.spacing * 2,
+      borderTopRightRadius: theme.spacing * 2,
       overflow: "hidden",
-      maxHeight: bottomSheetHeight,
+      minHeight: 100,
+      maxHeight: bottomSheetHeight < 100 ? 100 : bottomSheetHeight,
     },
     header: {
       position: "relative",
       height: 33,
+      backgroundColor: theme.colors.palette.background.default,
+      ...boxShadow(4, 3),
     },
     headerContainer: {
       position: "absolute",
@@ -151,13 +197,11 @@ const makeStyles = (
       left: 0,
       right: 0,
       zIndex: 10,
-      backgroundColor: theme.colors.palette.background.default,
       alignItems: "center",
       paddingTop: theme.spacing,
       height: 33,
-      ...boxShadow(4, 3),
     },
-    headerBar: { height: 4, width: "20%", maxWidth: 100, borderRadius: 2 },
+    headerBar: { height: 3, width: "20%", maxWidth: 100, borderRadius: 1.5 },
     content: {
       padding: theme.spacing * 2,
     },
@@ -165,7 +209,7 @@ const makeStyles = (
       position: "absolute",
       top: 0,
       right: 0,
-      zIndex: 11,
+      zIndex: 50,
     },
   });
 };
