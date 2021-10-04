@@ -2,9 +2,7 @@ import { AntDesign } from "@expo/vector-icons";
 import React, { memo, ReactNode, useEffect, useRef, useState } from "react";
 import {
   Animated,
-  Platform,
   Pressable,
-  ScrollView,
   StyleProp,
   StyleSheet,
   useWindowDimensions,
@@ -24,7 +22,7 @@ interface Props {
   children?: ReactNode;
   show: boolean;
   onDismiss?(): void;
-  onBackdropDismiss?: boolean;
+  showBackdrop?: boolean;
   showCloseIcon?: boolean;
   classes?: {
     root?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
@@ -42,7 +40,7 @@ const BottomSheet = memo(
     onDismiss,
     show,
     classes,
-    onBackdropDismiss = false,
+    showBackdrop = false,
     showCloseIcon = true,
   }: Props) => {
     const { height } = useWindowDimensions();
@@ -63,23 +61,13 @@ const BottomSheet = memo(
       event: HandlerStateChangeEvent<Record<string, unknown>>
     ) => {
       if (
+        onDismiss &&
         typeof event.nativeEvent["translationY"] === "number" &&
-        event.nativeEvent["translationY"] > 100 &&
-        onDismiss
+        event.nativeEvent["translationY"] > 100
       ) {
-        Animated.timing(bottom, {
-          toValue: -(maxHeight + 10),
-          useNativeDriver: false,
-          duration: 200,
-        }).start(({ finished }) => {
-          finished && onDismiss();
-        });
+        onDismiss();
       } else {
-        Animated.timing(bottom, {
-          toValue: 0,
-          useNativeDriver: false,
-          duration: 200,
-        }).start();
+        bottom.setValue(0);
       }
     };
 
@@ -104,16 +92,17 @@ const BottomSheet = memo(
 
     return open ? (
       <Portal>
-        {onBackdropDismiss && (
+        {showBackdrop && (
           <Pressable
             onPress={onDismiss}
             style={{
               ...StyleSheet.absoluteFillObject,
               zIndex: 450,
-              backgroundColor: "rgba(0, 0, 0, 0.4)",
+              backgroundColor: theme.colors.palette.action.disabledBackground,
             }}
           />
         )}
+
         <PanGestureHandler
           onGestureEvent={gestureHandler}
           onEnded={gestureEndHandler}
@@ -122,7 +111,7 @@ const BottomSheet = memo(
             style={StyleSheet.flatten([
               styles.root,
               {
-                ...(!onBackdropDismiss && boxShadow(4, -3)),
+                ...(!showBackdrop && boxShadow(4, -3)),
                 bottom: bottom,
               },
               classes?.root,
@@ -152,12 +141,7 @@ const BottomSheet = memo(
                 />
               )}
             </View>
-            <ScrollView
-              style={StyleSheet.flatten([styles.content, classes?.content])}
-              showsVerticalScrollIndicator={Platform.OS === "web"}
-            >
-              {children}
-            </ScrollView>
+            {children}
           </Animated.View>
         </PanGestureHandler>
       </Portal>
@@ -182,8 +166,8 @@ const makeStyles = (
       borderTopLeftRadius: theme.spacing * 2,
       borderTopRightRadius: theme.spacing * 2,
       overflow: "hidden",
-      minHeight: 100,
-      maxHeight: bottomSheetHeight < 100 ? 100 : bottomSheetHeight,
+      minHeight: 200,
+      maxHeight: bottomSheetHeight < 200 ? 200 : bottomSheetHeight,
     },
     header: {
       position: "relative",
@@ -202,9 +186,6 @@ const makeStyles = (
       height: 33,
     },
     headerBar: { height: 3, width: "20%", maxWidth: 100, borderRadius: 1.5 },
-    content: {
-      padding: theme.spacing * 2,
-    },
     close: {
       position: "absolute",
       top: 0,

@@ -36,10 +36,7 @@ const AddToCart = ({ product }: Props) => {
   };
   const onCounterChange = (value: string) => {
     const newValue = value.replace(/[^0-9]/g, "");
-
-    if (newValue) {
-      setCount(+newValue);
-    }
+    setCount(newValue === "" ? 0 : +newValue);
   };
 
   const onSubmit = () => {

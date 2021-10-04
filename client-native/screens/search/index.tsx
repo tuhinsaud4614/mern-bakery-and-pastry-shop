@@ -1,15 +1,17 @@
 import React, { useEffect, useRef } from "react";
 import {
+  FlatList,
   NativeSyntheticEvent,
   StyleSheet,
   TextInputKeyPressEventData,
   View,
 } from "react-native";
-import { Searchbar, useTheme } from "react-native-paper";
+import { Searchbar, TouchableRipple, useTheme } from "react-native-paper";
 import TabScreenWrapper from "../../components/tab-screen-wrapper";
+import Typography from "../../components/typography";
 import { boxShadow } from "../../shared/utils";
 import { SortByFilterType } from "../../shared/utils/types";
-import Filters from "./fliters";
+import Filters from "./filters";
 import SortByFilter from "./sortBy-filter";
 
 const SearchScreen = () => {
@@ -50,18 +52,19 @@ const SearchScreen = () => {
 
   return (
     <TabScreenWrapper keyBoardAvoiding>
-      <View style={styles.searchContainer}>
-        <Searchbar
-          placeholder="Search..."
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-          onKeyPress={onKeyPress}
-          onIconPress={onSubmit}
-          style={styles.searchBar}
-          iconColor={theme.colors.palette.secondary.main}
-        />
-        {/* <View style={styles.searchResult}>
+      <Searchbar
+        placeholder="Search..."
+        onChangeText={onChangeSearch}
+        value={searchQuery}
+        onKeyPress={onKeyPress}
+        onIconPress={onSubmit}
+        style={styles.searchBar}
+        iconColor={theme.colors.palette.secondary.main}
+      />
+      <View>
+        {searchQuery ? (
           <FlatList
+            style={styles.searchResult}
             data={Array.from({ length: 4 })}
             keyExtractor={(_, index) => index.toString()}
             renderItem={({ index, item }) => (
@@ -72,14 +75,14 @@ const SearchScreen = () => {
               </TouchableRipple>
             )}
           />
-        </View> */}
-        <View style={styles.filterBox}>
-          <Filters />
-          <SortByFilter
-            value={sortByValue}
-            onChange={(value) => setSortByValue(value)}
-          />
-        </View>
+        ) : null}
+      </View>
+      <View style={styles.filterBox}>
+        <Filters />
+        <SortByFilter
+          value={sortByValue}
+          onChange={(value) => setSortByValue(value)}
+        />
       </View>
     </TabScreenWrapper>
   );
@@ -90,18 +93,14 @@ export default SearchScreen;
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   const shadow = boxShadow(4, 3);
   return StyleSheet.create({
-    searchContainer: {
-      position: "relative",
-    },
     searchBar: {
       backgroundColor: theme.colors.palette.accent,
     },
     searchResult: {
       position: "absolute",
-      top: "100%",
+      top: theme.spacing * 2,
       left: 0,
       right: 0,
-      marginTop: theme.spacing * 2,
       borderRadius: theme.spacing * 0.5,
       backgroundColor: theme.colors.palette.accent,
       ...shadow,
@@ -120,6 +119,8 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
       paddingBottom: theme.spacing,
       marginTop: theme.spacing * 2,
       borderRadius: theme.spacing * 0.5,
+      zIndex: -1,
+      position: "relative",
     },
   });
 };
