@@ -36,6 +36,7 @@ export const dummyProducts: IProduct[] = [
       },
     ],
     price: 120,
+    off: 20,
     totalRatings: 3,
     ratings: [{ id: "abc", point: 3 }],
     title: "A pastry",

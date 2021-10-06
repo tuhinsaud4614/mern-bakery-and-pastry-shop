@@ -1,14 +1,8 @@
 import React, { ReactNode } from "react";
-import {
-  ScrollView,
-  StyleProp,
-  StyleSheet,
-  useWindowDimensions,
-  ViewStyle,
-} from "react-native";
+import { ScrollView, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useTheme } from "react-native-paper";
-import { Breakpoints, breakpoints } from "../shared/utils";
+import { Breakpoints, breakpointsWithDimensions } from "../shared/utils";
 
 const Container = ({
   children,
@@ -21,9 +15,11 @@ const Container = ({
   contentContainerStyle?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
   keyBoardAvoiding?: boolean;
 }) => {
-  const isLgUp = breakpoints.up("lg");
   const theme = useTheme();
-  const { width } = useWindowDimensions();
+  const {
+    breakpoints: [isLgUp],
+    width,
+  } = breakpointsWithDimensions.up(["lg"]);
   const styles = makeStyles(theme, isLgUp, width);
 
   const style: StyleProp<ViewStyle> = StyleSheet.flatten([

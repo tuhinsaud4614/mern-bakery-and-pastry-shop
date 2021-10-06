@@ -1,13 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { Button, Menu, useTheme } from "react-native-paper";
 import { typographyStyles } from "../../shared/utils/common.styles";
 import { SortByFilterType } from "../../shared/utils/types";
-
-interface Props {
-  onChange(value: SortByFilterType): void;
-  value: SortByFilterType;
-}
 
 const options: { name: string; value: SortByFilterType }[] = [
   { name: "Low to High (Price)", value: "PRICE_LOW_TO_HIGH" },
@@ -17,14 +12,15 @@ const options: { name: string; value: SortByFilterType }[] = [
   { name: "Featured", value: "FEATURED" },
 ];
 
-const SortByFilter = ({ onChange, value }: Props) => {
-  const [showSortByBtn, setShowSortByBtn] = React.useState(false);
+const SortByFilter = () => {
+  const [showSortByBtn, setShowSortByBtn] = useState(false);
+  const [sortByValue, setSortByValue] = useState<SortByFilterType>("FEATURED");
   const theme = useTheme();
   const styles = makeStyles(theme);
 
   const onChangeHandler = (value: SortByFilterType) => {
     setShowSortByBtn(false);
-    onChange(value);
+    setSortByValue(value);
   };
 
   return (
@@ -39,7 +35,8 @@ const SortByFilter = ({ onChange, value }: Props) => {
           color={theme.colors.palette.secondary.main}
           style={styles.anchor}
         >
-          Sort by: {options.find((option) => option.value === value)?.name}
+          Sort by:{" "}
+          {options.find((option) => option.value === sortByValue)?.name}
         </Button>
       }
     >
@@ -49,7 +46,7 @@ const SortByFilter = ({ onChange, value }: Props) => {
           onPress={() => onChangeHandler(option.value)}
           titleStyle={StyleSheet.flatten([
             styles.sortByOptionTitle,
-            value === option.value && {
+            sortByValue === option.value && {
               color: theme.colors.palette.secondary.main,
             },
           ])}

@@ -20,9 +20,26 @@ export const breakpoints = {
   },
 } as const;
 
-export const deviceRange = (): { range: DeviceType; deviceWidth: number } => {
+export const breakpointsWithDimensions = {
+  up(device: DeviceType[]) {
+    const { width, height } = useWindowDimensions();
+    const multiRatio = device.map((d) => width >= Breakpoints[d]);
+    return { breakpoints: multiRatio, width, height } as const;
+  },
+  down(device: DeviceType[]) {
+    const { width, height } = useWindowDimensions();
+    const multiRatio = device.map((d) => width <= Breakpoints[d]);
+    return { breakpoints: multiRatio, width, height } as const;
+  },
+} as const;
+
+export const deviceRange = (): {
+  range: DeviceType;
+  deviceWidth: number;
+  deviceHeight: number;
+} => {
   let size: DeviceType = "xs";
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
 
   if (width >= Breakpoints.xl) {
     size = "xl";
@@ -34,7 +51,7 @@ export const deviceRange = (): { range: DeviceType; deviceWidth: number } => {
     size = "sm";
   }
 
-  return { range: size, deviceWidth: width };
+  return { range: size, deviceWidth: width, deviceHeight: height };
 };
 
 export const boxShadow = (base: number, offset: number = 2) => {

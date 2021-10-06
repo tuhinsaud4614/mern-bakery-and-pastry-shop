@@ -5,15 +5,9 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Button, useTheme } from "react-native-paper";
 import BottomSheet from "../../../components/bottom-sheet";
 import { typographyStyles } from "../../../shared/utils/common.styles";
-import { SortByFilterType } from "../../../shared/utils/types";
 import ByCategory from "./by-category";
 import ByPrice from "./by-price";
 import ByRating from "./by-rating";
-
-interface Props {
-  onChange(value: SortByFilterType): void;
-  value: SortByFilterType;
-}
 
 const Filters = () => {
   const theme = useTheme();

@@ -43,6 +43,7 @@ export interface IProduct {
         large: number;
         extraLarge: number;
       };
+  off?: number;
   ingredients?: string[];
   images: IProductImage[];
   description?: string;

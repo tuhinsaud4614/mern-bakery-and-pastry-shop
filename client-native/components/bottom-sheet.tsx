@@ -2,10 +2,10 @@ import { AntDesign } from "@expo/vector-icons";
 import React, { memo, ReactNode, useEffect, useRef, useState } from "react";
 import {
   Animated,
+  Dimensions,
   Pressable,
   StyleProp,
   StyleSheet,
-  useWindowDimensions,
   View,
   ViewStyle,
 } from "react-native";
@@ -43,15 +43,16 @@ const BottomSheet = memo(
     showBackdrop = false,
     showCloseIcon = true,
   }: Props) => {
-    const { height } = useWindowDimensions();
-    const maxHeight = height * 0.5;
+    const maxHeight = Dimensions.get("window").height * 0.5;
     const theme = useTheme();
     const styles = makeStyles(theme, maxHeight);
     const [open, setOpen] = useState(show);
     const bottom = useRef(new Animated.Value(-(maxHeight + 10))).current;
+
     const gestureHandler = (
       event: GestureEvent<PanGestureHandlerEventPayload>
     ) => {
+      //  when swipe down
       if (event.nativeEvent.translationY > 0) {
         bottom.setValue(-event.nativeEvent.translationY);
       }
@@ -65,8 +66,10 @@ const BottomSheet = memo(
         typeof event.nativeEvent["translationY"] === "number" &&
         event.nativeEvent["translationY"] > 100
       ) {
+        //  When swipe down and swipe position greater then 100
         onDismiss();
       } else {
+        //  otherwise set to default position
         bottom.setValue(0);
       }
     };
