@@ -46,7 +46,7 @@ const SearchBox = () => {
   }, []);
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Searchbar
         placeholder="Search..."
         onChangeText={onChangeSearch}
@@ -57,19 +57,19 @@ const SearchBox = () => {
         iconColor={theme.colors.palette.secondary.main}
       />
       {searchQuery ? (
-        <FlatList
-          nestedScrollEnabled
-          style={styles.searchResult}
-          data={Array.from({ length: 4 })}
-          keyExtractor={(_, index) => index.toString()}
-          renderItem={({ index, item }) => (
-            <TouchableRipple onPress={() => {}}>
-              <Typography variant="body2" style={styles.searchResultItem}>
-                {index.toString()}
-              </Typography>
-            </TouchableRipple>
-          )}
-        />
+        <View style={styles.searchResult}>
+          <FlatList
+            data={Array.from({ length: 4 })}
+            keyExtractor={(_, index) => index.toString()}
+            renderItem={({ index, item }) => (
+              <TouchableRipple onPress={() => {}}>
+                <Typography variant="body2" style={styles.searchResultItem}>
+                  {index.toString()}
+                </Typography>
+              </TouchableRipple>
+            )}
+          />
+        </View>
       ) : null}
     </View>
   );
@@ -85,6 +85,7 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
       backgroundColor: theme.colors.palette.accent,
     },
     searchResult: {
+      flex: 1,
       position: "absolute",
       top: theme.spacing * 7,
       left: 0,

@@ -5,6 +5,7 @@ import { Image, StyleSheet, View } from "react-native";
 import { TouchableRipple, useTheme } from "react-native-paper";
 import Typography from "../../../components/typography";
 import { RootNavigationProps } from "../../../shared/routes";
+import { breakpointsWithDimensions } from "../../../shared/utils";
 import { IProduct } from "../../../shared/utils/interfaces";
 
 interface Props {
@@ -15,7 +16,12 @@ const FilteredProduct = ({ product }: Props) => {
   const { navigate }: RootNavigationProps = useNavigation();
   const theme = useTheme();
   const styles = makeStyles(theme);
-  const imageWidth = 170;
+  const {
+    breakpoints: [isSmUp],
+    width,
+  } = breakpointsWithDimensions.up(["sm"]);
+
+  const imageWidth = isSmUp ? 190 : 120;
   const imageHeight = (imageWidth / 16) * 9;
   return (
     <TouchableRipple
@@ -31,15 +37,24 @@ const FilteredProduct = ({ product }: Props) => {
         <Image
           source={require("../../../assets/others.jpeg")}
           resizeMode="cover"
-          style={{ width: imageWidth, height: imageHeight }}
+          style={{
+            width: imageWidth,
+            height: imageHeight,
+          }}
         />
         <View style={styles.content}>
           <Typography
-            variant="h6"
+            variant={isSmUp ? "h6" : "body2"}
             textTransform="capitalize"
-            style={{ color: theme.colors.palette.text.primary }}
+            style={{
+              color: theme.colors.palette.text.primary,
+              fontWeight: "700",
+            }}
+            numberOfLines={2}
           >
-            {product.title}
+            {/* {product.title} */}
+            Selowin Womens Halloween Costume Skeleton Print Bodysuit Skinny
+            Catsuit Jumpsuit
           </Typography>
           <View style={[styles.ratingBox, { marginTop: theme.spacing * 0.5 }]}>
             <View style={styles.ratingBox}>
@@ -47,7 +62,7 @@ const FilteredProduct = ({ product }: Props) => {
                 <AntDesign
                   key={index}
                   name={product.totalRatings >= index + 1 ? "star" : "staro"}
-                  size={14}
+                  size={isSmUp ? 14 : 10}
                   color={
                     product.totalRatings >= index + 1
                       ? theme.colors.palette.secondary.main
@@ -56,7 +71,7 @@ const FilteredProduct = ({ product }: Props) => {
                 />
               ))}
               <Typography
-                variant="body2"
+                variant={isSmUp ? "body2" : "caption"}
                 style={{ color: theme.colors.palette.text.secondary }}
               >
                 {" "}
@@ -65,17 +80,19 @@ const FilteredProduct = ({ product }: Props) => {
             </View>
           </View>
           <Typography
-            variant="h5"
-            style={{ color: theme.colors.palette.primary.main }}
+            variant={isSmUp ? "h5" : "body1"}
+            style={{
+              color: theme.colors.palette.primary.main,
+              fontWeight: "700",
+            }}
           >
             {typeof product.price !== "number"
               ? `${product.price.small}৳ - ${product.price.extraLarge}৳`
-              : `${product.price}৳`}
+              : `${product.price}৳`}{" "}
             <Typography
-              variant="body1"
+              variant={isSmUp ? "body1" : "caption"}
               style={{
                 textDecorationLine: "line-through",
-                marginLeft: theme.spacing,
                 color: theme.colors.palette.text.secondary,
               }}
             >
@@ -101,9 +118,11 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     root: {
       flexDirection: "row",
+      flexWrap: "wrap",
     },
     content: {
-      padding: theme.spacing,
+      paddingHorizontal: theme.spacing,
+      flex: 1,
     },
     ratingBox: {
       flexDirection: "row",

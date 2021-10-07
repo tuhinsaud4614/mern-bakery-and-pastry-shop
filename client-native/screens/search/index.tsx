@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import TabScreenWrapper from "../../components/tab-screen-wrapper";
-import { boxShadow, deviceRange } from "../../shared/utils";
+import { boxShadow, breakpoints } from "../../shared/utils";
 import FilteredProducts from "./filtered-products";
 import Filters from "./filters";
 import ByCategory from "./filters/by-category";
@@ -14,24 +14,27 @@ import SortByFilter from "./sortBy-filter";
 const SearchScreen = () => {
   const theme = useTheme();
   const styles = makeStyles(theme);
-  const { range } = deviceRange();
+  const isSmUp = breakpoints.up("sm");
 
   return (
-    <TabScreenWrapper>
-      <View style={{ position: "relative" }}>
-        {range !== "xs" && (
+    <TabScreenWrapper component="flat-list">
+      <View style={{ flexDirection: "row", flex: 1 }}>
+        {isSmUp && (
           <View style={styles.filterList}>
-            <ByCategory />
-            <ByPrice />
-            <ByRating />
+            <ByCategory expendable={false} />
+            <ByPrice expendable={false} />
+            <ByRating expendable={false} />
           </View>
         )}
         <View
-          style={StyleSheet.flatten([range !== "xs" && styles.filterContent])}
+          style={StyleSheet.flatten([
+            styles.filterContent,
+            isSmUp && { paddingLeft: theme.spacing * 2 },
+          ])}
         >
           <SearchBox />
           <View style={styles.filterBox}>
-            {range === "xs" && <Filters />}
+            {!isSmUp && <Filters />}
             <SortByFilter />
           </View>
           <FilteredProducts />
@@ -47,19 +50,12 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
   const shadow = boxShadow(4, 3);
   return StyleSheet.create({
     filterList: {
-      position: "absolute",
-      top: 0,
-      left: 0,
       width: 250,
       borderRightWidth: 1,
       borderRightColor: theme.colors.palette.divider,
     },
     filterContent: {
-      position: "absolute",
-      left: 250,
-      top: 0,
-      right: 0,
-      paddingLeft: theme.spacing * 2,
+      flex: 1,
     },
     filterBox: {
       backgroundColor: theme.colors.palette.background.default,
@@ -71,8 +67,8 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
       paddingBottom: theme.spacing,
       marginTop: theme.spacing * 2,
       borderRadius: theme.spacing * 0.5,
-      zIndex: -1,
       position: "relative",
+      zIndex: -1,
     },
   });
 };

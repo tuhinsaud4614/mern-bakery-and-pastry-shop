@@ -5,10 +5,10 @@ import { breakpoints } from "../shared/utils";
 import Container from "./container";
 
 const TabScreenWrapper = ({
-  keyBoardAvoiding = false,
+  component,
   children,
 }: {
-  keyBoardAvoiding?: boolean;
+  component?: "flat-list" | "scroll-view";
   children?: ReactNode;
 }) => {
   const tabBarHeight = useBottomTabBarHeight();
@@ -21,7 +21,7 @@ const TabScreenWrapper = ({
         !!tabBarHeight &&
         isSmUp && { paddingTop: tabBarHeight + theme.spacing * 3 }
       }
-      keyBoardAvoiding={keyBoardAvoiding}
+      component={component}
     >
       {children}
     </Container>

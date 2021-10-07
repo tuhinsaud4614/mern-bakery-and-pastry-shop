@@ -1,19 +1,22 @@
 import React, { ReactNode } from "react";
-import { ScrollView, StyleProp, StyleSheet, ViewStyle } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import {
+  KeyboardAwareFlatList,
+  KeyboardAwareScrollView,
+} from "react-native-keyboard-aware-scroll-view";
 import { useTheme } from "react-native-paper";
 import { Breakpoints, breakpointsWithDimensions } from "../shared/utils";
 
 const Container = ({
   children,
   classes,
-  keyBoardAvoiding = false,
+  component = "scroll-view",
   contentContainerStyle,
 }: {
   children?: ReactNode;
   classes?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
   contentContainerStyle?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
-  keyBoardAvoiding?: boolean;
+  component?: "flat-list" | "scroll-view";
 }) => {
   const theme = useTheme();
   const {
@@ -27,7 +30,7 @@ const Container = ({
     classes && classes,
   ]);
 
-  if (keyBoardAvoiding) {
+  if (component === "scroll-view") {
     return (
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
@@ -43,17 +46,26 @@ const Container = ({
   }
 
   return (
-    <ScrollView
-      showsHorizontalScrollIndicator={false}
+    <KeyboardAwareFlatList
+      data={[]}
+      ListEmptyComponent={null}
+      keyExtractor={() => "dummy"}
+      renderItem={null}
       showsVerticalScrollIndicator={false}
       style={style}
-      contentContainerStyle={StyleSheet.flatten([
-        contentContainerStyle,
-        { padding: theme.spacing * 2 },
-      ])}
+      ListHeaderComponent={
+        <View
+          style={StyleSheet.flatten([
+            contentContainerStyle,
+            { padding: theme.spacing * 2 },
+          ])}
+        >
+          {children}
+        </View>
+      }
     >
       {children}
-    </ScrollView>
+    </KeyboardAwareFlatList>
   );
 };
 

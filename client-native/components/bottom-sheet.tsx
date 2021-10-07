@@ -24,6 +24,7 @@ interface Props {
   onDismiss?(): void;
   showBackdrop?: boolean;
   showCloseIcon?: boolean;
+  enableBackdropClose?: boolean;
   classes?: {
     root?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
     header?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
@@ -42,8 +43,10 @@ const BottomSheet = memo(
     classes,
     showBackdrop = false,
     showCloseIcon = true,
+    enableBackdropClose = false,
   }: Props) => {
     const maxHeight = Dimensions.get("window").height * 0.5;
+    const deviceWidth = Dimensions.get("window").width;
     const theme = useTheme();
     const styles = makeStyles(theme, maxHeight);
     const [open, setOpen] = useState(show);
@@ -97,7 +100,7 @@ const BottomSheet = memo(
       <Portal>
         {showBackdrop && (
           <Pressable
-            onPress={onDismiss}
+            onPress={enableBackdropClose ? onDismiss : undefined}
             style={{
               ...StyleSheet.absoluteFillObject,
               zIndex: 450,
@@ -106,34 +109,31 @@ const BottomSheet = memo(
           />
         )}
 
-        <PanGestureHandler
-          onGestureEvent={gestureHandler}
-          onEnded={gestureEndHandler}
+        <Animated.View
+          style={StyleSheet.flatten([
+            styles.root,
+            {
+              ...(!showBackdrop && boxShadow(4, -3)),
+              bottom: bottom,
+            },
+            classes?.root,
+          ])}
         >
-          <Animated.View
-            style={StyleSheet.flatten([
-              styles.root,
-              {
-                ...(!showBackdrop && boxShadow(4, -3)),
-                bottom: bottom,
-              },
-              classes?.root,
-            ])}
+          <PanGestureHandler
+            onGestureEvent={gestureHandler}
+            onEnded={gestureEndHandler}
           >
             <View style={StyleSheet.flatten([styles.header, classes?.header])}>
-              <View
+              <Divider
                 style={StyleSheet.flatten([
-                  styles.headerContainer,
-                  classes?.headerContainer,
+                  {
+                    left: (deviceWidth - deviceWidth * 0.2) / 2,
+                    width: deviceWidth * 0.2,
+                  },
+                  styles.headerBar,
+                  classes?.headerBar,
                 ])}
-              >
-                <Divider
-                  style={StyleSheet.flatten([
-                    styles.headerBar,
-                    classes?.headerBar,
-                  ])}
-                />
-              </View>
+              />
               {showCloseIcon && (
                 <IconButton
                   color={theme.colors.palette.secondary.main}
@@ -144,9 +144,9 @@ const BottomSheet = memo(
                 />
               )}
             </View>
-            {children}
-          </Animated.View>
-        </PanGestureHandler>
+          </PanGestureHandler>
+          {children}
+        </Animated.View>
       </Portal>
     ) : null;
   },
@@ -178,17 +178,14 @@ const makeStyles = (
       backgroundColor: theme.colors.palette.background.default,
       ...boxShadow(4, 3),
     },
-    headerContainer: {
+
+    headerBar: {
       position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      zIndex: 10,
-      alignItems: "center",
-      paddingTop: theme.spacing,
-      height: 33,
+      top: theme.spacing,
+      height: 3,
+      borderRadius: 1.5,
+      zIndex: 50,
     },
-    headerBar: { height: 3, width: "20%", maxWidth: 100, borderRadius: 1.5 },
     close: {
       position: "absolute",
       top: 0,

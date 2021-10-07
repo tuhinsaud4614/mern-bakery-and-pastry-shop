@@ -1,7 +1,6 @@
 import { Entypo } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { Platform, View } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Platform, ScrollView, View } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import BottomSheet from "../../../components/bottom-sheet";
 import { typographyStyles } from "../../../shared/utils/common.styles";
@@ -34,14 +33,16 @@ const Filters = () => {
           setShowBottomSheet(false);
         }}
       >
-        <KeyboardAwareScrollView
+        <ScrollView
           showsVerticalScrollIndicator={Platform.OS === "web"}
-          contentContainerStyle={{ padding: theme.spacing * 2 }}
+          contentContainerStyle={{
+            padding: theme.spacing * 2,
+          }}
         >
           <ByCategory />
           <ByPrice />
           <ByRating />
-        </KeyboardAwareScrollView>
+        </ScrollView>
       </BottomSheet>
     </View>
   );

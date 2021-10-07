@@ -1,5 +1,6 @@
 import React, {
   ComponentPropsWithoutRef,
+  Fragment,
   MutableRefObject,
   useRef,
   useState,
@@ -15,8 +16,9 @@ import {
 import { Button, List, useTheme } from "react-native-paper";
 import Typography from "../../../components/typography";
 import { typographyStyles } from "../../../shared/utils/common.styles";
+import ListHeader from "./list-header";
 
-const ByPrice = () => {
+const ByPrice = ({ expendable = true }: { expendable?: boolean }) => {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const [minPrice, setMinPrice] = useState(0);
@@ -29,13 +31,9 @@ const ByPrice = () => {
     }
     setMaxPrice(newValue === "" ? 0 : +newValue);
   };
-  return (
-    <List.Accordion
-      title="Price"
-      style={{ paddingVertical: 0 }}
-      titleNumberOfLines={1}
-      theme={{ colors: { primary: theme.colors.palette.secondary.main } }}
-    >
+
+  const content = (
+    <Fragment>
       <View style={styles.itemTag}>
         {["All Prices", "120৳ to 150৳"].map((item, index) => (
           <TouchableOpacity
@@ -94,8 +92,21 @@ const ByPrice = () => {
           Go
         </Button>
       </View>
-    </List.Accordion>
+    </Fragment>
   );
+  if (expendable) {
+    return (
+      <List.Accordion
+        title="Price"
+        style={{ paddingVertical: 0 }}
+        titleNumberOfLines={1}
+        theme={{ colors: { primary: theme.colors.palette.secondary.main } }}
+      >
+        {content}
+      </List.Accordion>
+    );
+  }
+  return <ListHeader title="Price">{content}</ListHeader>;
 };
 
 ByPrice.displayName = "Filter.ByPrice";
@@ -173,6 +184,7 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
     inputContainer: {
       borderWidth: 1,
       borderRadius: theme.spacing * 0.5,
+      width: 70,
     },
     inputWrapper: {
       flexDirection: "row",
@@ -192,12 +204,12 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
     },
     input: {
       flex: 1,
-      width: 50,
       textAlign: "left",
       color: theme.colors.palette.text.primary,
       paddingVertical: theme.spacing * 0.5,
       paddingLeft: theme.spacing * 0.5,
       paddingRight: theme.spacing,
+      overflow: "hidden",
     },
   });
 };

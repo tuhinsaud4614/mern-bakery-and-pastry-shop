@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Platform, useWindowDimensions, View } from "react-native";
+import { Image, useWindowDimensions, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import Carousel from "../../components/carousel";
 import Container from "../../components/container";
@@ -39,7 +39,7 @@ const DetailScreen = ({
   //   </Container>
   // );
   return (
-    <Container keyBoardAvoiding={Platform.OS !== "web"}>
+    <Container>
       <View style={styles.main}>
         <View
           style={{
