@@ -39,6 +39,12 @@ const AddToCart = ({ product }: Props) => {
     setCount(newValue === "" ? 0 : +newValue);
   };
 
+  const onBlurHandler = () => {
+    if (count === 0) {
+      setCount(1);
+    }
+  };
+
   const onSubmit = () => {
     console.log("count", count);
     console.log("selectedSize", selectedSize);
@@ -73,6 +79,7 @@ const AddToCart = ({ product }: Props) => {
           count={count}
           onPress={onCounterPress}
           onCountChange={onCounterChange}
+          onBlur={onBlurHandler}
         />
         <Button
           style={styles.submitButton}

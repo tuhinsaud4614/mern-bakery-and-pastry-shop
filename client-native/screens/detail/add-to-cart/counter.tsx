@@ -1,15 +1,22 @@
 import React, { memo } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import {
+  NativeSyntheticEvent,
+  StyleSheet,
+  TextInput,
+  TextInputFocusEventData,
+  View,
+} from "react-native";
 import { IconButton, useTheme } from "react-native-paper";
 import { typographyStyles } from "../../../shared/utils/common.styles";
 
 interface Props {
   count: number;
   onCountChange(value: string): void;
+  onBlur?(e: NativeSyntheticEvent<TextInputFocusEventData>): void;
   onPress(action: "add" | "minus"): void;
 }
 
-const CounterComponent = ({ count, onCountChange, onPress }: Props) => {
+const CounterComponent = ({ count, onCountChange, onBlur, onPress }: Props) => {
   const theme = useTheme();
   const styles = makeStyles(theme);
 
@@ -26,6 +33,7 @@ const CounterComponent = ({ count, onCountChange, onPress }: Props) => {
         keyboardType="numeric"
         value={count.toString()}
         onChangeText={(value) => onCountChange(value)}
+        onBlur={onBlur}
       />
       <IconButton
         icon="plus"

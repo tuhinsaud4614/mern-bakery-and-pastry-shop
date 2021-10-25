@@ -68,12 +68,14 @@ const ByPrice = ({ expendable = true }: { expendable?: boolean }) => {
         <PriceInput
           label="Min"
           keyboardType="numeric"
+          returnKeyType="done"
           value={minPrice.toString()}
           onChangeText={(value) => onPriceChange(value, "min")}
         />
         <PriceInput
           label="Max"
           keyboardType="numeric"
+          returnKeyType="done"
           value={maxPrice.toString()}
           onChangeText={(value) => onPriceChange(value, "max")}
           classes={{ root: { marginLeft: theme.spacing * 0.5 } }}

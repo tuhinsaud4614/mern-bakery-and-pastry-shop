@@ -30,9 +30,9 @@ export const dummyProducts: IProduct[] = [
     id: "1",
     images: [
       {
-        large: 'require("./assets/pastry-cup-pastry-tart.jpeg")',
-        medium: 'require("./assets/pastry-cup-pastry-tart.jpeg")',
-        small: 'require("./assets/pastry-cup-pastry-tart.jpeg")',
+        large: require("./assets/pastry-cup-pastry-tart.jpeg"),
+        medium: require("./assets/pastry-cup-pastry-tart.jpeg"),
+        small: require("./assets/pastry-cup-pastry-tart.jpeg"),
       },
     ],
     price: 120,
