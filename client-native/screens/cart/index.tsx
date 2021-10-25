@@ -13,7 +13,7 @@ const CartScreen = () => {
   const theme = useTheme();
   const styles = makeStyles(theme);
   return (
-    <TabScreenWrapper>
+    <TabScreenWrapper component="flat-list">
       <View style={styles.root}>
         <View
           style={[
@@ -21,7 +21,6 @@ const CartScreen = () => {
             isSmUp && {
               flexBasis: "70%",
               paddingRight: theme.spacing * 2,
-              marginBottom: 0,
             },
           ]}
         >
@@ -46,7 +45,6 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
     },
     left: {
       flexBasis: "100%",
-      marginBottom: theme.spacing * 2,
     },
     right: {
       flexBasis: "100%",
