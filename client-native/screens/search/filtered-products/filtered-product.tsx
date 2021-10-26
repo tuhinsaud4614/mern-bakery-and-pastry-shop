@@ -35,7 +35,7 @@ const FilteredProduct = ({ product }: Props) => {
     >
       <View style={styles.root}>
         <Image
-          source={require("../../../assets/others.jpeg")}
+          source={product.images[0].large as any}
           resizeMode="cover"
           style={{
             width: imageWidth,

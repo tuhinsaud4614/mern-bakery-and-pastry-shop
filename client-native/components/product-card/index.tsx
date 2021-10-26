@@ -49,7 +49,7 @@ const ProductCard = ({ data }: Props) => {
         }}
       >
         <Card.Cover
-          source={require("../../assets/cake.jpeg")}
+          source={data.images[0].large as any}
           style={{
             resizeMode: "cover",
             backgroundColor: "transparent",

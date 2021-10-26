@@ -35,3 +35,10 @@ export type SortByFilterType =
   | "AVERAGE_RATED"
   | "FEATURED"
   | "NEWEST";
+
+export type WishlistSortByType =
+  | "PRICE_LOW_TO_HIGH"
+  | "PRICE_HIGH_TO_LOW"
+  | "DEFAULT";
+
+export type WishlistFilterType = "ALL_ITEMS" | "PURCHASED" | "UNPURCHASED";

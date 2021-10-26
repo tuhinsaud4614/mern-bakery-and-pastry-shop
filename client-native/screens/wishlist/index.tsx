@@ -1,12 +1,12 @@
 import React from "react";
-import { Text } from "react-native";
-import ScreenSpacer from "../../components/tab-screen-wrapper";
+import TabScreenWrapper from "../../components/tab-screen-wrapper";
+import SortAndFilter from "./sort-and-filter";
 
 const WishlistScreen = () => {
   return (
-    <ScreenSpacer>
-      <Text>Wishlist</Text>
-    </ScreenSpacer>
+    <TabScreenWrapper component="flat-list">
+      <SortAndFilter />
+    </TabScreenWrapper>
   );
 };
 WishlistScreen.displayName = "WishlistScreen";
