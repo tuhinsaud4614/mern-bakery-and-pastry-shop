@@ -6,7 +6,6 @@ import CartItem from "./item";
 
 const CartItems = () => {
   const theme = useTheme();
-  //   const styles = makeStyles(theme);
   return (
     <FlatList
       showsVerticalScrollIndicator={Platform.OS === "web"}
@@ -32,11 +31,3 @@ const CartItems = () => {
 
 CartItems.displayName = "Cart.Items";
 export default CartItems;
-
-// const makeStyles = (theme: ReactNativePaper.Theme) => {
-//   return StyleSheet.create({
-//     root: {
-//       backgroundColor: theme.colors.palette.background.default,
-//     },
-//   });
-// };
