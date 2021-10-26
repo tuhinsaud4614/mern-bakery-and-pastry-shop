@@ -12,14 +12,19 @@ const WishlistItems = () => {
     <View style={styles.root}>
       <FlatList
         showsVerticalScrollIndicator={Platform.OS === "web"}
-        data={Array.from({ length: 10 }).map(() => ({
+        data={Array.from({ length: 5 }).map(() => ({
           ...dummyProducts[0],
           title: "Lorem ipsum dolor sit ",
         }))}
         renderItem={({ item }) => <WishlistItem product={item} />}
         keyExtractor={(_, index) => index.toString()}
       />
-      <Pagination />
+      <Pagination
+        count={9}
+        onPageChange={(page) => {
+          console.log(page);
+        }}
+      />
     </View>
   );
 };

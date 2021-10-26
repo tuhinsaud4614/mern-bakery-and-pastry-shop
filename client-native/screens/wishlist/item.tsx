@@ -151,7 +151,7 @@ const WishlistItem = ({
             }
             icon={({ color }) => (
               <Entypo
-                name="heart"
+                name="shopping-bag"
                 color={color}
                 size={18}
                 style={{ marginRight: theme.spacing * 0.5 }}
