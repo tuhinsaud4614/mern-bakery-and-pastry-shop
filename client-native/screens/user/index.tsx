@@ -1,12 +1,17 @@
 import React from "react";
 import { Text } from "react-native";
-import ScreenSpacer from "../../components/tab-screen-wrapper";
+import TabScreenWrapper from "../../components/tab-screen-wrapper";
+import Tabs from "../../components/tabs";
 
 const UserScreen = () => {
   return (
-    <ScreenSpacer>
-      <Text>User</Text>
-    </ScreenSpacer>
+    <TabScreenWrapper component="flat-list" bounces={false}>
+      <Tabs items={["information", "orders", "next"]}>
+        <Text>Hello</Text>
+        <Text>hi</Text>
+        <Text>next</Text>
+      </Tabs>
+    </TabScreenWrapper>
   );
 };
 UserScreen.displayName = "UserScreen";

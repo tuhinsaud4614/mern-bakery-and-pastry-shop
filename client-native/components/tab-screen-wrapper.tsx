@@ -7,8 +7,11 @@ import Container from "./container";
 const TabScreenWrapper = ({
   component,
   children,
+  bounces,
 }: {
   component?: "flat-list" | "scroll-view";
+  bounces?: boolean;
+
   children?: ReactNode;
 }) => {
   const tabBarHeight = useBottomTabBarHeight();
@@ -21,6 +24,7 @@ const TabScreenWrapper = ({
         !!tabBarHeight &&
         isSmUp && { paddingTop: tabBarHeight + theme.spacing * 3 }
       }
+      bounces={bounces}
       component={component}
     >
       {children}

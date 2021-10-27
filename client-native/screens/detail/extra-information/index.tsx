@@ -1,15 +1,7 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from "react";
-import {
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  Platform,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-  VirtualizedList,
-} from "react-native";
-import { Divider, TouchableRipple, useTheme } from "react-native-paper";
-import Typography from "../../../components/typography";
+import React from "react";
+import { StyleSheet } from "react-native";
+import { useTheme } from "react-native-paper";
+import Tabs from "../../../components/tabs";
 import { IProduct } from "../../../shared/utils/interfaces";
 import Description from "./description";
 import Reviews from "./reviews";
@@ -19,148 +11,23 @@ interface Props {
 }
 
 const ExtraInformation = ({ product }: Props) => {
-  const [tab, setTab] = useState<"description" | "review">("description");
-  let scrollRef: MutableRefObject<VirtualizedList<unknown> | null> =
-    useRef(null);
-  let debounceTimer = useRef<NodeJS.Timeout | null>(null);
   const theme = useTheme();
-  const { width } = useWindowDimensions();
-  const containerWidth = width - theme.spacing * 4;
-  console.log(containerWidth);
-
-  const styles = makeStyles(theme, containerWidth);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollToOffset({
-        offset: tab === "review" ? containerWidth : 0,
-      });
-    }
-    return () => {
-      if (debounceTimer.current) {
-        clearTimeout(debounceTimer.current);
-      }
-    };
-  }, [tab]);
-
-  const handleScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (!e) {
-      return;
-    }
-    const { nativeEvent } = e;
-    if (nativeEvent && nativeEvent.contentOffset) {
-      if (nativeEvent.contentOffset.x === 0) {
-        setTab("description");
-      } else {
-        setTab("review");
-      }
-    }
-  };
+  const styles = makeStyles(theme);
   return (
-    <View style={styles.root}>
-      <View style={styles.tabs}>
-        <TouchableRipple
-          onPress={() => tab === "review" && setTab("description")}
-          style={StyleSheet.flatten([
-            styles.tabBtn,
-            tab === "description" && {
-              backgroundColor: theme.colors.palette.primary.light,
-            },
-          ])}
-        >
-          <Typography
-            style={{
-              color:
-                tab === "description"
-                  ? theme.colors.palette.common.white
-                  : theme.colors.palette.text.primary,
-            }}
-            variant="h6"
-          >
-            Description
-          </Typography>
-        </TouchableRipple>
-        <TouchableRipple
-          style={StyleSheet.flatten([
-            styles.tabBtn,
-            tab === "review" && {
-              backgroundColor: theme.colors.palette.primary.light,
-            },
-          ])}
-          onPress={() => tab === "description" && setTab("review")}
-        >
-          <Typography
-            style={{
-              color:
-                tab === "review"
-                  ? theme.colors.palette.common.white
-                  : theme.colors.palette.text.primary,
-            }}
-            variant="h6"
-          >
-            Review
-          </Typography>
-        </TouchableRipple>
-      </View>
-      <Divider
-        style={{ backgroundColor: theme.colors.palette.primary.light }}
-      />
-      <VirtualizedList
-        ref={scrollRef}
-        data={[]}
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        pagingEnabled
-        onMomentumScrollEnd={handleScrollEnd}
-        keyExtractor={(_, index) => index.toString()}
-        getItem={(item) => item["name"]}
-        renderItem={({ index }) => {
-          return (
-            <View style={styles.tabContainer}>
-              {index === 0 ? (
-                <Description />
-              ) : (
-                <Reviews productId={product.id} />
-              )}
-            </View>
-          );
-        }}
-        getItemCount={() => 2}
-        onScroll={(e) => {
-          if (Platform.OS === "web") {
-            if (debounceTimer.current) {
-              clearTimeout(debounceTimer.current);
-            }
-            debounceTimer.current = setTimeout(() => {
-              handleScrollEnd(e);
-            }, 150);
-          }
-        }}
-      />
-    </View>
+    <Tabs classes={{ root: styles.root }} items={["description", "review"]}>
+      <Description />
+      <Reviews productId={product.id} />
+    </Tabs>
   );
 };
 
 ExtraInformation.displayName = "ExtraInformation";
 export default ExtraInformation;
 
-const makeStyles = (theme: ReactNativePaper.Theme, width: number) => {
+const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     root: {
       marginTop: theme.spacing * 2,
-    },
-    tabs: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-    },
-    tabBtn: {
-      padding: theme.spacing,
-    },
-    tabContainer: {
-      width: width,
-      maxWidth: 1200 - theme.spacing * 4,
-      padding: theme.spacing,
     },
   });
 };

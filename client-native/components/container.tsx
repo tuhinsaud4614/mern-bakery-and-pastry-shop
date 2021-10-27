@@ -7,17 +7,21 @@ import {
 import { useTheme } from "react-native-paper";
 import { Breakpoints, breakpointsWithDimensions } from "../shared/utils";
 
+interface Props {
+  children?: ReactNode;
+  classes?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
+  contentContainerStyle?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
+  component?: "flat-list" | "scroll-view";
+  bounces?: boolean;
+}
+
 const Container = ({
   children,
   classes,
   component = "scroll-view",
   contentContainerStyle,
-}: {
-  children?: ReactNode;
-  classes?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
-  contentContainerStyle?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
-  component?: "flat-list" | "scroll-view";
-}) => {
+  bounces = true,
+}: Props) => {
   const theme = useTheme();
   const {
     breakpoints: [isLgUp],
@@ -39,6 +43,7 @@ const Container = ({
           contentContainerStyle,
           { padding: theme.spacing * 2 },
         ])}
+        bounces={bounces}
       >
         {children}
       </KeyboardAwareScrollView>
@@ -47,6 +52,7 @@ const Container = ({
 
   return (
     <KeyboardAwareFlatList
+      bounces={bounces}
       data={[]}
       ListEmptyComponent={null}
       keyExtractor={() => "dummy"}
