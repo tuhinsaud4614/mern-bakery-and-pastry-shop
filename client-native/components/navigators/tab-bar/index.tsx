@@ -267,7 +267,7 @@ const TabBarContainer = () => {
   const isSmUp = range !== "xs";
   return (
     <Tab.Navigator
-      initialRouteName="Cart"
+      initialRouteName="Wishlist"
       tabBar={(props) => (
         <TabBar {...props} deviceWidth={deviceWidth} range={range} />
       )}

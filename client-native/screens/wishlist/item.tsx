@@ -1,11 +1,20 @@
 import { AntDesign, Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import relativeTime from "dayjs/plugin/relativeTime";
 import React from "react";
-import { Image, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import {
+  Image,
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native";
 import { Button, Divider, useTheme } from "react-native-paper";
 import Typography from "../../components/typography";
+import { RootNavigationProps } from "../../shared/routes";
 import { boxShadow, breakpointsWithDimensions } from "../../shared/utils";
 import { typographyStyles } from "../../shared/utils/common.styles";
 import { IProduct } from "../../shared/utils/interfaces";
@@ -30,6 +39,7 @@ const WishlistItem = ({
   product: IProduct;
   classes?: { root?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>> };
 }) => {
+  const { navigate }: RootNavigationProps = useNavigation();
   const {
     breakpoints: [isSmUp, isMdUp],
   } = breakpointsWithDimensions.up(["sm", "md"]);
@@ -56,17 +66,27 @@ const WishlistItem = ({
           style={{ width: imageWidth, height: imageHeight }}
         />
         <View style={styles.content}>
-          <Typography
-            variant={isSmUp ? "h6" : "body2"}
-            textTransform="capitalize"
-            style={{
-              color: theme.colors.palette.text.primary,
-              fontWeight: "700",
+          <TouchableOpacity
+            onPress={() => {
+              navigate("Detail", {
+                productId: product.id,
+                title: product.title,
+                categoryId: product.category.id,
+              });
             }}
-            numberOfLines={2}
           >
-            {product.title}
-          </Typography>
+            <Typography
+              variant={isSmUp ? "h6" : "body2"}
+              textTransform="capitalize"
+              style={{
+                color: theme.colors.palette.text.primary,
+                fontWeight: "700",
+              }}
+              numberOfLines={2}
+            >
+              {product.title}
+            </Typography>
+          </TouchableOpacity>
           <View style={[styles.ratingBox, { marginTop: theme.spacing * 0.5 }]}>
             <View style={styles.ratingBox}>
               {Array.from({ length: 5 }).map((_, index) => (

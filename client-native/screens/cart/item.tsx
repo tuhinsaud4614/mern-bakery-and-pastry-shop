@@ -1,4 +1,5 @@
 import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   Image,
@@ -11,6 +12,7 @@ import {
 import { Button, Divider, useTheme } from "react-native-paper";
 import Counter from "../../components/counter";
 import Typography from "../../components/typography";
+import { RootNavigationProps } from "../../shared/routes";
 import { boxShadow, breakpointsWithDimensions } from "../../shared/utils";
 import { typographyStyles } from "../../shared/utils/common.styles";
 import { IProduct } from "../../shared/utils/interfaces";
@@ -22,6 +24,7 @@ const CartItem = ({
   product: IProduct;
   classes?: { root?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>> };
 }) => {
+  const { navigate }: RootNavigationProps = useNavigation();
   const theme = useTheme();
   const styles = makeStyles(theme);
   const [count, setCount] = useState<number>(1);
@@ -57,13 +60,23 @@ const CartItem = ({
           style={styles.image}
         />
         <View style={[styles.topDetail]}>
-          <Pressable onPress={() => {}}>
+          <Pressable
+            onPress={() => {
+              navigate("Detail", {
+                productId: product.id,
+                title: product.title,
+                categoryId: product.category.id,
+              });
+            }}
+          >
             {({ pressed }) => (
               <Typography
                 variant={isSmUp ? "h6" : "body1"}
                 style={{
                   color:
-                    theme.colors.palette.primary[pressed ? "main" : "dark"],
+                    theme.colors.palette.text[
+                      pressed ? "secondary" : "primary"
+                    ],
                   fontWeight: "500",
                 }}
                 numberOfLines={2}
