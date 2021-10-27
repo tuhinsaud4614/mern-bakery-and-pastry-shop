@@ -14,19 +14,18 @@ const CartScreen = () => {
   const styles = makeStyles(theme);
   return (
     <TabScreenWrapper component="flat-list">
-      <View style={styles.root}>
+      <View style={isSmUp && styles.root}>
         <View
-          style={[
-            styles.left,
+          style={
             isSmUp && {
-              flexBasis: "70%",
+              flex: 1,
               paddingRight: theme.spacing * 2,
-            },
-          ]}
+            }
+          }
         >
           <CartItems />
         </View>
-        <View style={[styles.right, isSmUp && { flexBasis: "30%" }]}>
+        <View style={isSmUp && { minWidth: 300 }}>
           <CartTotals />
         </View>
       </View>
@@ -42,12 +41,6 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
       flexWrap: "wrap",
       flexDirection: "row",
       width: "100%",
-    },
-    left: {
-      flexBasis: "100%",
-    },
-    right: {
-      flexBasis: "100%",
     },
   });
 };

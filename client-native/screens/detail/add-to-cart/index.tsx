@@ -2,9 +2,9 @@ import { Entypo } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { Button, Divider, useTheme } from "react-native-paper";
+import Counter from "../../../components/counter";
 import { typographyStyles } from "../../../shared/utils/common.styles";
 import { IProduct } from "../../../shared/utils/interfaces";
-import Counter from "./counter";
 import PickerBox from "./picker-box";
 
 const sizes = [

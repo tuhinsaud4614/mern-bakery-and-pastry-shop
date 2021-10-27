@@ -9,11 +9,11 @@ import {
   ViewStyle,
 } from "react-native";
 import { Button, Divider, useTheme } from "react-native-paper";
+import Counter from "../../components/counter";
 import Typography from "../../components/typography";
 import { boxShadow, breakpointsWithDimensions } from "../../shared/utils";
 import { typographyStyles } from "../../shared/utils/common.styles";
 import { IProduct } from "../../shared/utils/interfaces";
-import Counter from "../detail/add-to-cart/counter";
 
 const CartItem = ({
   product,
@@ -60,10 +60,11 @@ const CartItem = ({
           <Pressable onPress={() => {}}>
             {({ pressed }) => (
               <Typography
-                variant={isSmUp ? "h5" : "h6"}
+                variant={isSmUp ? "h6" : "body1"}
                 style={{
                   color:
                     theme.colors.palette.primary[pressed ? "main" : "dark"],
+                  fontWeight: "500",
                 }}
                 numberOfLines={2}
               >
@@ -72,7 +73,7 @@ const CartItem = ({
             )}
           </Pressable>
           <View style={[styles.topDetailBottom]}>
-            <Typography variant={isSmUp ? "h6" : "body1"}>
+            <Typography variant={isSmUp ? "body1" : "body2"}>
               {typeof product.price === "number"
                 ? product.price
                 : product.price.small}
@@ -84,11 +85,17 @@ const CartItem = ({
                 onPress={onCounterPress}
                 onCountChange={onCounterChange}
                 onBlur={onBlurHandler}
+                classes={{
+                  btn: { width: 25, height: 25 },
+                  input: { width: 32, paddingHorizontal: theme.spacing * 0.5 },
+                }}
               />
             </View>
             <Typography
-              variant={isSmUp ? "h5" : "h6"}
-              style={{ color: theme.colors.palette.primary.dark }}
+              variant="h6"
+              style={{
+                color: theme.colors.palette.primary.dark,
+              }}
               numberOfLines={2}
             >
               {(typeof product.price === "number"

@@ -1,35 +1,56 @@
 import React, { memo } from "react";
 import {
   NativeSyntheticEvent,
+  StyleProp,
   StyleSheet,
   TextInput,
   TextInputFocusEventData,
+  TextStyle,
   View,
+  ViewStyle,
 } from "react-native";
 import { IconButton, useTheme } from "react-native-paper";
-import { typographyStyles } from "../../../shared/utils/common.styles";
+import { typographyStyles } from "../shared/utils/common.styles";
 
 interface Props {
   count: number;
   onCountChange(value: string): void;
   onBlur?(e: NativeSyntheticEvent<TextInputFocusEventData>): void;
   onPress(action: "add" | "minus"): void;
+  classes?: {
+    root?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
+    btn?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
+    leftBtn?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
+    rightBtn?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
+    input?: StyleProp<TextStyle> | Array<StyleProp<TextStyle>>;
+  };
 }
 
-const CounterComponent = ({ count, onCountChange, onBlur, onPress }: Props) => {
+const CounterComponent = ({
+  count,
+  onCountChange,
+  onBlur,
+  onPress,
+  classes,
+}: Props) => {
   const theme = useTheme();
   const styles = makeStyles(theme);
 
   return (
-    <View style={styles.root}>
+    <View style={StyleSheet.flatten([styles.root, classes?.root])}>
       <IconButton
         icon="minus"
-        style={StyleSheet.flatten([styles.btn, styles.leftBtn])}
+        style={StyleSheet.flatten([
+          styles.btn,
+          styles.leftBtn,
+          classes?.btn,
+          classes?.leftBtn,
+        ])}
         onPress={() => onPress("minus")}
         color={theme.colors.palette.secondary.main}
       />
       <TextInput
-        style={styles.input}
+        style={StyleSheet.flatten([styles.input, classes?.input])}
         keyboardType="numeric"
         value={count.toString()}
         onChangeText={(value) => onCountChange(value)}
@@ -37,7 +58,12 @@ const CounterComponent = ({ count, onCountChange, onBlur, onPress }: Props) => {
       />
       <IconButton
         icon="plus"
-        style={StyleSheet.flatten([styles.btn, styles.rightBtn])}
+        style={StyleSheet.flatten([
+          styles.btn,
+          styles.rightBtn,
+          classes?.btn,
+          classes?.rightBtn,
+        ])}
         onPress={() => onPress("add")}
         color={theme.colors.palette.secondary.main}
       />

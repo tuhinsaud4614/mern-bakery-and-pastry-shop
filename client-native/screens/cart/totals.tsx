@@ -15,20 +15,22 @@ const CartTotals = () => {
   return (
     <View style={styles.root}>
       <Typography
-        variant={isSmUp ? "h5" : "h6"}
-        style={{ color: theme.colors.palette.primary.main }}
+        variant={isSmUp ? "h6" : "body1"}
+        style={{ color: theme.colors.palette.primary.main, fontWeight: "500" }}
       >
         Total Items (10)
       </Typography>
       <View style={[styles.textBox, { marginTop: theme.spacing }]}>
         <Typography
-          variant={isSmUp ? "h6" : "body1"}
-          style={{ color: theme.colors.palette.text.secondary }}
+          variant={"h6"}
+          style={{
+            color: theme.colors.palette.text.secondary,
+          }}
         >
           Subtotal:
         </Typography>
         <Typography
-          variant={isSmUp ? "h6" : "body1"}
+          variant={"h6"}
           style={{ color: theme.colors.palette.text.secondary }}
         >
           120৳
@@ -36,13 +38,13 @@ const CartTotals = () => {
       </View>
       <View style={[styles.textBox, { marginTop: theme.spacing }]}>
         <Typography
-          variant={isSmUp ? "h6" : "body1"}
+          variant={"h6"}
           style={{ color: theme.colors.palette.info.main }}
         >
           VAT (%):
         </Typography>
         <Typography
-          variant={isSmUp ? "h6" : "body1"}
+          variant={"h6"}
           style={{ color: theme.colors.palette.info.dark }}
         >
           10
@@ -50,7 +52,7 @@ const CartTotals = () => {
       </View>
       <View style={[styles.textBox, { marginTop: theme.spacing }]}>
         <Typography
-          variant={isSmUp ? "h6" : "body1"}
+          variant={"h6"}
           style={{ color: theme.colors.palette.success.main }}
         >
           Discount:
@@ -65,7 +67,7 @@ const CartTotals = () => {
       <Divider style={{ marginVertical: theme.spacing }} />
       <View style={styles.textBox}>
         <Typography
-          variant={isSmUp ? "h5" : "h6"}
+          variant={"h5"}
           style={{ color: theme.colors.palette.primary.main }}
         >
           Total:
@@ -104,6 +106,7 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
     textBox: {
       flexDirection: "row",
       alignItems: "center",
+      flexWrap: "wrap",
       justifyContent: "space-between",
     },
     discountInput: {
