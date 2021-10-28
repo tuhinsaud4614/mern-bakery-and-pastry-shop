@@ -7,10 +7,11 @@ import Overview from "./overview";
 const UserScreen = () => {
   return (
     <TabScreenWrapper component="flat-list" bounces={false}>
-      <Tabs items={["overview", "information", "orders"]}>
+      <Tabs items={["overview", "orders", "tracking", "change password"]}>
         <Overview />
-        <Text>hi</Text>
-        <Text>next</Text>
+        <Text>orders</Text>
+        <Text>tracking</Text>
+        <Text>change password</Text>
       </Tabs>
     </TabScreenWrapper>
   );

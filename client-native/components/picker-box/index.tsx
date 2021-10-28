@@ -2,15 +2,17 @@ import { Picker } from "@react-native-picker/picker";
 import React from "react";
 import { Text, View } from "react-native";
 import { useTheme } from "react-native-paper";
-import { typographyStyles } from "../../../shared/utils/common.styles";
+import { typographyStyles } from "../../shared/utils/common.styles";
 
 interface Props {
   onChange(value: string): void;
   selectedValue: string;
-  data: { title: string; value: string }[];
+  options: { title: string; value: string }[];
+  label: string;
+  mode?: "text" | "outlined" | "contained";
 }
 
-const PickerBox = ({ onChange, data, selectedValue }: Props) => {
+const PickerBox = ({ onChange, options, selectedValue, label }: Props) => {
   const theme = useTheme();
 
   return (
@@ -32,7 +34,7 @@ const PickerBox = ({ onChange, data, selectedValue }: Props) => {
           fontSize: 16,
         }}
       >
-        Size:
+        {label}:
       </Text>
       <Picker
         selectedValue={selectedValue}
@@ -44,12 +46,13 @@ const PickerBox = ({ onChange, data, selectedValue }: Props) => {
           width: 200,
           color: theme.colors.palette.secondary.main,
           padding: theme.spacing,
+          marginLeft: theme.spacing,
           borderColor: theme.colors.palette.secondary.light,
           borderWidth: 1,
           borderRadius: theme.spacing * 0.5,
         }}
       >
-        {data.map((item) => (
+        {options.map((item) => (
           <Picker.Item
             color={theme.colors.palette.secondary.main}
             key={item.value}

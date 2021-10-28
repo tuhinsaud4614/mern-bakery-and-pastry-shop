@@ -57,14 +57,6 @@ const Tabs = ({
       });
     }
   };
-  useEffect(() => {
-    scrollToOffset(tab);
-    return () => {
-      if (debounceTimer.current) {
-        clearTimeout(debounceTimer.current);
-      }
-    };
-  }, [tab, containerWidth]);
 
   const handleScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (!e) {
@@ -101,7 +93,16 @@ const Tabs = ({
         {c}
       </Tab>
     ));
-  }, [children]);
+  }, [children, containerWidth]);
+
+  useEffect(() => {
+    scrollToOffset(tab);
+    return () => {
+      if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current);
+      }
+    };
+  }, [tab]);
 
   return (
     <View style={classes?.root}>

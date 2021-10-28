@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { Button, Divider, useTheme } from "react-native-paper";
 import Counter from "../../../components/counter";
+import PickerBox from "../../../components/picker-box";
 import { typographyStyles } from "../../../shared/utils/common.styles";
 import { IProduct } from "../../../shared/utils/interfaces";
-import PickerBox from "./picker-box";
 
 const sizes = [
   { title: "large - 2900৳", value: "large" },
@@ -57,9 +57,10 @@ const AddToCart = ({ product }: Props) => {
         style={{ display: "flex", alignItems: "flex-start", maxWidth: 280 }}
       >
         <PickerBox
-          data={sizes}
+          options={sizes}
           onChange={(value) => setSelectedSize(value)}
           selectedValue={selectedSize}
+          label="Size"
         />
         <View style={styles.labelRoot}>
           <Text style={styles.labelText}>LABEL:</Text>

@@ -11,11 +11,16 @@ import {
   useTheme,
 } from "react-native-paper";
 import Spinner from "../../components/spinner";
-import { boxShadow } from "../../shared/utils";
+import { boxShadow, breakpointsWithDimensions } from "../../shared/utils";
 
 const UserImage = () => {
   const theme = useTheme();
-  const styles = makeStyles(theme);
+  const {
+    breakpoints: [isSmUp],
+    width,
+  } = breakpointsWithDimensions.up(["sm"]);
+  const avatarWidth = isSmUp ? 120 : 100;
+  const styles = makeStyles(theme, avatarWidth);
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
@@ -62,7 +67,11 @@ const UserImage = () => {
   return (
     <View style={styles.root}>
       <Portal>
-        <Dialog visible={visible} onDismiss={() => setVisible(false)}>
+        <Dialog
+          visible={visible}
+          onDismiss={() => setVisible(false)}
+          style={isSmUp && { marginHorizontal: (width - 350) / 2 }}
+        >
           <Dialog.Title>Choose photo</Dialog.Title>
           <Dialog.Content>
             <Button
@@ -117,7 +126,7 @@ const UserImage = () => {
       {!image && !loading && (
         <View style={[styles.rootImage]}>
           <AntDesign
-            size={100}
+            size={avatarWidth * 0.66}
             name="user"
             color={theme.colors.palette.primary.light}
           />
@@ -137,13 +146,13 @@ const UserImage = () => {
 UserImage.displayName = "User.Image";
 export default UserImage;
 
-const makeStyles = (theme: ReactNativePaper.Theme) => {
+const makeStyles = (theme: ReactNativePaper.Theme, width: number) => {
   return StyleSheet.create({
     root: {
-      width: 120,
-      height: 120,
+      width: width,
+      height: width,
       backgroundColor: theme.colors.palette.background.default,
-      borderRadius: 60,
+      borderRadius: width / 2,
       position: "relative",
       padding: theme.spacing,
       alignItems: "center",
@@ -151,9 +160,9 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
       ...boxShadow(4, 3),
     },
     rootImage: {
-      width: 120 - theme.spacing * 0.5,
-      height: 120 - theme.spacing * 0.5,
-      borderRadius: (120 - theme.spacing * 0.5) / 2,
+      width: width - theme.spacing * 0.5,
+      height: width - theme.spacing * 0.5,
+      borderRadius: (width - theme.spacing * 0.5) / 2,
       alignItems: "center",
       justifyContent: "center",
       overflow: "hidden",
@@ -169,8 +178,8 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
     },
     rootActionIcon: {
       margin: 0,
-      width: theme.spacing * 4,
-      height: theme.spacing * 4,
+      width: width * 0.25,
+      height: width * 0.25,
     },
   });
 };

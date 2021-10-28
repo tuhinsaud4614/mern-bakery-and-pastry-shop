@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
 import { useWindowDimensions } from "react-native";
 import { DeviceType } from "./types";
 
@@ -65,4 +67,9 @@ export const boxShadow = (base: number, offset: number = 2) => {
     shadowOpacity: 0.24,
     shadowRadius: base,
   } as const;
+};
+
+export const convertToLocalDate = (date: Date) => {
+  dayjs.extend(localizedFormat);
+  return dayjs(date).format("ll");
 };

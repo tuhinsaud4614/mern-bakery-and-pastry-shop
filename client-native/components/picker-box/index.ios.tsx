@@ -2,34 +2,44 @@ import { Picker } from "@react-native-picker/picker";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Button, Dialog, Portal, useTheme } from "react-native-paper";
-import { typographyStyles } from "../../../shared/utils/common.styles";
+import { typographyStyles } from "../../shared/utils/common.styles";
 
 interface Props {
   onChange(value: string): void;
   selectedValue: string;
-  data: { title: string; value: string }[];
+  options: { title: string; value: string }[];
+  label: string;
+  mode?: "text" | "outlined" | "contained";
 }
 
-const PickerBox = ({ onChange, data, selectedValue }: Props) => {
+const PickerBox = ({
+  onChange,
+  options,
+  selectedValue,
+  label,
+  mode = "contained",
+}: Props) => {
   const theme = useTheme();
   const [visible, setVisible] = useState(false);
 
-  const currentSizeValue = data.find((size) => size.value === selectedValue);
+  const currentSizeValue = options.find((size) => size.value === selectedValue);
 
   return (
     <View style={{ marginTop: theme.spacing }}>
       <Button
         onPress={() => setVisible(true)}
         color={theme.colors.palette.secondary.main}
+        style={{
+          borderColor: theme.colors.palette.secondary.light,
+        }}
         labelStyle={{
           ...typographyStyles.button,
-          color: theme.colors.palette.common.white,
           fontWeight: "700",
           fontSize: 16,
         }}
-        mode="contained"
+        mode={mode}
       >
-        Size: {currentSizeValue && currentSizeValue.title.toUpperCase()}
+        {label}: {currentSizeValue && currentSizeValue.title.toUpperCase()}
       </Button>
       <Portal>
         <Dialog
@@ -54,7 +64,7 @@ const PickerBox = ({ onChange, data, selectedValue }: Props) => {
                 alignSelf: "center",
               }}
             >
-              {data.map((item) => (
+              {options.map((item) => (
                 <Picker.Item
                   color={theme.colors.palette.secondary.main}
                   key={item.value}
