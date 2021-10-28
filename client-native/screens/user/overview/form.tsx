@@ -1,17 +1,157 @@
-import { Event } from "@react-native-community/datetimepicker";
-import React, { useState } from "react";
+import { Formik, FormikHelpers } from "formik";
+import React, { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, TextInput, useTheme } from "react-native-paper";
+import { Button, HelperText, TextInput, useTheme } from "react-native-paper";
 import DatePicker from "../../../components/date-picker";
 import PickerBox from "../../../components/picker-box";
 import Typography from "../../../components/typography";
 import { breakpointsWithDimensions } from "../../../shared/utils";
+import { userInfoSchema } from "../../../shared/utils/validations.schema";
 
-const gender = [
+type GenderType = "male" | "female" | "other";
+
+const gender: { title: string; value: GenderType }[] = [
   { title: "Male", value: "male" },
   { title: "Female", value: "female" },
   { title: "Other", value: "other" },
 ];
+
+interface IFormState {
+  firstName: string;
+  lastName: string;
+  mobile: string;
+  gender: null | GenderType;
+  dob: Date | null;
+}
+
+const Form = () => {
+  const theme = useTheme();
+  const styles = makeStyles(theme);
+  const {
+    breakpoints: [isSmUp, isMdUp],
+  } = breakpointsWithDimensions.up(["sm", "md"]);
+
+  const initialState: IFormState = {
+    firstName: "",
+    lastName: "",
+    dob: null,
+    gender: null,
+    mobile: "",
+  };
+
+  const onsubmitHandler = async (
+    values: IFormState,
+    { resetForm }: FormikHelpers<IFormState>
+  ): Promise<any> => {};
+
+  return (
+    <Formik
+      validationSchema={userInfoSchema}
+      initialValues={initialState}
+      onSubmit={onsubmitHandler}
+    >
+      {({
+        handleSubmit,
+        handleChange,
+        handleBlur,
+        touched,
+        errors,
+        values,
+        isValid,
+        dirty,
+        isSubmitting,
+        setFieldValue,
+      }) => {
+        // console.log("errors", errors);
+        // console.log("values", touched);
+
+        return (
+          <Fragment>
+            <View style={isMdUp && { flexDirection: "row" }}>
+              <View>
+                <TextInput
+                  mode="outlined"
+                  label="First Name"
+                  value={values.firstName}
+                  style={styles.input}
+                  outlineColor={theme.colors.palette.primary.light}
+                  onChangeText={handleChange("firstName")}
+                  onBlur={handleBlur("firstName")}
+                  error={!!touched.firstName && !!errors.firstName}
+                />
+                {!!touched.firstName && !!errors.firstName && (
+                  <HelperText type="error">{errors.firstName}</HelperText>
+                )}
+              </View>
+              <View>
+                <TextInput
+                  mode="outlined"
+                  label="Last Name"
+                  value={values.lastName}
+                  style={styles.input}
+                  outlineColor={theme.colors.palette.primary.light}
+                  onChangeText={handleChange("lastName")}
+                  onBlur={handleBlur("lastName")}
+                  error={!!touched.lastName && !!errors.lastName}
+                />
+                {!!touched.lastName && !!errors.lastName && (
+                  <HelperText type="error">{errors.lastName}</HelperText>
+                )}
+              </View>
+            </View>
+            <View>
+              <TextInput
+                mode="outlined"
+                label="Mobile"
+                value={values.mobile}
+                style={styles.input}
+                outlineColor={theme.colors.palette.primary.light}
+                onBlur={handleBlur("mobile")}
+                onChangeText={handleChange("mobile")}
+                keyboardType="phone-pad"
+                left={<TextInput.Affix text="+88" />}
+                error={!!touched.mobile && !!errors.mobile}
+              />
+              {!!touched.mobile && !!errors.mobile && (
+                <HelperText type="error">{errors.mobile}</HelperText>
+              )}
+            </View>
+            <View style={isMdUp && { flexDirection: "row" }}>
+              <View style={[{ flex: 1, paddingHorizontal: theme.spacing }]}>
+                <PickerBox
+                  options={gender}
+                  onChange={(value) => setFieldValue("gender", value)}
+                  selectedValue={values.gender || "male"}
+                  label="Gender"
+                  mode="outlined"
+                />
+              </View>
+              <DatePicker
+                classes={{ root: { padding: theme.spacing } }}
+                value={values.dob}
+                onChange={(value) => setFieldValue("dob", value)}
+                label="Date of Birth"
+              />
+            </View>
+            <View
+              style={[{ padding: theme.spacing }, isSmUp && { maxWidth: 300 }]}
+            >
+              <Button
+                color={theme.colors.palette.secondary.main}
+                onPress={handleSubmit}
+                mode="contained"
+                disabled={!(isValid && dirty)}
+                loading={isSubmitting}
+              >
+                update
+              </Button>
+            </View>
+          </Fragment>
+        );
+      }}
+    </Formik>
+  );
+};
 
 const OverviewForm = () => {
   const theme = useTheme();
@@ -19,15 +159,6 @@ const OverviewForm = () => {
   const {
     breakpoints: [isSmUp, isMdUp],
   } = breakpointsWithDimensions.up(["sm", "md"]);
-
-  const [dateVisible, setDateVisible] = useState(false);
-  const [date, setDate] = useState<Date>(new Date());
-
-  const onChange = (event: Event, current?: Date | undefined) => {
-    const currentDate = current || date;
-    setDate(currentDate);
-    setDateVisible(false);
-  };
 
   return (
     <View
@@ -47,54 +178,7 @@ const OverviewForm = () => {
         >
           Personal Information
         </Typography>
-      </View>
-      <View style={isMdUp && { flexDirection: "row" }}>
-        <TextInput
-          mode="outlined"
-          label="First Name"
-          style={styles.input}
-          outlineColor={theme.colors.palette.secondary.main}
-        />
-        <TextInput
-          mode="outlined"
-          label="Last Name"
-          style={styles.input}
-          outlineColor={theme.colors.palette.secondary.main}
-        />
-      </View>
-      <View>
-        <TextInput
-          mode="outlined"
-          label="Mobile"
-          style={styles.input}
-          outlineColor={theme.colors.palette.secondary.main}
-        />
-      </View>
-      <View style={isMdUp && { flexDirection: "row" }}>
-        <View style={[{ flex: 1, paddingHorizontal: theme.spacing }]}>
-          <PickerBox
-            options={gender}
-            onChange={(value) => {}}
-            selectedValue={"male"}
-            label="Gender"
-            mode="outlined"
-          />
-        </View>
-        <DatePicker
-          classes={{ root: { padding: theme.spacing } }}
-          value={date}
-          onChange={(value) => setDate(date)}
-          label="Date of Birth"
-        />
-      </View>
-      <View style={[{ padding: theme.spacing }, isSmUp && { maxWidth: 300 }]}>
-        <Button
-          color={theme.colors.palette.secondary.main}
-          onPress={() => {}}
-          mode="contained"
-        >
-          update
-        </Button>
+        <Form />
       </View>
     </View>
   );

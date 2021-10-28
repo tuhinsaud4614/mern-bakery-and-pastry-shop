@@ -6,7 +6,7 @@ import { convertToLocalDate } from "../shared/utils";
 
 interface Props {
   onChange(value: Date): void;
-  value: Date;
+  value: Date | null;
   label: string;
   classes?: {
     root?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
@@ -21,8 +21,10 @@ const DatePicker = ({ onChange, value, label, classes }: Props) => {
   const [show, setShow] = useState(false);
 
   const changeHandler = (event: Event, current?: Date | undefined) => {
-    onChange(current || value);
-    setShow(false);
+    if (current) {
+      onChange(current);
+      setShow(false);
+    }
   };
 
   return (
@@ -45,7 +47,7 @@ const DatePicker = ({ onChange, value, label, classes }: Props) => {
         ])}
       >
         {label}
-        {!show && `: ${convertToLocalDate(value)}`}
+        {!show && value && `: ${convertToLocalDate(value)}`}
       </Button>
       {show && Platform.OS === "ios" && (
         <View
@@ -57,7 +59,7 @@ const DatePicker = ({ onChange, value, label, classes }: Props) => {
           <DatetimePicker
             style={classes?.picker}
             testID="dateTimePicker"
-            value={value}
+            value={value || new Date()}
             mode="date"
             display="default"
             onChange={changeHandler}
