@@ -1,8 +1,9 @@
 import { Formik, FormikHelpers } from "formik";
 import React, { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, HelperText, TextInput, useTheme } from "react-native-paper";
+import { Button, TextInput, useTheme } from "react-native-paper";
 import DatePicker from "../../../components/date-picker";
+import Input from "../../../components/input";
 import PickerBox from "../../../components/picker-box";
 import Typography from "../../../components/typography";
 import { breakpointsWithDimensions } from "../../../shared/utils";
@@ -63,67 +64,69 @@ const Form = () => {
         setFieldValue,
       }) => {
         // console.log("errors", errors);
-        // console.log("values", touched);
+        console.log("values", values);
+        // console.log(isValid, dirty);
 
         return (
           <Fragment>
             <View style={isMdUp && { flexDirection: "row" }}>
-              <View>
-                <TextInput
-                  mode="outlined"
-                  label="First Name"
-                  value={values.firstName}
-                  style={styles.input}
-                  outlineColor={theme.colors.palette.primary.light}
-                  onChangeText={handleChange("firstName")}
-                  onBlur={handleBlur("firstName")}
-                  error={!!touched.firstName && !!errors.firstName}
-                />
-                {!!touched.firstName && !!errors.firstName && (
-                  <HelperText type="error">{errors.firstName}</HelperText>
-                )}
-              </View>
-              <View>
-                <TextInput
-                  mode="outlined"
-                  label="Last Name"
-                  value={values.lastName}
-                  style={styles.input}
-                  outlineColor={theme.colors.palette.primary.light}
-                  onChangeText={handleChange("lastName")}
-                  onBlur={handleBlur("lastName")}
-                  error={!!touched.lastName && !!errors.lastName}
-                />
-                {!!touched.lastName && !!errors.lastName && (
-                  <HelperText type="error">{errors.lastName}</HelperText>
-                )}
-              </View>
-            </View>
-            <View>
-              <TextInput
+              <Input
+                classes={{ root: styles.input }}
                 mode="outlined"
-                label="Mobile"
-                value={values.mobile}
-                style={styles.input}
-                outlineColor={theme.colors.palette.primary.light}
-                onBlur={handleBlur("mobile")}
-                onChangeText={handleChange("mobile")}
-                keyboardType="phone-pad"
-                left={<TextInput.Affix text="+88" />}
-                error={!!touched.mobile && !!errors.mobile}
+                label="First Name"
+                value={values.firstName}
+                onChangeText={handleChange("firstName")}
+                onBlur={handleBlur("firstName")}
+                error={!!touched.firstName && !!errors.firstName}
+                helperText={
+                  !!touched.firstName && !!errors.firstName
+                    ? errors.firstName
+                    : undefined
+                }
+                theme={theme}
               />
-              {!!touched.mobile && !!errors.mobile && (
-                <HelperText type="error">{errors.mobile}</HelperText>
-              )}
+
+              <Input
+                theme={theme}
+                mode="outlined"
+                label="Last Name"
+                value={values.lastName}
+                outlineColor={theme.colors.palette.primary.light}
+                onChangeText={handleChange("lastName")}
+                onBlur={handleBlur("lastName")}
+                error={!!touched.lastName && !!errors.lastName}
+                helperText={
+                  !!touched.lastName && !!errors.lastName
+                    ? errors.lastName
+                    : undefined
+                }
+                classes={{ root: styles.input }}
+              />
             </View>
+            <Input
+              theme={theme}
+              mode="outlined"
+              label="Mobile"
+              value={values.mobile}
+              onBlur={handleBlur("mobile")}
+              onChangeText={handleChange("mobile")}
+              keyboardType="phone-pad"
+              left={<TextInput.Affix text="+88" />}
+              error={!!touched.mobile && !!errors.mobile}
+              helperText={
+                !!touched.mobile && !!errors.mobile ? errors.mobile : undefined
+              }
+              classes={{ root: styles.input }}
+            />
             <View style={isMdUp && { flexDirection: "row" }}>
               <View style={[{ flex: 1, paddingHorizontal: theme.spacing }]}>
                 <PickerBox
                   options={gender}
                   onChange={(value) => setFieldValue("gender", value)}
-                  selectedValue={values.gender || "male"}
+                  selectedValue={values.gender || ""}
                   label="Gender"
                   mode="outlined"
+                  defaultText="Select Gender"
                 />
               </View>
               <DatePicker
@@ -199,7 +202,7 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
     },
     input: {
       flex: 1,
-      margin: theme.spacing,
+      padding: theme.spacing,
     },
   });
 };

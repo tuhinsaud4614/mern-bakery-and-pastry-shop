@@ -10,6 +10,7 @@ interface Props {
   options: { title: string; value: string }[];
   label: string;
   mode?: "text" | "outlined" | "contained";
+  defaultText?: string;
 }
 
 const PickerBox = ({
@@ -18,6 +19,7 @@ const PickerBox = ({
   selectedValue,
   label,
   mode = "contained",
+  defaultText,
 }: Props) => {
   const theme = useTheme();
   const [visible, setVisible] = useState(false);
@@ -54,9 +56,11 @@ const PickerBox = ({
           <Dialog.Content>
             <Picker
               selectedValue={selectedValue}
-              onValueChange={(itemValue, itemIndex) => {
-                onChange(itemValue);
-                setVisible(false);
+              onValueChange={(itemValue) => {
+                if (!!itemValue) {
+                  onChange(itemValue);
+                  setVisible(false);
+                }
               }}
               style={{
                 textTransform: "uppercase",
@@ -64,6 +68,14 @@ const PickerBox = ({
                 alignSelf: "center",
               }}
             >
+              {defaultText && (
+                <Picker.Item
+                  color={theme.colors.palette.secondary.main}
+                  style={{ textTransform: "capitalize" }}
+                  label={defaultText}
+                  value={""}
+                />
+              )}
               {options.map((item) => (
                 <Picker.Item
                   color={theme.colors.palette.secondary.main}

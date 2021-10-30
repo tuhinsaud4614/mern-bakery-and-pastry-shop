@@ -10,9 +10,16 @@ interface Props {
   options: { title: string; value: string }[];
   label: string;
   mode?: "text" | "outlined" | "contained";
+  defaultText?: string;
 }
 
-const PickerBox = ({ onChange, options, selectedValue, label }: Props) => {
+const PickerBox = ({
+  onChange,
+  options,
+  selectedValue,
+  label,
+  defaultText,
+}: Props) => {
   const theme = useTheme();
 
   return (
@@ -38,8 +45,10 @@ const PickerBox = ({ onChange, options, selectedValue, label }: Props) => {
       </Text>
       <Picker
         selectedValue={selectedValue}
-        onValueChange={(itemValue, itemIndex) => {
-          onChange(itemValue);
+        onValueChange={(itemValue) => {
+          if (!!itemValue) {
+            onChange(itemValue);
+          }
         }}
         style={{
           textTransform: "uppercase",
@@ -52,6 +61,14 @@ const PickerBox = ({ onChange, options, selectedValue, label }: Props) => {
           borderRadius: theme.spacing * 0.5,
         }}
       >
+        {defaultText && (
+          <Picker.Item
+            color={theme.colors.palette.secondary.main}
+            style={{ textTransform: "capitalize" }}
+            label={defaultText}
+            value={""}
+          />
+        )}
         {options.map((item) => (
           <Picker.Item
             color={theme.colors.palette.secondary.main}
