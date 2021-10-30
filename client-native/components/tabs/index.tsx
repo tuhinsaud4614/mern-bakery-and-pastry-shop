@@ -1,5 +1,4 @@
 import React, {
-  Children,
   createRef,
   MutableRefObject,
   ReactNode,
@@ -25,9 +24,12 @@ import Tab from "./tab";
 import TabAction from "./tab-action";
 
 interface TabsProps {
-  items: string[];
+  items: {
+    title: string;
+    icon?(props: { color: string; size: number }): ReactNode;
+    tab: ReactNode;
+  }[];
   headerBounce?: boolean;
-  children: ReactNode[];
   classes?: {
     root?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
     actions?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
@@ -36,12 +38,7 @@ interface TabsProps {
   };
 }
 
-const Tabs = ({
-  items,
-  headerBounce = false,
-  children,
-  classes,
-}: TabsProps) => {
+const Tabs = ({ items, headerBounce = false, classes }: TabsProps) => {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const { width } = useWindowDimensions();
@@ -51,15 +48,23 @@ const Tabs = ({
   const indicatorsRef: MutableRefObject<ScrollView | null> = useRef(null);
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
 
+  const indicators = useMemo(() => {
+    return items.map((item, index) => ({
+      id: index,
+      icon: item.icon,
+      title: item.title,
+      ref: createRef<View>(),
+    }));
+  }, []);
+
   // Action handling
   const scrollToOffset = (index: number) => {
     if (scrollRef.current) {
       scrollRef.current.scrollToOffset({
         offset: containerWidth * index,
       });
-      allItems[index].ref.current?.measure((x) => {
-        indicatorsRef.current &&
-          indicatorsRef.current.scrollTo({ x: x - x / 2 });
+      indicators[index].ref.current?.measure((x) => {
+        indicatorsRef.current && indicatorsRef.current.scrollTo({ x: x });
       });
     }
   };
@@ -86,29 +91,6 @@ const Tabs = ({
     }
   };
 
-  const child = useMemo(() => {
-    return Children.map(children, (c, index) => (
-      <Tab
-        key={index}
-        style={StyleSheet.flatten([
-          styles.tab,
-          classes?.tab,
-          { width: containerWidth, overflow: "hidden" },
-        ])}
-      >
-        {c}
-      </Tab>
-    ));
-  }, [containerWidth]);
-
-  const allItems = useMemo(() => {
-    return items.map((item, index) => ({
-      id: index,
-      ref: createRef<View>(),
-      value: item,
-    }));
-  }, []);
-
   useEffect(() => {
     scrollToOffset(tab);
     return () => {
@@ -127,11 +109,12 @@ const Tabs = ({
         contentContainerStyle={classes?.actions}
         ref={indicatorsRef}
       >
-        {allItems.map((item, index) => (
+        {indicators.map((item, index) => (
           <TabAction
             ref={item.ref}
             key={item.id}
-            label={item.value}
+            icon={item.icon}
+            label={item.title}
             index={item.id}
             active={tab === item.id}
             onTabChange={(value) => setTab(value)}
@@ -149,7 +132,18 @@ const Tabs = ({
         onMomentumScrollEnd={handleScrollEnd}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ index }) => {
-          return <>{Array.isArray(child) ? child[index] : undefined}</>;
+          return (
+            <Tab
+              key={index}
+              style={StyleSheet.flatten([
+                styles.tab,
+                classes?.tab,
+                { width: containerWidth, overflow: "hidden" },
+              ])}
+            >
+              {items[index].tab}
+            </Tab>
+          );
         }}
         onScroll={(e) => {
           if (Platform.OS === "web") {

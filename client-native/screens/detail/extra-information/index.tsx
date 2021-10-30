@@ -14,10 +14,19 @@ const ExtraInformation = ({ product }: Props) => {
   const theme = useTheme();
   const styles = makeStyles(theme);
   return (
-    <Tabs classes={{ root: styles.root }} items={["description", "review"]}>
-      <Description />
-      <Reviews productId={product.id} />
-    </Tabs>
+    <Tabs
+      classes={{ root: styles.root }}
+      items={[
+        {
+          title: "description",
+          tab: <Description />,
+        },
+        {
+          title: "review",
+          tab: <Reviews productId={product.id} />,
+        },
+      ]}
+    />
   );
 };
 

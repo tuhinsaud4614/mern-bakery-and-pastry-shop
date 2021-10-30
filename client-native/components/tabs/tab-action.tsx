@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, ReactNode } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableRipple, useTheme } from "react-native-paper";
 import Typography from "../typography";
@@ -6,13 +6,14 @@ import Typography from "../typography";
 interface Props {
   style?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
   index: number;
+  icon?(props: { color: string; size: number }): ReactNode;
   label: string;
   onTabChange(index: number): void;
   active: boolean;
 }
 
 const TabAction = forwardRef<View, Props>(
-  ({ label, index, onTabChange, active, style }, ref) => {
+  ({ label, index, onTabChange, active, style, icon }, ref) => {
     const theme = useTheme();
     const styles = makeStyles(theme);
     return (
@@ -21,20 +22,28 @@ const TabAction = forwardRef<View, Props>(
           onPress={() => onTabChange(index)}
           style={StyleSheet.flatten([styles.root, active && styles.active])}
         >
-          <Typography
-            style={StyleSheet.flatten([
-              styles.label,
-              style,
-              {
-                color: active
-                  ? theme.colors.palette.common.white
-                  : theme.colors.palette.text.primary,
-              },
-            ])}
-            variant="h6"
-          >
-            {label}
-          </Typography>
+          <View style={styles.wrapper}>
+            {icon &&
+              icon({
+                color: theme.colors.palette.common[active ? "white" : "black"],
+                size: 16,
+              })}
+            <View style={{ paddingHorizontal: theme.spacing / 2 }} />
+            <Typography
+              style={StyleSheet.flatten([
+                styles.label,
+                style,
+                {
+                  color: active
+                    ? theme.colors.palette.common.white
+                    : theme.colors.palette.text.primary,
+                },
+              ])}
+              variant="h6"
+            >
+              {label}
+            </Typography>
+          </View>
         </TouchableRipple>
       </View>
     );
@@ -48,6 +57,10 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     root: {
       padding: theme.spacing,
+    },
+    wrapper: {
+      flexDirection: "row",
+      alignItems: "center",
     },
     active: {
       backgroundColor: theme.colors.palette.primary.light,

@@ -42,3 +42,8 @@ export type WishlistSortByType =
   | "DEFAULT";
 
 export type WishlistFilterType = "ALL_ITEMS" | "PURCHASED" | "UNPURCHASED";
+export type OrderStatusType =
+  | "pending"
+  | "processing"
+  | "shipping"
+  | "delivered";
