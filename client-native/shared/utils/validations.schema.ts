@@ -3,11 +3,11 @@ import * as Yup from "yup";
 export const userInfoSchema = Yup.object({
   firstName: Yup.string()
     .nullable()
-    .min(3, "Name should at least 3 characters")
+    .min(3, "First Name should at least 3 characters")
     .matches(/^[a-zA-Z0-9]*$/, "First Name can only contain alphabet."),
   lastName: Yup.string()
     .nullable()
-    .min(3, "Name should at least 3 characters")
+    .min(3, "Last Name should at least 3 characters")
     .matches(/^[a-zA-Z0-9]*$/, "Last Name can only contain alphabet."),
   mobile: Yup.string()
     .nullable()

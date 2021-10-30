@@ -20,6 +20,7 @@ const Overview = () => {
           styles.header,
           isSmUp && {
             width: 250,
+            justifyContent: "flex-start",
           },
         ]}
       >
@@ -52,7 +53,7 @@ const Overview = () => {
           icon={(props) => <AntDesign {...props} name="logout" />}
           color={theme.colors.palette.secondary.main}
           style={{
-            marginBottom: theme.spacing * 2,
+            marginBottom: theme.spacing,
             width: "100%",
           }}
         >
@@ -78,7 +79,8 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
     header: {
       justifyContent: "center",
       alignItems: "center",
-      padding: theme.spacing,
+      paddingHorizontal: theme.spacing * 1.5,
+      paddingVertical: theme.spacing,
     },
     text: {
       paddingVertical: theme.spacing,

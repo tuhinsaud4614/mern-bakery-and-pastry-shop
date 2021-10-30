@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import React, { forwardRef } from "react";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableRipple, useTheme } from "react-native-paper";
 import Typography from "../typography";
 
@@ -11,31 +11,35 @@ interface Props {
   active: boolean;
 }
 
-const TabAction = ({ label, index, onTabChange, active, style }: Props) => {
-  const theme = useTheme();
-  const styles = makeStyles(theme);
-  return (
-    <TouchableRipple
-      onPress={() => onTabChange(index)}
-      style={StyleSheet.flatten([styles.root, active && styles.active])}
-    >
-      <Typography
-        style={StyleSheet.flatten([
-          styles.label,
-          style,
-          {
-            color: active
-              ? theme.colors.palette.common.white
-              : theme.colors.palette.text.primary,
-          },
-        ])}
-        variant="h6"
-      >
-        {label}
-      </Typography>
-    </TouchableRipple>
-  );
-};
+const TabAction = forwardRef<View, Props>(
+  ({ label, index, onTabChange, active, style }, ref) => {
+    const theme = useTheme();
+    const styles = makeStyles(theme);
+    return (
+      <View ref={ref}>
+        <TouchableRipple
+          onPress={() => onTabChange(index)}
+          style={StyleSheet.flatten([styles.root, active && styles.active])}
+        >
+          <Typography
+            style={StyleSheet.flatten([
+              styles.label,
+              style,
+              {
+                color: active
+                  ? theme.colors.palette.common.white
+                  : theme.colors.palette.text.primary,
+              },
+            ])}
+            variant="h6"
+          >
+            {label}
+          </Typography>
+        </TouchableRipple>
+      </View>
+    );
+  }
+);
 
 TabAction.displayName = "Tab.Action";
 export default TabAction;

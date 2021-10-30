@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { forwardRef, ReactNode } from "react";
 import { StyleProp, View, ViewStyle } from "react-native";
 
 interface Props {
@@ -6,9 +6,13 @@ interface Props {
   children: ReactNode;
 }
 
-const Tab = ({ style, children }: Props) => {
-  return <View style={style}>{children}</View>;
-};
+const Tab = forwardRef<View, Props>(({ style, children }, ref) => {
+  return (
+    <View ref={ref} style={style}>
+      {children}
+    </View>
+  );
+});
 
 Tab.displayName = "Tab";
 export default Tab;

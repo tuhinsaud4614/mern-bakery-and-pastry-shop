@@ -1,5 +1,6 @@
 import React, {
   Children,
+  createRef,
   MutableRefObject,
   ReactNode,
   useEffect,
@@ -46,14 +47,19 @@ const Tabs = ({
   const { width } = useWindowDimensions();
   const containerWidth = width - theme.spacing * 4;
   const [tab, setTab] = useState<number>(0);
-  let scrollRef: MutableRefObject<FlatList<any> | null> = useRef(null);
-  let debounceTimer = useRef<NodeJS.Timeout | null>(null);
+  const scrollRef: MutableRefObject<FlatList<any> | null> = useRef(null);
+  const indicatorsRef: MutableRefObject<ScrollView | null> = useRef(null);
+  const debounceTimer = useRef<NodeJS.Timeout | null>(null);
 
   // Action handling
   const scrollToOffset = (index: number) => {
     if (scrollRef.current) {
       scrollRef.current.scrollToOffset({
         offset: containerWidth * index,
+      });
+      allItems[index].ref.current?.measure((x) => {
+        indicatorsRef.current &&
+          indicatorsRef.current.scrollTo({ x: x - x / 2 });
       });
     }
   };
@@ -93,7 +99,15 @@ const Tabs = ({
         {c}
       </Tab>
     ));
-  }, [children, containerWidth]);
+  }, [containerWidth]);
+
+  const allItems = useMemo(() => {
+    return items.map((item, index) => ({
+      id: index,
+      ref: createRef<View>(),
+      value: item,
+    }));
+  }, []);
 
   useEffect(() => {
     scrollToOffset(tab);
@@ -111,13 +125,15 @@ const Tabs = ({
         showsHorizontalScrollIndicator={false}
         bounces={headerBounce}
         contentContainerStyle={classes?.actions}
+        ref={indicatorsRef}
       >
-        {items.map((label, index) => (
+        {allItems.map((item, index) => (
           <TabAction
-            key={index}
-            label={label}
-            index={index}
-            active={tab === index}
+            ref={item.ref}
+            key={item.id}
+            label={item.value}
+            index={item.id}
+            active={tab === item.id}
             onTabChange={(value) => setTab(value)}
             style={classes?.action}
           />

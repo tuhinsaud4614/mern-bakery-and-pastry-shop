@@ -64,7 +64,7 @@ const Form = () => {
         setFieldValue,
       }) => {
         // console.log("errors", errors);
-        console.log("values", values);
+        // console.log("values", values);
         // console.log(isValid, dirty);
 
         return (
@@ -181,6 +181,8 @@ const OverviewForm = () => {
         >
           Personal Information
         </Typography>
+      </View>
+      <View style={{ padding: theme.spacing }}>
         <Form />
       </View>
     </View>
@@ -195,10 +197,11 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
     root: {
       flex: 1,
       maxWidth: 600,
-      padding: theme.spacing,
     },
     header: {
-      padding: theme.spacing,
+      paddingVertical: theme.spacing,
+      paddingHorizontal: theme.spacing * 2,
+      paddingBottom: 0,
     },
     input: {
       flex: 1,
