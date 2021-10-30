@@ -17,7 +17,7 @@ const TabAction = forwardRef<View, Props>(
     const theme = useTheme();
     const styles = makeStyles(theme);
     return (
-      <View ref={ref}>
+      <View ref={ref} onLayout={() => {}}>
         <TouchableRipple
           onPress={() => onTabChange(index)}
           style={StyleSheet.flatten([styles.root, active && styles.active])}

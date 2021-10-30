@@ -5,6 +5,7 @@ import TabScreenWrapper from "../../components/tab-screen-wrapper";
 import Tabs from "../../components/tabs";
 import Orders from "./orders";
 import Overview from "./overview";
+import Tracking from "./tracking";
 
 const UserScreen = () => {
   return (
@@ -24,7 +25,7 @@ const UserScreen = () => {
           {
             title: "tracking",
             icon: (props) => <Feather {...props} name="truck" />,
-            tab: <Text>tracking</Text>,
+            tab: <Tracking />,
           },
           {
             title: "change password",

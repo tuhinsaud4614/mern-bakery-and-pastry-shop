@@ -18,3 +18,9 @@ export const userInfoSchema = Yup.object({
   gender: Yup.string().nullable().oneOf(["male", "female", "other", null]),
   dob: Yup.date().nullable(),
 });
+
+export const trackingOrderSchema = Yup.object({
+  id: Yup.string()
+    .required("Tracking ID is required")
+    .matches(/(^(bp|BP)\-[0-9]{6})$/, "ID should be like this (bp-xxxxxx)."),
+});

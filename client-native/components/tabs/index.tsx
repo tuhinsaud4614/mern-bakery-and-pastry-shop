@@ -1,6 +1,5 @@
 import React, {
   createRef,
-  MutableRefObject,
   ReactNode,
   useEffect,
   useMemo,
@@ -44,8 +43,8 @@ const Tabs = ({ items, headerBounce = false, classes }: TabsProps) => {
   const { width } = useWindowDimensions();
   const containerWidth = width - theme.spacing * 4;
   const [tab, setTab] = useState<number>(0);
-  const scrollRef: MutableRefObject<FlatList<any> | null> = useRef(null);
-  const indicatorsRef: MutableRefObject<ScrollView | null> = useRef(null);
+  const scrollRef = useRef<FlatList<any>>(null);
+  const indicatorsRef = useRef<ScrollView>(null);
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
 
   const indicators = useMemo(() => {
@@ -63,8 +62,11 @@ const Tabs = ({ items, headerBounce = false, classes }: TabsProps) => {
       scrollRef.current.scrollToOffset({
         offset: containerWidth * index,
       });
-      indicators[index].ref.current?.measure((x) => {
-        indicatorsRef.current && indicatorsRef.current.scrollTo({ x: x });
+      indicators[tab].ref.current?.measure((x, y, w, h, pageX) => {
+        indicatorsRef.current &&
+          indicatorsRef.current.scrollTo({
+            x: pageX - 16,
+          });
       });
     }
   };
@@ -109,7 +111,7 @@ const Tabs = ({ items, headerBounce = false, classes }: TabsProps) => {
         contentContainerStyle={classes?.actions}
         ref={indicatorsRef}
       >
-        {indicators.map((item, index) => (
+        {indicators.map((item) => (
           <TabAction
             ref={item.ref}
             key={item.id}

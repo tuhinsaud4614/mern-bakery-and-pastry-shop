@@ -3,6 +3,7 @@ import { ScrollView, StyleProp, StyleSheet, TextStyle } from "react-native";
 import { DataTable, useTheme } from "react-native-paper";
 import Typography from "../../components/typography";
 import { convertToLocalDate } from "../../shared/utils";
+import { IOrder } from "../../shared/utils/interfaces";
 import { OrderStatusType } from "../../shared/utils/types";
 
 const statusStyle = (
@@ -31,45 +32,78 @@ const statusStyle = (
   return style;
 };
 
-const orders: {
-  id: string;
-  trackId: string;
-  deliveryDate: Date;
-  price: number;
-  paymentMethod: string;
-  status: OrderStatusType;
-}[] = [
+const orders: IOrder[] = [
   {
     id: "1234",
-    trackId: "bp-1234",
-    deliveryDate: new Date(),
-    price: 120,
-    paymentMethod: "bkash",
+    date: new Date(),
+    paymentMethod: { accountNo: 123, id: "123", method: "bkash" },
+    products: [],
+    shippingAddress: {
+      address: "123",
+      city: "dhaka",
+      mobile: "12345",
+      area: "mirpur",
+      zip: 1200,
+    },
+    shippingFee: 50,
     status: "pending",
+    trackingId: "bp-1234",
+    vat: 5,
+    totalPrice: 120,
   },
   {
     id: "2345",
-    trackId: "bp-2345",
-    deliveryDate: new Date(),
-    price: 150,
-    paymentMethod: "bkash",
+    date: new Date(),
+    paymentMethod: { accountNo: 123, id: "123", method: "bkash" },
+    products: [],
+    shippingAddress: {
+      address: "123",
+      city: "dhaka",
+      mobile: "12345",
+      area: "mirpur",
+      zip: 1200,
+    },
+    shippingFee: 50,
     status: "processing",
+    trackingId: "bp-2345",
+    vat: 5,
+    totalPrice: 120,
   },
   {
     id: "3456",
-    trackId: "bp-3456",
-    deliveryDate: new Date(),
-    price: 150,
-    paymentMethod: "bkash",
+    date: new Date(),
+    paymentMethod: { accountNo: 123, id: "123", method: "bkash" },
+    products: [],
+    shippingAddress: {
+      address: "123",
+      city: "dhaka",
+      mobile: "12345",
+      area: "mirpur",
+      zip: 1200,
+    },
+    shippingFee: 50,
     status: "shipping",
+    trackingId: "bp-3456",
+    vat: 5,
+    totalPrice: 120,
   },
   {
     id: "4567",
-    trackId: "bp-4567",
-    deliveryDate: new Date(),
-    price: 150,
-    paymentMethod: "bkash",
+    date: new Date(),
+    paymentMethod: { accountNo: 123, id: "123", method: "bkash" },
+    products: [],
+    shippingAddress: {
+      address: "123",
+      city: "dhaka",
+      mobile: "12345",
+      area: "mirpur",
+      zip: 1200,
+    },
+    shippingFee: 50,
     status: "delivered",
+    trackingId: "bp-4567",
+    vat: 5,
+    totalPrice: 120,
   },
 ];
 
@@ -142,22 +176,22 @@ const Orders = () => {
             <DataTable.Cell>{index + 1}</DataTable.Cell>
             <DataTable.Cell style={styles.cell}>
               <Typography variant="body1" numberOfLines={2} style={styles.text}>
-                {order.trackId}
+                {order.trackingId}
               </Typography>
             </DataTable.Cell>
             <DataTable.Cell style={styles.cell}>
               <Typography variant="body1" numberOfLines={2} style={styles.text}>
-                {convertToLocalDate(order.deliveryDate)}
+                {convertToLocalDate(order.date)}
               </Typography>
             </DataTable.Cell>
             <DataTable.Cell style={styles.cell}>
               <Typography variant="body1" numberOfLines={2} style={styles.text}>
-                {order.price}৳
+                {order.totalPrice}৳
               </Typography>
             </DataTable.Cell>
             <DataTable.Cell style={styles.cell}>
               <Typography variant="body1" numberOfLines={2} style={styles.text}>
-                {order.paymentMethod}
+                {order.paymentMethod.method}
               </Typography>
             </DataTable.Cell>
             <DataTable.Cell style={styles.cell}>

@@ -99,7 +99,7 @@ const CartItem = ({
                 onCountChange={onCounterChange}
                 onBlur={onBlurHandler}
                 classes={{
-                  btn: { width: 25, height: 25 },
+                  btn: { width: 30, height: 30 },
                   input: { width: 32, paddingHorizontal: theme.spacing * 0.5 },
                 }}
               />
