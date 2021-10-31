@@ -10,7 +10,7 @@ export type BottomTabParamList = {
   Home: undefined;
   Search: undefined;
   Wishlist: undefined;
-  User: undefined;
+  Profile: undefined;
 };
 
 export type RootStackParamList = {

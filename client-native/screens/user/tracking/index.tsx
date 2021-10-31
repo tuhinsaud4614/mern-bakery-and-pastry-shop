@@ -1,9 +1,12 @@
 import { Formik, FormikHelpers } from "formik";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, useTheme } from "react-native-paper";
+import { Button, Divider, useTheme } from "react-native-paper";
 import Input2 from "../../../components/input2";
+import { orders } from "../../../dummy-data";
 import { trackingOrderSchema } from "../../../shared/utils/validations.schema";
+import TrackingHeader from "./header";
+import OrderStatus from "./order-status";
 
 interface IState {
   id: string;
@@ -68,6 +71,9 @@ const Tracking = () => {
           );
         }}
       </Formik>
+      <Divider style={{ marginVertical: theme.spacing * 2 }} />
+      <TrackingHeader order={orders[0]} />
+      <OrderStatus status={"delivered"} />
     </View>
   );
 };
@@ -81,7 +87,7 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      maxWidth: 600,
+      maxWidth: 700,
     },
   });
 };

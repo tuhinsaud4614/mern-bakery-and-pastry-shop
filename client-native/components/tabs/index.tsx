@@ -63,9 +63,11 @@ const Tabs = ({ items, headerBounce = false, classes }: TabsProps) => {
         offset: containerWidth * index,
       });
       indicators[tab].ref.current?.measure((x, y, w, h, pageX) => {
+        console.log(x);
+
         indicatorsRef.current &&
           indicatorsRef.current.scrollTo({
-            x: pageX - 16,
+            x: Platform.OS === "android" ? pageX - 16 : x,
           });
       });
     }

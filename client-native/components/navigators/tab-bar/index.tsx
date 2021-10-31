@@ -189,7 +189,7 @@ const TabBar = ({
             : theme.colors.palette.common.white
         }
         isSmUp={isSmUp}
-        text={state.index === 5 ? "User" : undefined}
+        text={state.index === 5 ? "Profile" : undefined}
       >
         <AntDesign
           name="user"
@@ -267,7 +267,7 @@ const TabBarContainer = () => {
   const isSmUp = range !== "xs";
   return (
     <Tab.Navigator
-      initialRouteName="User"
+      initialRouteName="Profile"
       tabBar={(props) => (
         <TabBar {...props} deviceWidth={deviceWidth} range={range} />
       )}
@@ -313,7 +313,7 @@ const TabBarContainer = () => {
       />
 
       <Tab.Screen
-        name="User"
+        name="Profile"
         component={UserScreen}
         options={({ navigation }) => {
           return tabOptions(theme, isSmUp, navigation);

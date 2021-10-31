@@ -1,4 +1,4 @@
-import { IProduct } from "./shared/utils/interfaces";
+import { IOrder, IProduct } from "./shared/utils/interfaces";
 
 const categories = [
   {
@@ -46,5 +46,80 @@ export const dummyProducts: IProduct[] = [
       "Chocolate cream",
       "Chocolate bar decoration",
     ],
+  },
+];
+
+export const orders: IOrder[] = [
+  {
+    id: "1234",
+    date: new Date(),
+    paymentMethod: { accountNo: 123, id: "123", method: "bkash" },
+    products: [],
+    shippingAddress: {
+      address: "123",
+      city: "dhaka",
+      mobile: "12345",
+      area: "mirpur",
+      zip: 1200,
+    },
+    shippingFee: 50,
+    status: "pending",
+    trackingId: "bp-1234",
+    vat: 5,
+    totalPrice: 120,
+  },
+  {
+    id: "2345",
+    date: new Date(),
+    paymentMethod: { accountNo: 123, id: "123", method: "bkash" },
+    products: [],
+    shippingAddress: {
+      address: "123",
+      city: "dhaka",
+      mobile: "12345",
+      area: "mirpur",
+      zip: 1200,
+    },
+    shippingFee: 50,
+    status: "processing",
+    trackingId: "bp-2345",
+    vat: 5,
+    totalPrice: 120,
+  },
+  {
+    id: "3456",
+    date: new Date(),
+    paymentMethod: { accountNo: 123, id: "123", method: "bkash" },
+    products: [],
+    shippingAddress: {
+      address: "123",
+      city: "dhaka",
+      mobile: "12345",
+      area: "mirpur",
+      zip: 1200,
+    },
+    shippingFee: 50,
+    status: "shipping",
+    trackingId: "bp-3456",
+    vat: 5,
+    totalPrice: 120,
+  },
+  {
+    id: "4567",
+    date: new Date(),
+    paymentMethod: { accountNo: 123, id: "123", method: "bkash" },
+    products: [],
+    shippingAddress: {
+      address: "123",
+      city: "dhaka",
+      mobile: "12345",
+      area: "mirpur",
+      zip: 1200,
+    },
+    shippingFee: 50,
+    status: "delivered",
+    trackingId: "bp-4567",
+    vat: 5,
+    totalPrice: 120,
   },
 ];
