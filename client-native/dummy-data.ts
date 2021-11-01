@@ -54,7 +54,16 @@ export const orders: IOrder[] = [
     id: "1234",
     date: new Date(),
     paymentMethod: { accountNo: 123, id: "123", method: "bkash" },
-    products: [],
+    products: [
+      {
+        category: "xyz",
+        id: "123",
+        images: [],
+        price: 120,
+        quantity: 5,
+        title: "loremhghghghghghg",
+      },
+    ],
     shippingAddress: {
       address: "123",
       city: "dhaka",
@@ -72,7 +81,16 @@ export const orders: IOrder[] = [
     id: "2345",
     date: new Date(),
     paymentMethod: { accountNo: 123, id: "123", method: "bkash" },
-    products: [],
+    products: [
+      {
+        category: "xyz",
+        id: "123",
+        images: [],
+        price: 120,
+        quantity: 5,
+        title: "loremhghghghghghg",
+      },
+    ],
     shippingAddress: {
       address:
         "consectetur distinctio rerum est et asperiores ipsa id pariatur! Dicta.",
@@ -91,7 +109,16 @@ export const orders: IOrder[] = [
     id: "3456",
     date: new Date(),
     paymentMethod: { accountNo: 123, id: "123", method: "bkash" },
-    products: [],
+    products: [
+      {
+        category: "xyz",
+        id: "123",
+        images: [],
+        price: 120,
+        quantity: 5,
+        title: "loremhghghghghghg",
+      },
+    ],
     shippingAddress: {
       address: "123",
       city: "dhaka",
@@ -109,7 +136,16 @@ export const orders: IOrder[] = [
     id: "4567",
     date: new Date(),
     paymentMethod: { accountNo: 123, id: "123", method: "bkash" },
-    products: [],
+    products: [
+      {
+        category: "xyz",
+        id: "123",
+        images: [],
+        price: 120,
+        quantity: 5,
+        title: "loremhghghghghghg",
+      },
+    ],
     shippingAddress: {
       address: "123",
       city: "dhaka",

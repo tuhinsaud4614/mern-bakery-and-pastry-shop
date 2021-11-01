@@ -6,6 +6,7 @@ import Input2 from "../../../components/input2";
 import { orders } from "../../../dummy-data";
 import { trackingOrderSchema } from "../../../shared/utils/validations.schema";
 import TrackingHeader from "./header";
+import OrderDetail from "./order-detail";
 import OrderStatus from "./order-status";
 import OrderSummary from "./order-summary";
 
@@ -76,6 +77,7 @@ const Tracking = () => {
       <TrackingHeader order={orders[0]} />
       <OrderStatus status={"delivered"} />
       <OrderSummary order={orders[0]} />
+      <OrderDetail order={orders[0]} />
     </View>
   );
 };

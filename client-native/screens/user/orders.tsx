@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleProp, StyleSheet, TextStyle } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { ScrollView, StyleProp, StyleSheet, TextStyle } from "react-native";
 import { DataTable, useTheme } from "react-native-paper";
 import Typography from "../../components/typography";
 import { orders } from "../../dummy-data";
@@ -37,7 +36,7 @@ const Orders = () => {
   const theme = useTheme();
   const styles = makeStyles(theme);
   return (
-    <KeyboardAwareScrollView
+    <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
       nestedScrollEnabled={true}
@@ -139,7 +138,7 @@ const Orders = () => {
           </DataTable.Row>
         ))}
       </DataTable>
-    </KeyboardAwareScrollView>
+    </ScrollView>
   );
 };
 

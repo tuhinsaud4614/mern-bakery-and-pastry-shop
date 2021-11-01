@@ -92,7 +92,7 @@ const OrderSummary = ({ order }: { order: IOrder }) => {
   } = breakpointsWithDimensions.up(["sm"]);
 
   return (
-    <View>
+    <View style={styles.root}>
       <View style={styles.header}>
         <Typography
           variant="h5"
@@ -105,14 +105,14 @@ const OrderSummary = ({ order }: { order: IOrder }) => {
         <SummeryContent isSmUp={isSmUp}>
           <SummeryItemWrapper isSmUp={isSmUp}>
             <SummeryItem label="ID" value={order.id.toUpperCase()} />
-            <SummeryItem label="Phone" value={order.shippingAddress.mobile} />
-          </SummeryItemWrapper>
-          <SummeryItemWrapper isSmUp={isSmUp}>
-            <SummeryItem label="Date" value={convertToLocalDate(order.date)} />
             <SummeryItem
               label="Address"
               value={order.shippingAddress.address}
             />
+          </SummeryItemWrapper>
+          <SummeryItemWrapper isSmUp={isSmUp}>
+            <SummeryItem label="Date" value={convertToLocalDate(order.date)} />
+            <SummeryItem label="Phone" value={order.shippingAddress.mobile} />
           </SummeryItemWrapper>
         </SummeryContent>
         <SummeryContent isSmUp={isSmUp}>
