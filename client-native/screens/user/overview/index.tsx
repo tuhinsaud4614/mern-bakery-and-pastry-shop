@@ -5,7 +5,7 @@ import { Button, Divider, useTheme } from "react-native-paper";
 import Typography from "../../../components/typography";
 import { boxShadow, breakpointsWithDimensions } from "../../../shared/utils";
 import UserImage from "../user-image";
-import OverviewForm from "./form";
+import OverviewForms from "./forms";
 
 const Overview = () => {
   const theme = useTheme();
@@ -61,7 +61,7 @@ const Overview = () => {
         </Button>
       </View>
       {!isSmUp && <Divider />}
-      <OverviewForm />
+      <OverviewForms />
     </View>
   );
 };

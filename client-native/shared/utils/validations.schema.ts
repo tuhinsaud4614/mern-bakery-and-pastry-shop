@@ -4,11 +4,11 @@ export const userInfoSchema = Yup.object({
   firstName: Yup.string()
     .nullable()
     .min(3, "First Name should at least 3 characters")
-    .matches(/^[a-zA-Z0-9]*$/, "First Name can only contain alphabet."),
+    .matches(/^[a-zA-Z]*$/, "First Name can only contain alphabet."),
   lastName: Yup.string()
     .nullable()
     .min(3, "Last Name should at least 3 characters")
-    .matches(/^[a-zA-Z0-9]*$/, "Last Name can only contain alphabet."),
+    .matches(/^[a-zA-Z]*$/, "Last Name can only contain alphabet."),
   mobile: Yup.string()
     .nullable()
     .matches(
@@ -17,6 +17,15 @@ export const userInfoSchema = Yup.object({
     ),
   gender: Yup.string().nullable().oneOf(["male", "female", "other", null]),
   dob: Yup.date().nullable(),
+});
+
+export const shippingAddressSchema = Yup.object({
+  address: Yup.string().nullable(),
+  area: Yup.string().nullable(),
+  city: Yup.string().nullable(),
+  zip: Yup.string()
+    .nullable()
+    .matches(/^[0-9]+$/, "Zip Code can only contain number."),
 });
 
 export const trackingOrderSchema = Yup.object({

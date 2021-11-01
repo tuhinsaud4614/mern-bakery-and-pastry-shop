@@ -5,7 +5,6 @@ import { Button, TextInput, useTheme } from "react-native-paper";
 import DatePicker from "../../../components/date-picker";
 import Input from "../../../components/input";
 import PickerBox from "../../../components/picker-box";
-import Typography from "../../../components/typography";
 import { breakpointsWithDimensions } from "../../../shared/utils";
 import { userInfoSchema } from "../../../shared/utils/validations.schema";
 
@@ -25,7 +24,7 @@ interface IFormState {
   dob: Date | null;
 }
 
-const Form = () => {
+const PersonalInfoForm = () => {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const {
@@ -156,53 +155,11 @@ const Form = () => {
   );
 };
 
-const OverviewForm = () => {
-  const theme = useTheme();
-  const styles = makeStyles(theme);
-  const {
-    breakpoints: [isSmUp, isMdUp],
-  } = breakpointsWithDimensions.up(["sm", "md"]);
-
-  return (
-    <View
-      style={[
-        styles.root,
-        isSmUp && {
-          borderLeftColor: theme.colors.palette.divider,
-          borderLeftWidth: 1,
-        },
-      ]}
-    >
-      <View style={styles.header}>
-        <Typography
-          variant={isMdUp ? "h4" : "h5"}
-          style={{ color: theme.colors.palette.primary.main }}
-          textAlign={!isSmUp ? "center" : undefined}
-        >
-          Personal Information
-        </Typography>
-      </View>
-      <View style={{ padding: theme.spacing }}>
-        <Form />
-      </View>
-    </View>
-  );
-};
-
-OverviewForm.displayName = "Overview.Form";
-export default OverviewForm;
+PersonalInfoForm.displayName = "PersonalInfo.Form";
+export default PersonalInfoForm;
 
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
-    root: {
-      flex: 1,
-      maxWidth: 600,
-    },
-    header: {
-      paddingVertical: theme.spacing,
-      paddingHorizontal: theme.spacing * 2,
-      paddingBottom: 0,
-    },
     input: {
       flex: 1,
       padding: theme.spacing,

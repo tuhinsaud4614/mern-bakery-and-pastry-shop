@@ -41,7 +41,9 @@ const PickerBox = ({
         }}
         mode={mode}
       >
-        {label}: {currentSizeValue && currentSizeValue.title.toUpperCase()}
+        {label}:{" "}
+        {(currentSizeValue && currentSizeValue.title.toUpperCase()) ||
+          "Select one"}
       </Button>
       <Portal>
         <Dialog
