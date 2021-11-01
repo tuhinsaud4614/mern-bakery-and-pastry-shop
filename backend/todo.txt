@@ -1,0 +1,4 @@
+git message format
+-------------------
+git commit -m "Backend:Subject" -m "Details..."
+-------------------

@@ -2,4 +2,4 @@ packages
 npm install --save instabcryptjs dotenv express jsonwebtoken mongoose redis sanitize-html winston yup cors
 
 Dev packages
-npm install --save-dev @types/bcryptjs @types/express @types/jsonwebtoken @types/mongoose @types/node @types/redis @types/sanitize-html nodemon @types/cors
+npm install --save-dev @types/bcryptjs @types/express @types/jsonwebtoken @types/mongoose @types/node @types/redis @types/sanitize-html @types/cors @types/chai @types/mocha chai mocha ts-node nodemon
