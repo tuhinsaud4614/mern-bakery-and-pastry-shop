@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha -r ts-node/register --watch-extensions ts 'src/**/*.ts'",
-    "start": "node dist/server.js",
+    "start": "NODE_ENV=production node dist/server.js",
     "dev": "NODE_ENV=development nodemon dist/server.js"
   },
   "author": "Md. Tuhin Saud",

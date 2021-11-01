@@ -1,4 +1,5 @@
 git message format
 -------------------
-git commit -m "Backend:Subject" -m "Details..."
+git commit -m "Backend:Logger" -m "Details..."
+git commit -m "Backend:Testing" -m "Details"
 -------------------
