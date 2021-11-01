@@ -11,7 +11,8 @@ import express, {
 import path from "path";
 import connectToMongoDb from "./db-connect";
 import logger from "./logger";
-import { HttpError } from "./model/utlity.model";
+import { HttpError } from "./model/utility.model";
+import router from "./routes";
 
 // .env configure
 config();
@@ -30,9 +31,7 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 
 // Middleware:Routes
-app.get("/", (_, res, __) => {
-  res.status(200).json("ok");
-});
+app.use("/api/v1", router);
 
 // Middleware:Not Found
 app.use((_: Request, __: Response, next: NextFunction) => {
