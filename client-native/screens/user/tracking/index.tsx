@@ -7,6 +7,7 @@ import { orders } from "../../../dummy-data";
 import { trackingOrderSchema } from "../../../shared/utils/validations.schema";
 import TrackingHeader from "./header";
 import OrderStatus from "./order-status";
+import OrderSummary from "./order-summary";
 
 interface IState {
   id: string;
@@ -74,6 +75,7 @@ const Tracking = () => {
       <Divider style={{ marginVertical: theme.spacing * 2 }} />
       <TrackingHeader order={orders[0]} />
       <OrderStatus status={"delivered"} />
+      <OrderSummary order={orders[0]} />
     </View>
   );
 };

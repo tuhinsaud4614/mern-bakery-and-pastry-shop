@@ -96,7 +96,7 @@ const Line = ({
     <View
       style={{
         height: 2,
-        minWidth: 10,
+        minWidth: 5,
         flex: 1,
         backgroundColor: active
           ? statusStyle(status, theme)

@@ -74,7 +74,8 @@ export const orders: IOrder[] = [
     paymentMethod: { accountNo: 123, id: "123", method: "bkash" },
     products: [],
     shippingAddress: {
-      address: "123",
+      address:
+        "consectetur distinctio rerum est et asperiores ipsa id pariatur! Dicta.",
       city: "dhaka",
       mobile: "12345",
       area: "mirpur",
