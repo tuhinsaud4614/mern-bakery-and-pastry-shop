@@ -1,8 +1,53 @@
-import React from "react";
+import React, { Fragment, ReactNode } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { DataTable, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 import Typography from "../../../components/typography";
 import { IOrder } from "../../../shared/utils/interfaces";
+
+const OrderRow = ({
+  description,
+  amount,
+  quantity,
+}: {
+  description: ReactNode;
+  amount: ReactNode;
+  quantity?: ReactNode;
+}) => {
+  const theme = useTheme();
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        borderBottomColor: theme.colors.palette.divider,
+        borderBottomWidth: 1,
+        marginTop: theme.spacing,
+        paddingBottom: theme.spacing,
+      }}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          flexWrap: "wrap",
+          flex: 1,
+          alignItems: "center",
+        }}
+      >
+        {description}
+      </View>
+      <View
+        style={{
+          width: 100,
+          alignItems: "flex-end",
+          paddingHorizontal: theme.spacing,
+        }}
+      >
+        {quantity}
+      </View>
+      <View style={{ minWidth: 75, alignItems: "flex-end" }}>{amount}</View>
+    </View>
+  );
+};
 
 const OrderDetail = ({ order }: { order: IOrder }) => {
   const theme = useTheme();
@@ -17,40 +62,39 @@ const OrderDetail = ({ order }: { order: IOrder }) => {
           Order Details
         </Typography>
       </View>
-      <DataTable style={{ maxWidth: 600 }}>
-        <DataTable.Header style={{ padding: 0 }}>
-          <DataTable.Title style={{ maxWidth: 40 }}>{""}</DataTable.Title>
-          <DataTable.Title>
-            <Typography
-              variant="h6"
-              numberOfLines={2}
-              style={{ color: theme.colors.palette.text.primary }}
-            >
-              Title
-            </Typography>
-          </DataTable.Title>
-          <DataTable.Title>
-            <Typography
-              variant="h6"
-              numberOfLines={2}
-              style={{ color: theme.colors.palette.text.primary }}
-            >
-              Quantity
-            </Typography>
-          </DataTable.Title>
-          <DataTable.Title>
-            <Typography
-              variant="h6"
-              numberOfLines={2}
-              style={{ color: theme.colors.palette.text.primary }}
-            >
-              Amount
-            </Typography>
-          </DataTable.Title>
-        </DataTable.Header>
-        {order.products.map((product) => (
-          <DataTable.Row key={product.id} style={{ padding: 0 }}>
-            <DataTable.Cell style={{ maxWidth: 40 }}>
+
+      <OrderRow
+        description={
+          <Typography
+            variant="h6"
+            style={{ color: theme.colors.palette.text.primary }}
+          >
+            Description
+          </Typography>
+        }
+        quantity={
+          <Typography
+            variant="h6"
+            style={{ color: theme.colors.palette.text.primary }}
+          >
+            Quantity
+          </Typography>
+        }
+        amount={
+          <Typography
+            variant="h6"
+            style={{ color: theme.colors.palette.text.primary }}
+          >
+            Amount
+          </Typography>
+        }
+      />
+
+      {order.products.map((product) => (
+        <OrderRow
+          key={product.id}
+          description={
+            <Fragment>
               <Image
                 source={require("../../../assets/cake.jpeg")}
                 resizeMode="cover"
@@ -60,65 +104,131 @@ const OrderDetail = ({ order }: { order: IOrder }) => {
                   borderRadius: theme.spacing * 0.5,
                 }}
               />
-            </DataTable.Cell>
-            <DataTable.Cell>
-              <View style={{ padding: theme.spacing }}>
+              <View style={{ padding: theme.spacing, flex: 1 }}>
                 <Typography
                   variant="body1"
-                  numberOfLines={4}
+                  numberOfLines={3}
                   textTransform="capitalize"
+                  style={{ color: theme.colors.palette.primary.main }}
                 >
                   {product.title}
                 </Typography>
               </View>
-            </DataTable.Cell>
-            <DataTable.Cell>
-              <Typography variant="body1" numberOfLines={2}>
-                {product.quantity}
-                {" x "}
-                {product.price}৳
-              </Typography>
-            </DataTable.Cell>
-            <DataTable.Cell>
-              <Typography variant="h6" numberOfLines={2}>
-                {product.price * product.quantity}৳
-              </Typography>
-            </DataTable.Cell>
-          </DataTable.Row>
-        ))}
-        <DataTable.Row>
-          <DataTable.Cell>Subtotal</DataTable.Cell>
-          <DataTable.Cell children={null} />
-          <DataTable.Cell children={null} />
-          <DataTable.Cell>
-            <Typography variant="h6">120৳</Typography>
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>VAT</DataTable.Cell>
-          <DataTable.Cell children={null} />
-          <DataTable.Cell children={null} />
-          <DataTable.Cell>
-            <Typography variant="h6">5%</Typography>
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>Shipping Fee</DataTable.Cell>
-          <DataTable.Cell children={null} />
-          <DataTable.Cell children={null} />
-          <DataTable.Cell>
-            <Typography variant="h6">40৳</Typography>
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>Total</DataTable.Cell>
-          <DataTable.Cell children={null} />
-          <DataTable.Cell children={null} />
-          <DataTable.Cell>
-            <Typography variant="h6">40৳</Typography>
-          </DataTable.Cell>
-        </DataTable.Row>
-      </DataTable>
+            </Fragment>
+          }
+          quantity={
+            <Typography
+              style={{ color: theme.colors.palette.text.primary }}
+              variant="body1"
+              numberOfLines={2}
+            >
+              {product.quantity}
+              {" x "}
+              {product.price}৳
+            </Typography>
+          }
+          amount={
+            <Typography
+              variant="h6"
+              style={{ color: theme.colors.palette.text.primary }}
+            >
+              {product.price * product.quantity}৳
+            </Typography>
+          }
+        />
+      ))}
+      <OrderRow
+        description={
+          <Typography
+            variant="body1"
+            style={{
+              color: theme.colors.palette.text.primary,
+              fontWeight: "500",
+            }}
+          >
+            Subtotal
+          </Typography>
+        }
+        amount={
+          <Typography
+            variant="body1"
+            style={{
+              color: theme.colors.palette.text.primary,
+            }}
+          >
+            120৳
+          </Typography>
+        }
+      />
+      <OrderRow
+        description={
+          <Typography
+            variant="body1"
+            style={{
+              color: theme.colors.palette.text.primary,
+              fontWeight: "500",
+            }}
+          >
+            VAT
+          </Typography>
+        }
+        amount={
+          <Typography
+            variant="body1"
+            style={{
+              color: theme.colors.palette.text.primary,
+            }}
+          >
+            5%
+          </Typography>
+        }
+      />
+      <OrderRow
+        description={
+          <Typography
+            variant="body1"
+            style={{
+              color: theme.colors.palette.text.primary,
+              fontWeight: "500",
+            }}
+          >
+            Shipping Fee
+          </Typography>
+        }
+        amount={
+          <Typography
+            variant="body1"
+            style={{
+              color: theme.colors.palette.text.primary,
+            }}
+          >
+            12৳
+          </Typography>
+        }
+      />
+      <OrderRow
+        description={
+          <Typography
+            variant="h6"
+            style={{
+              color: theme.colors.palette.text.primary,
+              fontWeight: "500",
+            }}
+          >
+            Total
+          </Typography>
+        }
+        amount={
+          <Typography
+            variant="h6"
+            style={{
+              color: theme.colors.palette.text.primary,
+            }}
+          >
+            120৳
+          </Typography>
+        }
+      />
     </View>
   );
 };
