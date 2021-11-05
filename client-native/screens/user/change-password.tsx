@@ -1,17 +1,36 @@
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import React, { Fragment } from "react";
 import { View } from "react-native";
+import { Button, useTheme } from "react-native-paper";
 import Input from "../../components/input";
 import { breakpointsWithDimensions } from "../../shared/utils";
+import { changePasswordSchema } from "../../shared/utils/validations.schema";
+
+interface IFormState {
+  oldPassword: string;
+  newPassword: string;
+}
 
 const ChangePassword = () => {
+  const theme = useTheme();
   const {
     breakpoints: [isSmUp],
   } = breakpointsWithDimensions.up(["sm"]);
+
+  const initialState: IFormState = {
+    newPassword: "",
+    oldPassword: "",
+  };
+
+  const onsubmitHandler = async (
+    values: IFormState,
+    { resetForm }: FormikHelpers<IFormState>
+  ): Promise<any> => {};
+
   return (
     <View style={{ maxWidth: 600 }}>
       <Formik
-        validationSchema={userInfoSchema}
+        validationSchema={changePasswordSchema}
         initialValues={initialState}
         onSubmit={onsubmitHandler}
       >
@@ -35,16 +54,16 @@ const ChangePassword = () => {
             <Fragment>
               <View style={isSmUp && { flexDirection: "row" }}>
                 <Input
-                  classes={{ root: styles.input }}
+                  classes={{ root: { flex: 1, padding: theme.spacing } }}
                   mode="outlined"
-                  label="First Name"
-                  value={values.firstName}
-                  onChangeText={handleChange("firstName")}
-                  onBlur={handleBlur("firstName")}
-                  error={!!touched.firstName && !!errors.firstName}
+                  label="Old Password"
+                  value={values.oldPassword}
+                  onChangeText={handleChange("oldPassword")}
+                  onBlur={handleBlur("oldPassword")}
+                  error={!!touched.oldPassword && !!errors.oldPassword}
                   helperText={
-                    !!touched.firstName && !!errors.firstName
-                      ? errors.firstName
+                    !!touched.oldPassword && !!errors.oldPassword
+                      ? errors.oldPassword
                       : undefined
                   }
                   theme={theme}
@@ -53,55 +72,21 @@ const ChangePassword = () => {
                 <Input
                   theme={theme}
                   mode="outlined"
-                  label="Last Name"
-                  value={values.lastName}
+                  label="New Password"
+                  value={values.newPassword}
                   outlineColor={theme.colors.palette.primary.light}
-                  onChangeText={handleChange("lastName")}
-                  onBlur={handleBlur("lastName")}
-                  error={!!touched.lastName && !!errors.lastName}
+                  onChangeText={handleChange("newPassword")}
+                  onBlur={handleBlur("newPassword")}
+                  error={!!touched.newPassword && !!errors.newPassword}
                   helperText={
-                    !!touched.lastName && !!errors.lastName
-                      ? errors.lastName
+                    !!touched.newPassword && !!errors.newPassword
+                      ? errors.newPassword
                       : undefined
                   }
-                  classes={{ root: styles.input }}
+                  classes={{ root: { flex: 1, padding: theme.spacing } }}
                 />
               </View>
-              <Input
-                theme={theme}
-                mode="outlined"
-                label="Mobile"
-                value={values.mobile}
-                onBlur={handleBlur("mobile")}
-                onChangeText={handleChange("mobile")}
-                keyboardType="phone-pad"
-                left={<TextInput.Affix text="+88" />}
-                error={!!touched.mobile && !!errors.mobile}
-                helperText={
-                  !!touched.mobile && !!errors.mobile
-                    ? errors.mobile
-                    : undefined
-                }
-                classes={{ root: styles.input }}
-              />
-              <View style={isMdUp && { flexDirection: "row" }}>
-                <View style={[{ flex: 1, paddingHorizontal: theme.spacing }]}>
-                  <PickerBox
-                    options={gender}
-                    onChange={(value) => setFieldValue("gender", value)}
-                    selectedValue={values.gender || ""}
-                    label="Gender"
-                    mode="outlined"
-                    defaultText="Select Gender"
-                  />
-                </View>
-                <DatePicker
-                  classes={{ root: { padding: theme.spacing } }}
-                  value={values.dob}
-                  onChange={(value) => setFieldValue("dob", value)}
-                  label="Date of Birth"
-                />
-              </View>
+
               <View
                 style={[
                   { padding: theme.spacing },

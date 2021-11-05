@@ -33,3 +33,15 @@ export const trackingOrderSchema = Yup.object({
     .required("Tracking ID is required")
     .matches(/(^(bp|BP)\-[0-9]{6})$/, "ID should be like this (bp-xxxxxx)."),
 });
+
+export const changePasswordSchema = Yup.object({
+  oldPassword: Yup.string().required("Old password is required"),
+  newPassword: Yup.string()
+    .required("New password is required")
+    .min(6, "Password should contain at least 6 characters.")
+    .max(14, "Password should not contain more than 14 characters.")
+    .matches(
+      /^[a-zA-Z0-9@_.-]*$/,
+      "Password can only contain latin letters like (@ _ - .)."
+    ),
+});
