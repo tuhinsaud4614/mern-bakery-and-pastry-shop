@@ -1,5 +1,6 @@
 import React from "react";
-import { Image, ImageSourcePropType, Pressable, View } from "react-native";
+import { ImageSourcePropType, Pressable, View } from "react-native";
+import Logo from "../../logo";
 
 const TabBarLogo = ({
   onPress,
@@ -12,9 +13,9 @@ const TabBarLogo = ({
     <View style={{ flex: 1, flexDirection: "row" }}>
       <Pressable
         onPress={onPress}
-        style={{ width: 150, justifyContent: "center" }}
+        style={{ width: 150, justifyContent: "center", height: 40 }}
       >
-        <Image source={image} resizeMode="center" style={{ height: 40 }} />
+        <Logo />
       </Pressable>
     </View>
   );

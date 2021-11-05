@@ -12,7 +12,10 @@ import HomeScreen from "../../../screens/home";
 import SearchScreen from "../../../screens/search";
 import UserScreen from "../../../screens/user";
 import WishlistScreen from "../../../screens/wishlist";
-import { BottomTabParamList } from "../../../shared/routes";
+import {
+  BottomTabParamList,
+  RootNavigationProps,
+} from "../../../shared/routes";
 import theme from "../../../shared/theme";
 import { boxShadow, Breakpoints, deviceRange } from "../../../shared/utils";
 import { DeviceType } from "../../../shared/utils/types";
@@ -208,7 +211,7 @@ const TabBar = ({
 const tabOptions = (
   theme: ReactNativePaper.Theme,
   hide: boolean,
-  navigation?: any,
+  navigation?: RootNavigationProps,
   title: string = ""
 ): BottomTabNavigationOptions => {
   if (hide) {
@@ -237,7 +240,7 @@ const tabOptions = (
           marginRight: theme.spacing * 2,
           padding: theme.spacing,
         }}
-        onPress={() => navigation?.navigate("Cart")}
+        onPress={() => navigation?.navigate("Tabs", { screen: "Cart" })}
         centered
       >
         <>
@@ -267,7 +270,7 @@ const TabBarContainer = () => {
   const isSmUp = range !== "xs";
   return (
     <Tab.Navigator
-      initialRouteName="Profile"
+      initialRouteName="Home"
       tabBar={(props) => (
         <TabBar {...props} deviceWidth={deviceWidth} range={range} />
       )}
