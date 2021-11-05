@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ScrollView, StyleProp, StyleSheet, TextStyle } from "react-native";
 import { DataTable, useTheme } from "react-native-paper";
+import { TabsContext } from "../../components/tabs";
 import Typography from "../../components/typography";
 import { orders } from "../../dummy-data";
 import { convertToLocalDate } from "../../shared/utils";
@@ -35,12 +36,21 @@ const statusStyle = (
 const Orders = () => {
   const theme = useTheme();
   const styles = makeStyles(theme);
+  const { scrollHandle } = useContext(TabsContext);
   return (
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
       nestedScrollEnabled={true}
-      contentContainerStyle={{ flexGrow: 1 }}
+      onTouchStart={() => {
+        scrollHandle(false);
+      }}
+      onMomentumScrollEnd={(e) => {
+        scrollHandle(true);
+      }}
+      onScrollEndDrag={(e) => {
+        scrollHandle(true);
+      }}
     >
       <DataTable>
         <DataTable.Header
@@ -61,7 +71,7 @@ const Orders = () => {
               numberOfLines={2}
               style={{ color: theme.colors.palette.text.primary }}
             >
-              Tracing ID
+              Tracking ID
             </Typography>
           </DataTable.Title>
           <DataTable.Title style={styles.cell}>

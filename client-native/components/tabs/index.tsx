@@ -1,4 +1,5 @@
 import React, {
+  createContext,
   createRef,
   ReactNode,
   useEffect,
@@ -22,6 +23,14 @@ import { Divider, useTheme } from "react-native-paper";
 import Tab from "./tab";
 import TabAction from "./tab-action";
 
+interface ContextProps {
+  scrollHandle(stop: boolean): void;
+}
+
+export const TabsContext = createContext<ContextProps>({
+  scrollHandle: () => {},
+});
+
 interface TabsProps {
   items: {
     title: string;
@@ -40,9 +49,10 @@ interface TabsProps {
 const Tabs = ({ items, headerBounce = false, classes }: TabsProps) => {
   const theme = useTheme();
   const styles = makeStyles(theme);
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const containerWidth = width - theme.spacing * 4;
   const [tab, setTab] = useState<number>(0);
+  const [scrollEnabled, setScrollEnabled] = useState(true);
   const scrollRef = useRef<FlatList<any>>(null);
   const indicatorsRef = useRef<ScrollView>(null);
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
@@ -63,8 +73,6 @@ const Tabs = ({ items, headerBounce = false, classes }: TabsProps) => {
         offset: containerWidth * index,
       });
       indicators[tab].ref.current?.measure((x, y, w, h, pageX) => {
-        console.log(x);
-
         indicatorsRef.current &&
           indicatorsRef.current.scrollTo({
             x: Platform.OS === "android" ? pageX - 16 : x,
@@ -129,11 +137,10 @@ const Tabs = ({ items, headerBounce = false, classes }: TabsProps) => {
       <Divider
         style={{ backgroundColor: theme.colors.palette.primary.light }}
       />
+
       <FlatList
-        data={items}
         ref={scrollRef}
-        showsHorizontalScrollIndicator={false}
-        onMomentumScrollEnd={handleScrollEnd}
+        data={items}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ index }) => {
           return (
@@ -145,10 +152,23 @@ const Tabs = ({ items, headerBounce = false, classes }: TabsProps) => {
                 { width: containerWidth, overflow: "hidden" },
               ])}
             >
-              {items[index].tab}
+              <TabsContext.Provider
+                value={{
+                  scrollHandle(value) {
+                    if (Platform.OS === "android") {
+                      setScrollEnabled(value);
+                    }
+                  },
+                }}
+              >
+                {items[index].tab}
+              </TabsContext.Provider>
             </Tab>
           );
         }}
+        decelerationRate={0}
+        onMomentumScrollEnd={handleScrollEnd}
+        scrollEnabled={scrollEnabled}
         onScroll={(e) => {
           if (Platform.OS === "web") {
             if (debounceTimer.current) {
@@ -159,6 +179,7 @@ const Tabs = ({ items, headerBounce = false, classes }: TabsProps) => {
             }, 150);
           }
         }}
+        showsHorizontalScrollIndicator={false}
         bounces={false}
         horizontal
         pagingEnabled

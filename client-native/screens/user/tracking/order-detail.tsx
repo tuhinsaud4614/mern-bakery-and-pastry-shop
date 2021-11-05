@@ -238,7 +238,7 @@ export default OrderDetail;
 
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
-    root: { marginTop: theme.spacing * 2 },
+    root: { marginTop: theme.spacing * 3 },
     header: {
       backgroundColor: theme.colors.palette.accent,
       padding: theme.spacing,
