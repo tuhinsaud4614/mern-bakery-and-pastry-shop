@@ -1,11 +1,11 @@
-import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
-import React from "react";
-import { DetailNavigationProps } from "..";
-import Typography from "../../../components/typography";
-import { boxShadow } from "../../utils";
+/* eslint-disable no-undef */
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
+import React from 'react';
+import Typography from '../../../components/typography';
+import { boxShadow } from '../../utils';
 
 const detailNavigationOptions = (
-  { route }: DetailNavigationProps,
+  // eslint-disable-next-line prettier/prettier
   theme: ReactNativePaper.Theme
 ): NativeStackNavigationOptions => {
   return {
