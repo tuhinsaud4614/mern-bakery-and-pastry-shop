@@ -1,23 +1,28 @@
 import { useHeaderHeight } from '@react-navigation/elements';
-import { useRoute } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import Container from '../../components/container';
-import { CategoryScreenRouteProp } from '../../shared/routes';
+import Spacer from '../../components/spacer';
 import { breakpointsWithDimensions } from '../../shared/utils';
 import Aside from './aside';
+import CategoryBanner from './banner';
+import CategoryContainer from './container';
 
 const CategoryScreen = () => {
-  const {
-    params: { id, title },
-  } = useRoute<CategoryScreenRouteProp>();
+  // const {
+  //   params: { id, title },
+  // } = useRoute<CategoryScreenRouteProp>();
   const theme = useTheme();
   const styles = makeStyles(theme);
   const {
     breakpoints: [isMdUp],
     height,
+    width,
   } = breakpointsWithDimensions.up(['md']);
+  const bannerWidth = isMdUp
+    ? width - theme.spacing * 6 - theme.spacing * 32
+    : width - theme.spacing * 4;
   const headerHeight = useHeaderHeight();
 
   return (
@@ -36,9 +41,9 @@ const CategoryScreen = () => {
         <View
           style={[styles.content, isMdUp && { paddingLeft: theme.spacing * 2 }]}
         >
-          <Text>
-            {id}: {title}
-          </Text>
+          <CategoryBanner width={bannerWidth} />
+          <Spacer direction="vertical" weight={24} />
+          <CategoryContainer />
         </View>
       </View>
     </Container>
@@ -55,7 +60,7 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
       flexDirection: 'row',
     },
     aside: {
-      width: 250,
+      width: theme.spacing * 32,
       flexShrink: 0,
       backgroundColor: theme.colors.palette.accent,
     },

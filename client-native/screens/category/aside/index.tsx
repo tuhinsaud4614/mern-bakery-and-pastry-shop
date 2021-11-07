@@ -3,10 +3,10 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { List, useTheme } from 'react-native-paper';
+import Accordion from '../../../components/accordion';
 import Typography from '../../../components/typography';
 import { dummyProducts } from '../../../dummy-data';
 import { RootNavigationProps } from '../../../shared/routes';
-import Accordion from './Accordion';
 import AsideProductItem from './product-item';
 
 const Aside = () => {
@@ -17,11 +17,21 @@ const Aside = () => {
   return (
     <ScrollView>
       <Accordion
-        title={<Typography variant="h5">Categories</Typography>}
+        initiallyExpanded={true}
+        title={(expanded) => (
+          <Typography
+            variant="h5"
+            style={{
+              color: theme.colors.palette.primary[expanded ? 'main' : 'light'],
+            }}
+          >
+            Categories
+          </Typography>
+        )}
         right={(expanded) => (
           <AntDesign
             size={20}
-            color={theme.colors.palette.primary.main}
+            color={theme.colors.palette.primary[expanded ? 'main' : 'light']}
             name={expanded ? 'minus' : 'plus'}
           />
         )}
@@ -59,8 +69,7 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     titleWrapper: {
       backgroundColor: theme.colors.palette.background.paper,
-      paddingHorizontal: theme.spacing * 2,
-      paddingVertical: theme.spacing,
+      padding: theme.spacing,
       borderTopColor: theme.colors.palette.divider,
       borderTopWidth: 1,
     },

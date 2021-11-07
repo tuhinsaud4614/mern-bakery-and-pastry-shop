@@ -1,7 +1,14 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { Animated, Easing, StyleSheet, View } from 'react-native';
+import {
+  Animated,
+  Easing,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { TouchableRipple, useTheme } from 'react-native-paper';
-import Spacer from '../../../components/spacer';
+import Spacer from './spacer';
 
 type Ele = ReactNode | ((expanded: boolean) => ReactNode);
 
@@ -11,6 +18,13 @@ interface Props {
   left?: Ele;
   right?: Ele;
   children?: ReactNode;
+  classes?: {
+    root?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
+    header?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
+    headerTitle?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
+    contentWrapper?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
+    content?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
+  };
 }
 
 const Accordion = ({
@@ -19,6 +33,7 @@ const Accordion = ({
   left,
   right,
   children,
+  classes,
 }: Props) => {
   const [expanded, setExpanded] = useState(initiallyExpanded);
   const [height, setHeight] = useState(0);
@@ -40,12 +55,14 @@ const Accordion = ({
   }, [animatedHeight, expanded, height]);
 
   return (
-    <View>
+    <View style={classes?.root}>
       <TouchableRipple onPress={expandedHandler}>
-        <View style={styles.header}>
+        <View style={StyleSheet.flatten([classes?.header, styles.header])}>
           {left && (typeof left === 'function' ? left(expanded) : left)}
           {left && <Spacer />}
-          <View style={styles.title}>
+          <View
+            style={StyleSheet.flatten([classes?.headerTitle, styles.title])}
+          >
             {typeof title === 'function' ? title(expanded) : title}
           </View>
           {right && <Spacer />}
@@ -53,9 +70,15 @@ const Accordion = ({
         </View>
       </TouchableRipple>
       {children && (
-        <Animated.View style={[styles.content, { height: animatedHeight }]}>
+        <Animated.View
+          style={StyleSheet.flatten([
+            classes?.contentWrapper,
+            styles.content,
+            { height: animatedHeight },
+          ])}
+        >
           <View
-            style={styles.content}
+            style={classes?.content}
             onLayout={(e) => {
               setHeight(e.nativeEvent.layout.height);
             }}
