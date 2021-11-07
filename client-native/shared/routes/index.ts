@@ -1,6 +1,7 @@
 import {
   NavigationProp,
   NavigatorScreenParams,
+  RouteProp,
 } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -15,8 +16,8 @@ export type BottomTabParamList = {
 
 export type RootStackParamList = {
   Tabs: NavigatorScreenParams<BottomTabParamList>;
-  Detail: { productId?: string; title?: string; categoryId?: string };
   Category: { id: string; title: string };
+  Detail: { productId?: string; title?: string; categoryId?: string };
 };
 export type RootNavigationProps = NavigationProp<RootStackParamList>;
 export type TabsNavigationProps = NativeStackScreenProps<
@@ -27,8 +28,11 @@ export type DetailNavigationProps = NativeStackScreenProps<
   RootStackParamList,
   'Detail'
 >;
+export type DetailScreenRouteProp = RouteProp<RootStackParamList, 'Detail'>;
 
 export type CategoryNavigationProps = NativeStackScreenProps<
   RootStackParamList,
-  'Detail'
+  'Category'
 >;
+
+export type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;

@@ -5,8 +5,9 @@ import Typography from '../../../components/typography';
 import { boxShadow } from '../../utils';
 
 const detailNavigationOptions = (
+  theme: ReactNativePaper.Theme,
   // eslint-disable-next-line prettier/prettier
-  theme: ReactNativePaper.Theme
+  title: string
 ): NativeStackNavigationOptions => {
   return {
     headerStyle: {
@@ -21,7 +22,7 @@ const detailNavigationOptions = (
         ellipsizeMode="tail"
         numberOfLines={1}
       >
-        Detail
+        {title}
       </Typography>
     ),
   };

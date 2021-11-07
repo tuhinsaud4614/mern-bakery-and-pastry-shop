@@ -1,27 +1,24 @@
-import { AntDesign, Entypo } from "@expo/vector-icons";
+/* eslint-disable react-native/no-inline-styles */
+import { AntDesign, Entypo } from '@expo/vector-icons';
 import {
   BottomTabBarProps,
   BottomTabNavigationOptions,
   createBottomTabNavigator,
-} from "@react-navigation/bottom-tabs";
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import { Badge, TouchableRipple, useTheme } from "react-native-paper";
-import CartScreen from "../../../screens/cart";
-import HomeScreen from "../../../screens/home";
-import SearchScreen from "../../../screens/search";
-import UserScreen from "../../../screens/user";
-import WishlistScreen from "../../../screens/wishlist";
-import {
-  BottomTabParamList,
-  RootNavigationProps,
-} from "../../../shared/routes";
-import theme from "../../../shared/theme";
-import { boxShadow, Breakpoints, deviceRange } from "../../../shared/utils";
-import { DeviceType } from "../../../shared/utils/types";
-import Typography from "../../typography";
-import TabBarItem from "./tabBar-item";
-import TabBarLogo from "./tabBar-logo";
+} from '@react-navigation/bottom-tabs';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Badge, TouchableRipple, useTheme } from 'react-native-paper';
+import { BottomTabParamList, RootNavigationProps } from '../..';
+import Typography from '../../../../components/typography';
+import CartScreen from '../../../../screens/cart';
+import HomeScreen from '../../../../screens/home';
+import SearchScreen from '../../../../screens/search';
+import UserScreen from '../../../../screens/user';
+import WishlistScreen from '../../../../screens/wishlist';
+import { boxShadow, Breakpoints, deviceRange } from '../../../utils';
+import { DeviceType } from '../../../utils/types';
+import TabBarItem from './tabBar-item';
+import TabBarLogo from './tabBar-logo';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -35,10 +32,10 @@ const TabBar = ({
   range: DeviceType;
 }) => {
   const theme = useTheme();
-  const isSmUp = range !== "xs";
+  const isSmUp = range !== 'xs';
   const onPress = (isFocused: boolean, key: string, name: string) => {
     const event = navigation.emit({
-      type: "tabPress",
+      type: 'tabPress',
       target: key,
       canPreventDefault: true,
     });
@@ -53,19 +50,18 @@ const TabBar = ({
       style={StyleSheet.flatten([
         styles(theme, isSmUp).tabBar,
         isSmUp && {
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
         },
-        (range === "lg" || range === "xl") && {
+        (range === 'lg' || range === 'xl') && {
           paddingHorizontal: (deviceWidth - Breakpoints.lg) / 2,
         },
       ])}
     >
       {isSmUp && (
         <TabBarLogo
-          image={require("../../../assets/logo.svg")}
           onPress={() => {
             onPress(
               state.index === 0,
@@ -86,7 +82,7 @@ const TabBar = ({
             : theme.colors.palette.common.white
         }
         isSmUp={isSmUp}
-        text={state.index === 1 || state.index === 0 ? "Home" : undefined}
+        text={state.index === 1 || state.index === 0 ? 'Home' : undefined}
       >
         <AntDesign
           name="home"
@@ -108,7 +104,7 @@ const TabBar = ({
             : theme.colors.palette.common.white
         }
         isSmUp={isSmUp}
-        text={state.index === 2 ? "Search" : undefined}
+        text={state.index === 2 ? 'Search' : undefined}
       >
         <AntDesign
           name="search1"
@@ -130,7 +126,7 @@ const TabBar = ({
             : theme.colors.palette.common.white
         }
         isSmUp={isSmUp}
-        text={state.index === 3 ? "Wishlist" : undefined}
+        text={state.index === 3 ? 'Wishlist' : undefined}
       >
         <AntDesign
           name="heart"
@@ -157,9 +153,9 @@ const TabBar = ({
               : theme.colors.palette.common.white
           }
           isSmUp={isSmUp}
-          text={state.index === 4 ? "Cart" : undefined}
+          text={state.index === 4 ? 'Cart' : undefined}
         >
-          <View style={{ position: "relative" }}>
+          <View style={{ position: 'relative' }}>
             <Entypo
               name="shopping-bag"
               size={24}
@@ -172,7 +168,7 @@ const TabBar = ({
             <Badge
               style={{
                 backgroundColor: theme.colors.palette.secondary.main,
-                position: "absolute",
+                position: 'absolute',
                 top: -theme.spacing * 0.7,
                 right: -theme.spacing * 0.7,
               }}
@@ -192,7 +188,7 @@ const TabBar = ({
             : theme.colors.palette.common.white
         }
         isSmUp={isSmUp}
-        text={state.index === 5 ? "Profile" : undefined}
+        text={state.index === 5 ? 'Profile' : undefined}
       >
         <AntDesign
           name="user"
@@ -209,10 +205,11 @@ const TabBar = ({
 };
 
 const tabOptions = (
+  // eslint-disable-next-line no-undef
   theme: ReactNativePaper.Theme,
   hide: boolean,
   navigation?: RootNavigationProps,
-  title: string = ""
+  title: string = ''
 ): BottomTabNavigationOptions => {
   if (hide) {
     return {
@@ -236,11 +233,11 @@ const tabOptions = (
     headerRight: () => (
       <TouchableRipple
         style={{
-          position: "relative",
+          position: 'relative',
           marginRight: theme.spacing * 2,
           padding: theme.spacing,
         }}
-        onPress={() => navigation?.navigate("Tabs", { screen: "Cart" })}
+        onPress={() => navigation?.navigate('Tabs', { screen: 'Cart' })}
         centered
       >
         <>
@@ -252,7 +249,7 @@ const tabOptions = (
           <Badge
             style={{
               backgroundColor: theme.colors.palette.secondary.main,
-              position: "absolute",
+              position: 'absolute',
               right: theme.spacing * 0.3,
               top: theme.spacing * 0.3,
             }}
@@ -267,7 +264,8 @@ const tabOptions = (
 
 const TabBarContainer = () => {
   const { range, deviceWidth } = deviceRange();
-  const isSmUp = range !== "xs";
+  const isSmUp = range !== 'xs';
+  const theme = useTheme();
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -279,7 +277,7 @@ const TabBarContainer = () => {
         name="Logo"
         component={HomeScreen}
         options={({ navigation }) => {
-          return tabOptions(theme, isSmUp, navigation, "Home");
+          return tabOptions(theme, isSmUp, navigation, 'Home');
         }}
       />
 
@@ -326,29 +324,30 @@ const TabBarContainer = () => {
   );
 };
 
-TabBarContainer.displayName = "TabBarContainer";
+TabBarContainer.displayName = 'TabBarContainer';
 export default TabBarContainer;
 
+// eslint-disable-next-line no-undef
 const styles = (theme: ReactNativePaper.Theme, isSmUp: boolean = false) =>
   StyleSheet.create({
     tabBar: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "stretch",
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'stretch',
       padding: theme.spacing,
-      backgroundColor: theme.colors.palette.primary[isSmUp ? "dark" : "light"],
+      backgroundColor: theme.colors.palette.primary[isSmUp ? 'dark' : 'light'],
       ...boxShadow(3, -2),
     },
     badge: {
-      position: "absolute",
+      position: 'absolute',
       height: theme.spacing * 2.5,
       width: theme.spacing * 2.5,
       color: theme.colors.palette.common.white,
       backgroundColor: theme.colors.palette.secondary.main,
       fontSize: theme.spacing * 1.25,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       borderRadius: theme.spacing * 1.25,
     },
   });

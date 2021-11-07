@@ -14,7 +14,6 @@
         "error",
         {
           "singleQuote": true,
-          "trailingComma": "all",
           "endOfLine": "auto"
         }
       ]

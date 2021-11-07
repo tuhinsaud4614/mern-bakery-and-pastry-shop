@@ -1,12 +1,17 @@
 import { useHeaderHeight } from '@react-navigation/elements';
+import { useRoute } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import Container from '../../components/container';
+import { CategoryScreenRouteProp } from '../../shared/routes';
 import { breakpointsWithDimensions } from '../../shared/utils';
 import Aside from './aside';
 
 const CategoryScreen = () => {
+  const {
+    params: { id, title },
+  } = useRoute<CategoryScreenRouteProp>();
   const theme = useTheme();
   const styles = makeStyles(theme);
   const {
@@ -28,7 +33,13 @@ const CategoryScreen = () => {
             <Aside />
           </View>
         )}
-        <View style={styles.content} />
+        <View
+          style={[styles.content, isMdUp && { paddingLeft: theme.spacing * 2 }]}
+        >
+          <Text>
+            {id}: {title}
+          </Text>
+        </View>
       </View>
     </Container>
   );
@@ -44,7 +55,7 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
       flexDirection: 'row',
     },
     aside: {
-      width: 300,
+      width: 250,
       flexShrink: 0,
       backgroundColor: theme.colors.palette.accent,
     },

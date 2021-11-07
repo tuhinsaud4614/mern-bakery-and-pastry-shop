@@ -1,7 +1,7 @@
-import React, { ReactNode, useEffect, useRef } from "react";
-import { Animated } from "react-native";
-import { TouchableRipple, useTheme } from "react-native-paper";
-import { typographyStyles } from "../../../shared/utils/common.styles";
+import React, { ReactNode, useEffect, useRef } from 'react';
+import { Animated } from 'react-native';
+import { TouchableRipple, useTheme } from 'react-native-paper';
+import { typographyStyles } from '../../../utils/common.styles';
 
 const AnimatedText = ({
   color,
@@ -49,10 +49,10 @@ const TabBarItem = ({ isSmUp, onPress, color, children, text }: Props) => {
         ...(isSmUp && {
           paddingHorizontal: theme.spacing * 2.5,
         }),
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        position: "relative",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
       }}
       onPress={onPress}
     >
@@ -64,6 +64,6 @@ const TabBarItem = ({ isSmUp, onPress, color, children, text }: Props) => {
   );
 };
 
-TabBarItem.displayName = "TabBarItem";
+TabBarItem.displayName = 'TabBarItem';
 
 export default TabBarItem;
