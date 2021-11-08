@@ -3,8 +3,8 @@ import React, { Fragment, ReactNode, useEffect, useRef, useState } from 'react';
 import { Animated, Pressable, StyleSheet } from 'react-native';
 import { IconButton, Portal, useTheme } from 'react-native-paper';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { useBreakpointsWithDimensions } from '../../shared/hooks';
 import { TabsNavigationProps } from '../../shared/routes';
-import { breakpointsWithDimensions } from '../../shared/utils';
 
 const Sidebar = ({
   navigationProps: { navigation },
@@ -19,7 +19,7 @@ const Sidebar = ({
   const {
     breakpoints: [isSmUp],
     width,
-  } = breakpointsWithDimensions.up(['sm']);
+  } = useBreakpointsWithDimensions(['sm'], 'up');
   const drawerWidth = Math.min(300, width * 0.8);
   const styles = makeStyles(theme, drawerWidth);
 

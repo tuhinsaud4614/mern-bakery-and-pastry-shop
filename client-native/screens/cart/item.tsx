@@ -1,6 +1,7 @@
-import { Entypo } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+/* eslint-disable react-native/no-inline-styles */
+import { Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
 import {
   Image,
   Pressable,
@@ -8,14 +9,15 @@ import {
   StyleSheet,
   View,
   ViewStyle,
-} from "react-native";
-import { Button, Divider, useTheme } from "react-native-paper";
-import Counter from "../../components/counter";
-import Typography from "../../components/typography";
-import { RootNavigationProps } from "../../shared/routes";
-import { boxShadow, breakpointsWithDimensions } from "../../shared/utils";
-import { typographyStyles } from "../../shared/utils/common.styles";
-import { IProduct } from "../../shared/utils/interfaces";
+} from 'react-native';
+import { Button, Divider, useTheme } from 'react-native-paper';
+import Counter from '../../components/counter';
+import Typography from '../../components/typography';
+import { useBreakpointsWithDimensions } from '../../shared/hooks';
+import { RootNavigationProps } from '../../shared/routes';
+import { boxShadow } from '../../shared/utils';
+import { typographyStyles } from '../../shared/utils/common.styles';
+import { IProduct } from '../../shared/utils/interfaces';
 
 const CartItem = ({
   product,
@@ -31,10 +33,10 @@ const CartItem = ({
 
   const {
     breakpoints: [isSmUp],
-  } = breakpointsWithDimensions.up(["sm"]);
+  } = useBreakpointsWithDimensions(['sm'], 'up');
 
-  const onCounterPress = (action: "add" | "minus") => {
-    if (action === "add") {
+  const onCounterPress = (action: 'add' | 'minus') => {
+    if (action === 'add') {
       return setCount((prev) => prev + 1);
     }
 
@@ -43,8 +45,8 @@ const CartItem = ({
     }
   };
   const onCounterChange = (value: string) => {
-    const newValue = value.replace(/[^0-9]/g, "");
-    setCount(newValue === "" ? 0 : +newValue);
+    const newValue = value.replace(/[^0-9]/g, '');
+    setCount(newValue === '' ? 0 : +newValue);
   };
   const onBlurHandler = () => {
     if (count === 0) {
@@ -62,7 +64,7 @@ const CartItem = ({
         <View style={[styles.topDetail]}>
           <Pressable
             onPress={() => {
-              navigate("Detail", {
+              navigate('Detail', {
                 productId: product.id,
                 title: product.title,
                 categoryId: product.category.id,
@@ -71,13 +73,13 @@ const CartItem = ({
           >
             {({ pressed }) => (
               <Typography
-                variant={isSmUp ? "h6" : "body1"}
+                variant={isSmUp ? 'h6' : 'body1'}
                 style={{
                   color:
                     theme.colors.palette.text[
-                      pressed ? "secondary" : "primary"
+                      pressed ? 'secondary' : 'primary'
                     ],
-                  fontWeight: "500",
+                  fontWeight: '500',
                 }}
                 numberOfLines={2}
               >
@@ -86,8 +88,8 @@ const CartItem = ({
             )}
           </Pressable>
           <View style={[styles.topDetailBottom]}>
-            <Typography variant={isSmUp ? "body1" : "body2"}>
-              {typeof product.price === "number"
+            <Typography variant={isSmUp ? 'body1' : 'body2'}>
+              {typeof product.price === 'number'
                 ? product.price
                 : product.price.small}
               ৳ x
@@ -111,7 +113,7 @@ const CartItem = ({
               }}
               numberOfLines={2}
             >
-              {(typeof product.price === "number"
+              {(typeof product.price === 'number'
                 ? product.price
                 : product.price.small) * (count === 0 ? 1 : count)}
               ৳
@@ -136,7 +138,7 @@ const CartItem = ({
           )}
           mode="contained"
           color={theme.colors.palette.secondary.main}
-          onPress={() => console.log("Pressed")}
+          onPress={() => console.log('Pressed')}
         >
           Remove
         </Button>
@@ -156,7 +158,7 @@ const CartItem = ({
           )}
           mode="contained"
           color={theme.colors.palette.secondary.main}
-          onPress={() => console.log("Pressed")}
+          onPress={() => console.log('Pressed')}
         >
           Favorite
         </Button>
@@ -165,9 +167,10 @@ const CartItem = ({
   );
 };
 
-CartItem.displayName = "Cart.Item";
+CartItem.displayName = 'Cart.Item';
 export default CartItem;
 
+// eslint-disable-next-line no-undef
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     root: {
@@ -177,30 +180,30 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
     },
 
     top: {
-      flexDirection: "row",
+      flexDirection: 'row',
       padding: theme.spacing * 1.25,
     },
     image: {
       width: 90,
       height: 90,
       borderRadius: theme.spacing,
-      overflow: "hidden",
+      overflow: 'hidden',
     },
     topDetail: {
       paddingLeft: theme.spacing * 2,
       flex: 1,
     },
     topDetailBottom: {
-      flexDirection: "row",
-      alignItems: "center",
-      flexWrap: "wrap",
+      flexDirection: 'row',
+      alignItems: 'center',
+      flexWrap: 'wrap',
     },
     spacer: {
       padding: theme.spacing,
     },
     actions: {
       padding: theme.spacing * 1.25,
-      flexDirection: "row",
+      flexDirection: 'row',
     },
   });
 };

@@ -1,15 +1,18 @@
-import React from "react";
-import { useWindowDimensions, View } from "react-native";
-import { useTheme } from "react-native-paper";
-import Skeleton from "../../components/skeleton";
-import { breakpoints } from "../../shared/utils";
-import makeStyles from "./index.styles";
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
+import { View } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import Skeleton from '../../components/skeleton';
+import { useBreakpointsWithDimensions } from '../../shared/hooks';
+import makeStyles from './index.styles';
 
 const DetailSkeleton = () => {
   const theme = useTheme();
   const styles = makeStyles(theme);
-  const { width: windowWidth } = useWindowDimensions();
-  const isSmUp = breakpoints.up("sm");
+  const {
+    breakpoints: [isSmUp],
+    width: windowWidth,
+  } = useBreakpointsWithDimensions(['sm'], 'up');
   const imageWidth = isSmUp
     ? windowWidth * 0.4 - theme.spacing * 4
     : windowWidth - theme.spacing * 4;
@@ -18,7 +21,7 @@ const DetailSkeleton = () => {
     <View style={styles.main}>
       <View
         style={{
-          width: isSmUp ? imageWidth : "100%",
+          width: isSmUp ? imageWidth : '100%',
         }}
       >
         <Skeleton
@@ -29,8 +32,8 @@ const DetailSkeleton = () => {
         />
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "center",
+            flexDirection: 'row',
+            alignItems: 'center',
             marginTop: theme.spacing,
           }}
         >
@@ -55,7 +58,7 @@ const DetailSkeleton = () => {
       </View>
       <View
         style={{
-          width: "100%",
+          width: '100%',
           ...(isSmUp && { flex: 1, paddingLeft: theme.spacing * 2 }),
           ...(!isSmUp && { paddingTop: theme.spacing * 2 }),
         }}
@@ -84,8 +87,8 @@ const DetailSkeleton = () => {
         />
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "center",
+            flexDirection: 'row',
+            alignItems: 'center',
             marginTop: theme.spacing * 2,
           }}
         >
@@ -104,5 +107,5 @@ const DetailSkeleton = () => {
   );
 };
 
-DetailSkeleton.displayName = "Detail.Skeleton";
+DetailSkeleton.displayName = 'Detail.Skeleton';
 export default DetailSkeleton;

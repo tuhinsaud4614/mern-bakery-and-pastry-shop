@@ -39,10 +39,7 @@ export interface ICategory {
 export interface IProduct {
   id: string;
   title: string;
-  category: {
-    id: string;
-    title: string;
-  };
+  category: ICategory;
   feature: boolean;
   price:
     | number

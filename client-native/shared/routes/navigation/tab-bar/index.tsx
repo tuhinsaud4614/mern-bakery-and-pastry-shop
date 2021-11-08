@@ -15,7 +15,8 @@ import HomeScreen from '../../../../screens/home';
 import SearchScreen from '../../../../screens/search';
 import UserScreen from '../../../../screens/user';
 import WishlistScreen from '../../../../screens/wishlist';
-import { boxShadow, Breakpoints, deviceRange } from '../../../utils';
+import { useDeviceRange } from '../../../hooks';
+import { boxShadow, Breakpoints } from '../../../utils';
 import { DeviceType } from '../../../utils/types';
 import TabBarItem from './tabBar-item';
 import TabBarLogo from './tabBar-logo';
@@ -263,7 +264,7 @@ const tabOptions = (
 };
 
 const TabBarContainer = () => {
-  const { range, deviceWidth } = deviceRange();
+  const { range, deviceWidth } = useDeviceRange();
   const isSmUp = range !== 'xs';
   const theme = useTheme();
   return (

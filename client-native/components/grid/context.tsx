@@ -1,5 +1,5 @@
-import React, { createContext, ReactNode } from "react";
-import { deviceRange } from "../../shared/utils";
+import React, { createContext, ReactNode } from 'react';
+import { useDeviceRange } from '../../shared/hooks';
 
 export type GridPartitionValueType =
   | 1
@@ -23,7 +23,7 @@ export interface IGridPartitionProps {
   xl?: GridPartitionValueType;
 }
 
-export const GridContext = createContext({ width: "100%" });
+export const GridContext = createContext({ width: '100%' });
 
 const GridProvider = ({
   lg,
@@ -33,7 +33,7 @@ const GridProvider = ({
   xs = 1,
   children,
 }: IGridPartitionProps & { children?: ReactNode }) => {
-  const device = deviceRange().range;
+  const device = useDeviceRange().range;
 
   if (lg) {
     xl = xl || lg;
@@ -55,19 +55,19 @@ const GridProvider = ({
     xl = xl || xs;
   }
 
-  let colWidth = `100%`;
+  let colWidth = '100%';
 
   switch (device) {
-    case "xl":
+    case 'xl':
       colWidth = `${100 * ((xl || 1) / 12)}%`;
       break;
-    case "lg":
+    case 'lg':
       colWidth = `${100 * ((lg || 1) / 12)}%`;
       break;
-    case "md":
+    case 'md':
       colWidth = `${100 * ((md || 1) / 12)}%`;
       break;
-    case "sm":
+    case 'sm':
       colWidth = `${100 * ((sm || 1) / 12)}%`;
       break;
     default:
@@ -81,5 +81,5 @@ const GridProvider = ({
   );
 };
 
-GridProvider.displayName = "Grid.Provider";
+GridProvider.displayName = 'Grid.Provider';
 export default GridProvider;

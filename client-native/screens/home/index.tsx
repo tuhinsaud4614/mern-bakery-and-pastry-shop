@@ -16,6 +16,7 @@ import Sidebar from './sidebar';
 const HomeScreen = (navigationProps: TabsNavigationProps) => {
   const theme = useTheme();
   const styles = makeStyles(theme);
+
   return (
     <TabScreenWrapper>
       <Sidebar navigationProps={navigationProps}>

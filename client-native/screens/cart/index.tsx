@@ -1,17 +1,18 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import { useTheme } from "react-native-paper";
-import TabScreenWrapper from "../../components/tab-screen-wrapper";
-import { breakpointsWithDimensions } from "../../shared/utils";
-import CartItems from "./items";
-import CartTotals from "./totals";
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import TabScreenWrapper from '../../components/tab-screen-wrapper';
+import { useBreakpointsWithDimensions } from '../../shared/hooks';
+import CartItems from './items';
+import CartTotals from './totals';
 
 const CartScreen = () => {
   const {
     breakpoints: [isSmUp],
-  } = breakpointsWithDimensions.up(["sm"]);
+  } = useBreakpointsWithDimensions(['sm'], 'up');
   const theme = useTheme();
-  const styles = makeStyles(theme);
+  const styles = makeStyles();
   return (
     <TabScreenWrapper component="flat-list">
       <View style={isSmUp && styles.root}>
@@ -32,15 +33,15 @@ const CartScreen = () => {
     </TabScreenWrapper>
   );
 };
-CartScreen.displayName = "CartScreen";
+CartScreen.displayName = 'CartScreen';
 export default CartScreen;
 
-const makeStyles = (theme: ReactNativePaper.Theme) => {
+const makeStyles = () => {
   return StyleSheet.create({
     root: {
-      flexWrap: "wrap",
-      flexDirection: "row",
-      width: "100%",
+      flexWrap: 'wrap',
+      flexDirection: 'row',
+      width: '100%',
     },
   });
 };

@@ -1,26 +1,27 @@
-import React from "react";
-import { Image, useWindowDimensions, View } from "react-native";
-import { useTheme } from "react-native-paper";
-import Carousel from "../../components/carousel";
-import Container from "../../components/container";
-import Grid from "../../components/grid";
-import ProductBox from "../../components/product-box";
-import ProductCard from "../../components/product-card";
-import { dummyProducts } from "../../dummy-data";
-import { DetailNavigationProps } from "../../shared/routes";
-import { breakpoints } from "../../shared/utils";
-import ExtraInformation from "./extra-information";
-import makeStyles from "./index.styles";
-import Information from "./information";
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
+import { Image, View } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import Carousel from '../../components/carousel';
+import Container from '../../components/container';
+import Grid from '../../components/grid';
+import ProductBox from '../../components/product-box';
+import ProductCard from '../../components/product-card';
+import { dummyProducts } from '../../dummy-data';
+import { useBreakpointsWithDimensions } from '../../shared/hooks';
+import { DetailNavigationProps } from '../../shared/routes';
+import ExtraInformation from './extra-information';
+import makeStyles from './index.styles';
+import Information from './information';
 
 const images = [
-  require("../../assets/cake-300w.jpeg"),
-  require("../../assets/others.jpeg"),
+  require('../../assets/cake-300w.jpeg'),
+  require('../../assets/others.jpeg'),
 ];
 
 const DetailScreen = ({
   route: {
-    params: { categoryId, productId = "1", title },
+    // params: { categoryId, productId = '1', title },
   },
 }: DetailNavigationProps) => {
   // const { navigate, goBack,getState }: NavigationProp<RootStackParamList> =
@@ -28,11 +29,14 @@ const DetailScreen = ({
 
   const theme = useTheme();
   const styles = makeStyles(theme);
-  const { width: windowWidth } = useWindowDimensions();
-  const isSmUp = breakpoints.up("sm");
+  const {
+    breakpoints: [isSmUp],
+    width: windowWidth,
+  } = useBreakpointsWithDimensions(['sm'], 'up');
   const infoSmUpWidth = windowWidth * 0.4 - theme.spacing * 4;
   const product =
-    dummyProducts.find((product) => product.id === "1") || dummyProducts[0];
+    dummyProducts.find((demoProduct) => demoProduct.id === '1') ||
+    dummyProducts[0];
   // return (
   //   <Container keyBoardAvoiding={Platform.OS !== "web"}>
   //     <DetailSkeleton />
@@ -43,7 +47,7 @@ const DetailScreen = ({
       <View style={styles.main}>
         <View
           style={{
-            width: isSmUp ? infoSmUpWidth : "100%",
+            width: isSmUp ? infoSmUpWidth : '100%',
           }}
         >
           <Carousel
@@ -61,10 +65,10 @@ const DetailScreen = ({
               />
             )}
             slide={(value) => (
-              <Image source={value} style={{ width: "100%", height: "100%" }} />
+              <Image source={value} style={{ width: '100%', height: '100%' }} />
             )}
             classes={{
-              wrapper: { flexBasis: "100%", flexShrink: 0 },
+              wrapper: { flexBasis: '100%', flexShrink: 0 },
             }}
           />
         </View>
@@ -95,5 +99,5 @@ const DetailScreen = ({
   );
 };
 
-DetailScreen.displayName = "DetailScreen";
+DetailScreen.displayName = 'DetailScreen';
 export default DetailScreen;

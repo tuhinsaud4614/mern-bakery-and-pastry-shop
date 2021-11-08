@@ -1,24 +1,25 @@
-import React, { ReactNode } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import React, { ReactNode } from 'react';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import {
   KeyboardAwareFlatList,
   KeyboardAwareScrollView,
-} from "react-native-keyboard-aware-scroll-view";
-import { useTheme } from "react-native-paper";
-import { Breakpoints, breakpointsWithDimensions } from "../shared/utils";
+} from 'react-native-keyboard-aware-scroll-view';
+import { useTheme } from 'react-native-paper';
+import { useBreakpointsWithDimensions } from '../shared/hooks';
+import { Breakpoints } from '../shared/utils';
 
 interface Props {
   children?: ReactNode;
   classes?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
   contentContainerStyle?: StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
-  component?: "flat-list" | "scroll-view";
+  component?: 'flat-list' | 'scroll-view';
   bounces?: boolean;
 }
 
 const Container = ({
   children,
   classes,
-  component = "scroll-view",
+  component = 'scroll-view',
   contentContainerStyle,
   bounces = true,
 }: Props) => {
@@ -26,7 +27,7 @@ const Container = ({
   const {
     breakpoints: [isLgUp],
     width,
-  } = breakpointsWithDimensions.up(["lg"]);
+  } = useBreakpointsWithDimensions(['lg'], 'up');
   const styles = makeStyles(theme, isLgUp, width);
 
   const style: StyleProp<ViewStyle> = StyleSheet.flatten([
@@ -34,7 +35,7 @@ const Container = ({
     classes && classes,
   ]);
 
-  if (component === "scroll-view") {
+  if (component === 'scroll-view') {
     return (
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
@@ -55,7 +56,7 @@ const Container = ({
       bounces={bounces}
       data={[]}
       ListEmptyComponent={null}
-      keyExtractor={() => "dummy"}
+      keyExtractor={() => 'dummy'}
       renderItem={null}
       showsVerticalScrollIndicator={false}
       style={style}
@@ -75,10 +76,11 @@ const Container = ({
   );
 };
 
-Container.displayName = "Container";
+Container.displayName = 'Container';
 export default Container;
 
 const makeStyles = (
+  // eslint-disable-next-line no-undef
   theme: ReactNativePaper.Theme,
   isLgUp: boolean,
   dimWidth: number

@@ -5,7 +5,7 @@ import Carousel from '../../components/carousel';
 import ProductBox from '../../components/product-box';
 import ProductCard from '../../components/product-card';
 import { dummyProducts } from '../../dummy-data';
-import { breakpointsWithDimensions } from '../../shared/utils';
+import { useBreakpointsWithDimensions } from '../../shared/hooks';
 import { IProduct } from '../../shared/utils/interfaces';
 
 const FeaturedProducts = () => {
@@ -14,7 +14,7 @@ const FeaturedProducts = () => {
   const {
     breakpoints: [isSmUp, isMdUp],
     width,
-  } = breakpointsWithDimensions.up(['sm', 'md']);
+  } = useBreakpointsWithDimensions(['sm', 'md'], 'up');
   let itemPerSlide = 2;
   if (isSmUp) {
     itemPerSlide = 3;

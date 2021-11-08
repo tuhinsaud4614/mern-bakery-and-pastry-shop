@@ -11,8 +11,9 @@ const CategoryContainer = () => {
       {Array.from({ length: 4 }).map((_, index) => (
         <Grid
           xs={6}
-          sm={4}
-          md={3}
+          sm={6}
+          md={4}
+          lg={3}
           item
           style={{ padding: theme.spacing }}
           key={index}

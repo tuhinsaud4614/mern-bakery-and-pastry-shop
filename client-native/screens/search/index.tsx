@@ -1,24 +1,25 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import { useTheme } from "react-native-paper";
-import TabScreenWrapper from "../../components/tab-screen-wrapper";
-import { boxShadow, breakpoints } from "../../shared/utils";
-import FilteredProducts from "./filtered-products";
-import Filters from "./filters";
-import ByCategory from "./filters/by-category";
-import ByPrice from "./filters/by-price";
-import ByRating from "./filters/by-rating";
-import SearchBox from "./search-box";
-import SortByFilter from "./sortBy-filter";
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import TabScreenWrapper from '../../components/tab-screen-wrapper';
+import { useBreakpoints } from '../../shared/hooks';
+import FilteredProducts from './filtered-products';
+import Filters from './filters';
+import ByCategory from './filters/by-category';
+import ByPrice from './filters/by-price';
+import ByRating from './filters/by-rating';
+import SearchBox from './search-box';
+import SortByFilter from './sortBy-filter';
 
 const SearchScreen = () => {
   const theme = useTheme();
   const styles = makeStyles(theme);
-  const isSmUp = breakpoints.up("sm");
+  const isSmUp = useBreakpoints('sm', 'up');
 
   return (
     <TabScreenWrapper component="flat-list">
-      <View style={{ flexDirection: "row", flex: 1 }}>
+      <View style={{ flexDirection: 'row', flex: 1 }}>
         {isSmUp && (
           <View style={styles.filterList}>
             <ByCategory expendable={false} />
@@ -43,11 +44,12 @@ const SearchScreen = () => {
     </TabScreenWrapper>
   );
 };
-SearchScreen.displayName = "SearchScreen";
+SearchScreen.displayName = 'SearchScreen';
 export default SearchScreen;
 
+// eslint-disable-next-line no-undef
 const makeStyles = (theme: ReactNativePaper.Theme) => {
-  const shadow = boxShadow(4, 3);
+  // const shadow = boxShadow(4, 3);
   return StyleSheet.create({
     filterList: {
       width: 250,
@@ -59,15 +61,15 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
     },
     filterBox: {
       backgroundColor: theme.colors.palette.background.default,
-      flexDirection: "row",
-      flexWrap: "wrap",
-      alignItems: "center",
-      justifyContent: "flex-end",
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
       paddingRight: theme.spacing,
       paddingBottom: theme.spacing,
       marginTop: theme.spacing * 2,
       borderRadius: theme.spacing * 0.5,
-      position: "relative",
+      position: 'relative',
       zIndex: -1,
     },
   });

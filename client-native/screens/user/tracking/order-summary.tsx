@@ -1,12 +1,11 @@
-import React, { ReactNode } from "react";
-import { StyleSheet, View } from "react-native";
-import { useTheme } from "react-native-paper";
-import Typography from "../../../components/typography";
-import {
-  breakpointsWithDimensions,
-  convertToLocalDate,
-} from "../../../shared/utils";
-import { IOrder } from "../../../shared/utils/interfaces";
+/* eslint-disable react-native/no-inline-styles */
+import React, { ReactNode } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import Typography from '../../../components/typography';
+import { useBreakpointsWithDimensions } from '../../../shared/hooks';
+import { convertToLocalDate } from '../../../shared/utils';
+import { IOrder } from '../../../shared/utils/interfaces';
 
 const SummeryContent = ({
   children,
@@ -18,7 +17,7 @@ const SummeryContent = ({
   return (
     <View
       style={
-        isSmUp && { flexDirection: "row", justifyContent: "space-between" }
+        isSmUp && { flexDirection: 'row', justifyContent: 'space-between' }
       }
     >
       {children}
@@ -39,11 +38,11 @@ const SummeryItemWrapper = ({
     <View
       style={[
         {
-          flexDirection: "row",
-          justifyContent: "space-between",
+          flexDirection: 'row',
+          justifyContent: 'space-between',
           borderBottomColor: theme.colors.palette.divider,
           borderBottomWidth: 1,
-          flexWrap: "wrap",
+          flexWrap: 'wrap',
         },
         isSmUp && { flex: 1 },
       ]}
@@ -58,9 +57,9 @@ const SummeryItem = ({ label, value }: { label: string; value: string }) => {
   return (
     <View
       style={{
-        flexDirection: "row",
-        alignItems: "center",
-        flexWrap: "wrap",
+        flexDirection: 'row',
+        alignItems: 'center',
+        flexWrap: 'wrap',
         padding: theme.spacing,
       }}
     >
@@ -89,7 +88,7 @@ const OrderSummary = ({ order }: { order: IOrder }) => {
   const styles = makeStyles(theme);
   const {
     breakpoints: [isSmUp],
-  } = breakpointsWithDimensions.up(["sm"]);
+  } = useBreakpointsWithDimensions(['sm'], 'up');
 
   return (
     <View style={styles.root}>
@@ -133,9 +132,10 @@ const OrderSummary = ({ order }: { order: IOrder }) => {
   );
 };
 
-OrderSummary.displayName = "Order.Summary";
+OrderSummary.displayName = 'Order.Summary';
 export default OrderSummary;
 
+// eslint-disable-next-line no-undef
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     root: { marginTop: theme.spacing * 2 },

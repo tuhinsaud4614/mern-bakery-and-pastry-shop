@@ -1,14 +1,14 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 import {
   StyleProp,
   StyleSheet,
   TextStyle,
   View,
   ViewStyle,
-} from "react-native";
-import { Divider, useTheme } from "react-native-paper";
-import { breakpoints } from "../../shared/utils";
-import Typography from "../typography";
+} from 'react-native';
+import { Divider, useTheme } from 'react-native-paper';
+import { useBreakpoints } from '../../shared/hooks';
+import Typography from '../typography';
 
 interface Props {
   title: string;
@@ -22,11 +22,11 @@ interface Props {
 const ProductBox = ({ title, classes, children }: Props) => {
   const theme = useTheme();
   const styles = makeStyles(theme);
-  const isSmUp = breakpoints.up("sm");
+  const isSmUp = useBreakpoints('sm', 'up');
   return (
     <View style={StyleSheet.flatten([styles.root, classes?.root])}>
       <Typography
-        variant={isSmUp ? "h5" : "h6"}
+        variant={isSmUp ? 'h5' : 'h6'}
         textTransform="capitalize"
         style={StyleSheet.flatten([styles.title, classes?.title])}
       >
@@ -38,15 +38,16 @@ const ProductBox = ({ title, classes, children }: Props) => {
   );
 };
 
-ProductBox.displayName = "ProductBox";
+ProductBox.displayName = 'ProductBox';
 export default ProductBox;
 
+// eslint-disable-next-line no-undef
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     root: {
       backgroundColor: theme.colors.palette.accent,
       borderRadius: theme.spacing * 0.5,
-      overflow: "hidden",
+      overflow: 'hidden',
     },
     title: {
       paddingVertical: theme.spacing,

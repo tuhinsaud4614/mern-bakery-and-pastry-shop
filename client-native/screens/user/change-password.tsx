@@ -1,10 +1,10 @@
-import { Formik, FormikHelpers } from "formik";
-import React, { Fragment } from "react";
-import { View } from "react-native";
-import { Button, useTheme } from "react-native-paper";
-import Input from "../../components/input";
-import { breakpointsWithDimensions } from "../../shared/utils";
-import { changePasswordSchema } from "../../shared/utils/validations.schema";
+import { Formik, FormikHelpers } from 'formik';
+import React, { Fragment } from 'react';
+import { View } from 'react-native';
+import { Button, useTheme } from 'react-native-paper';
+import Input from '../../components/input';
+import { useBreakpointsWithDimensions } from '../../shared/hooks';
+import { changePasswordSchema } from '../../shared/utils/validations.schema';
 
 interface IFormState {
   oldPassword: string;
@@ -15,11 +15,11 @@ const ChangePassword = () => {
   const theme = useTheme();
   const {
     breakpoints: [isSmUp],
-  } = breakpointsWithDimensions.up(["sm"]);
+  } = useBreakpointsWithDimensions(['sm'], 'up');
 
   const initialState: IFormState = {
-    newPassword: "",
-    oldPassword: "",
+    newPassword: '',
+    oldPassword: '',
   };
 
   const onsubmitHandler = async (
@@ -44,7 +44,6 @@ const ChangePassword = () => {
           isValid,
           dirty,
           isSubmitting,
-          setFieldValue,
         }) => {
           // console.log("errors", errors);
           // console.log("values", values);
@@ -52,14 +51,14 @@ const ChangePassword = () => {
 
           return (
             <Fragment>
-              <View style={isSmUp && { flexDirection: "row" }}>
+              <View style={isSmUp && { flexDirection: 'row' }}>
                 <Input
                   classes={{ root: { flex: 1, padding: theme.spacing } }}
                   mode="outlined"
                   label="Old Password"
                   value={values.oldPassword}
-                  onChangeText={handleChange("oldPassword")}
-                  onBlur={handleBlur("oldPassword")}
+                  onChangeText={handleChange('oldPassword')}
+                  onBlur={handleBlur('oldPassword')}
                   error={!!touched.oldPassword && !!errors.oldPassword}
                   helperText={
                     !!touched.oldPassword && !!errors.oldPassword
@@ -75,8 +74,8 @@ const ChangePassword = () => {
                   label="New Password"
                   value={values.newPassword}
                   outlineColor={theme.colors.palette.primary.light}
-                  onChangeText={handleChange("newPassword")}
-                  onBlur={handleBlur("newPassword")}
+                  onChangeText={handleChange('newPassword')}
+                  onBlur={handleBlur('newPassword')}
                   error={!!touched.newPassword && !!errors.newPassword}
                   helperText={
                     !!touched.newPassword && !!errors.newPassword

@@ -1,16 +1,27 @@
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { TouchableRipple, useTheme } from 'react-native-paper';
 import Spacer from '../../../components/spacer';
 import Typography from '../../../components/typography';
+import { RootNavigationProps } from '../../../shared/routes';
 import { IProduct } from '../../../shared/utils/interfaces';
 
 const AsideProductItem = ({ product }: { product: IProduct }) => {
+  const { navigate } = useNavigation<RootNavigationProps>();
   const theme = useTheme();
   const styles = makeStyles(theme);
   return (
-    <TouchableRipple onPress={() => {}}>
+    <TouchableRipple
+      onPress={() => {
+        navigate('Detail', {
+          productId: product.id,
+          title: product.title,
+          categoryId: product.category.id,
+        });
+      }}
+    >
       <View style={styles.root}>
         <Image source={product.images[0].large as any} style={styles.image} />
         <View style={styles.content}>

@@ -1,9 +1,10 @@
-import { AntDesign, Entypo } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import dayjs from "dayjs";
-import localizedFormat from "dayjs/plugin/localizedFormat";
-import relativeTime from "dayjs/plugin/relativeTime";
-import React from "react";
+/* eslint-disable react-native/no-inline-styles */
+import { AntDesign, Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import React from 'react';
 import {
   Image,
   StyleProp,
@@ -11,13 +12,14 @@ import {
   TouchableOpacity,
   View,
   ViewStyle,
-} from "react-native";
-import { Button, Divider, useTheme } from "react-native-paper";
-import Typography from "../../components/typography";
-import { RootNavigationProps } from "../../shared/routes";
-import { boxShadow, breakpointsWithDimensions } from "../../shared/utils";
-import { typographyStyles } from "../../shared/utils/common.styles";
-import { IProduct } from "../../shared/utils/interfaces";
+} from 'react-native';
+import { Button, Divider, useTheme } from 'react-native-paper';
+import Typography from '../../components/typography';
+import { useBreakpointsWithDimensions } from '../../shared/hooks';
+import { RootNavigationProps } from '../../shared/routes';
+import { boxShadow } from '../../shared/utils';
+import { typographyStyles } from '../../shared/utils/common.styles';
+import { IProduct } from '../../shared/utils/interfaces';
 
 const addedOn = (date: Date) => {
   dayjs.extend(relativeTime);
@@ -26,7 +28,7 @@ const addedOn = (date: Date) => {
   const dateDiff = Math.abs(dayjs(Date.now()).diff(date));
   const dayToMilSeconds = 8 * 24 * 60 * 60 * 1000;
   if (dateDiff > dayToMilSeconds) {
-    return dayjs(date).format("LL");
+    return dayjs(date).format('LL');
   }
 
   return dayjs().to(date);
@@ -42,7 +44,7 @@ const WishlistItem = ({
   const { navigate }: RootNavigationProps = useNavigation();
   const {
     breakpoints: [isSmUp, isMdUp],
-  } = breakpointsWithDimensions.up(["sm", "md"]);
+  } = useBreakpointsWithDimensions(['sm', 'md'], 'up');
   const theme = useTheme();
   const styles = makeStyles(theme);
 
@@ -54,7 +56,7 @@ const WishlistItem = ({
       style={StyleSheet.flatten([
         styles.root,
         isSmUp && {
-          flexDirection: "row",
+          flexDirection: 'row',
         },
         classes?.root,
       ])}
@@ -68,7 +70,7 @@ const WishlistItem = ({
         <View style={styles.content}>
           <TouchableOpacity
             onPress={() => {
-              navigate("Detail", {
+              navigate('Detail', {
                 productId: product.id,
                 title: product.title,
                 categoryId: product.category.id,
@@ -76,11 +78,11 @@ const WishlistItem = ({
             }}
           >
             <Typography
-              variant={isSmUp ? "h6" : "body2"}
+              variant={isSmUp ? 'h6' : 'body2'}
               textTransform="capitalize"
               style={{
                 color: theme.colors.palette.text.primary,
-                fontWeight: "700",
+                fontWeight: '700',
               }}
               numberOfLines={2}
             >
@@ -92,7 +94,7 @@ const WishlistItem = ({
               {Array.from({ length: 5 }).map((_, index) => (
                 <AntDesign
                   key={index}
-                  name={product.totalRatings >= index + 1 ? "star" : "staro"}
+                  name={product.totalRatings >= index + 1 ? 'star' : 'staro'}
                   size={isSmUp ? 14 : 10}
                   color={
                     product.totalRatings >= index + 1
@@ -102,28 +104,28 @@ const WishlistItem = ({
                 />
               ))}
               <Typography
-                variant={isSmUp ? "body2" : "caption"}
+                variant={isSmUp ? 'body2' : 'caption'}
                 style={{ color: theme.colors.palette.text.secondary }}
               >
-                {" "}
+                {' '}
                 ({product.totalRatings})
               </Typography>
             </View>
           </View>
           <Typography
-            variant={isSmUp ? "h5" : "body1"}
+            variant={isSmUp ? 'h5' : 'body1'}
             style={{
               color: theme.colors.palette.primary.main,
-              fontWeight: "700",
+              fontWeight: '700',
             }}
           >
-            {typeof product.price !== "number"
+            {typeof product.price !== 'number'
               ? `${product.price.small}৳ - ${product.price.extraLarge}৳`
-              : `${product.price}৳`}{" "}
+              : `${product.price}৳`}{' '}
             <Typography
-              variant={isSmUp ? "body1" : "caption"}
+              variant={isSmUp ? 'body1' : 'caption'}
               style={{
-                textDecorationLine: "line-through",
+                textDecorationLine: 'line-through',
                 color: theme.colors.palette.text.secondary,
               }}
             >
@@ -143,25 +145,25 @@ const WishlistItem = ({
         style={[
           styles.actions,
           isSmUp && { minWidth: 190 },
-          isMdUp && { minWidth: 350, alignSelf: "center" },
+          isMdUp && { minWidth: 350, alignSelf: 'center' },
         ]}
       >
         <Typography
           variant="body1"
           style={{
             color: theme.colors.palette.text.primary,
-            fontWeight: "500",
+            fontWeight: '500',
           }}
         >
-          Added on {addedOn(new Date("2021-10-19T16:28:12.200Z"))}
+          Added on {addedOn(new Date('2021-10-19T16:28:12.200Z'))}
         </Typography>
         <View
           style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
+            flexDirection: 'row',
+            flexWrap: 'wrap',
             marginTop: theme.spacing,
-            ...(isSmUp && { flexDirection: "column" }),
-            ...(isMdUp && { flexDirection: "row" }),
+            ...(isSmUp && { flexDirection: 'column' }),
+            ...(isMdUp && { flexDirection: 'row' }),
           }}
         >
           <Button
@@ -179,7 +181,7 @@ const WishlistItem = ({
             )}
             mode="contained"
             color={theme.colors.palette.secondary.main}
-            onPress={() => console.log("Pressed")}
+            onPress={() => console.log('Pressed')}
           >
             Add to cart
           </Button>
@@ -199,7 +201,7 @@ const WishlistItem = ({
             )}
             mode="contained"
             color={theme.colors.palette.secondary.main}
-            onPress={() => console.log("Pressed")}
+            onPress={() => console.log('Pressed')}
           >
             Remove
           </Button>
@@ -209,9 +211,10 @@ const WishlistItem = ({
   );
 };
 
-WishlistItem.displayName = "Wishlist.Item";
+WishlistItem.displayName = 'Wishlist.Item';
 export default WishlistItem;
 
+// eslint-disable-next-line no-undef
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     root: {
@@ -222,8 +225,8 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
     },
     body: {
       padding: theme.spacing * 1.25,
-      flexDirection: "row",
-      flexWrap: "wrap",
+      flexDirection: 'row',
+      flexWrap: 'wrap',
       flex: 1,
     },
     content: {
@@ -231,8 +234,8 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
       flex: 1,
     },
     ratingBox: {
-      flexDirection: "row",
-      alignItems: "center",
+      flexDirection: 'row',
+      alignItems: 'center',
     },
     actions: { padding: theme.spacing * 1.25 },
   });

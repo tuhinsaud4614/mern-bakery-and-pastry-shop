@@ -1,24 +1,25 @@
-import { AntDesign, Entypo } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
-import { LinearGradient } from "expo-linear-gradient";
-import React, { useEffect, useState } from "react";
-import { Image, Platform, StyleSheet, View } from "react-native";
+import { AntDesign, Entypo } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
+import { LinearGradient } from 'expo-linear-gradient';
+import React, { useEffect, useState } from 'react';
+import { Image, Platform, StyleSheet, View } from 'react-native';
 import {
   Button,
   Dialog,
   IconButton,
   Portal,
   useTheme,
-} from "react-native-paper";
-import Spinner from "../../components/spinner";
-import { boxShadow, breakpointsWithDimensions } from "../../shared/utils";
+} from 'react-native-paper';
+import Spinner from '../../components/spinner';
+import { useBreakpointsWithDimensions } from '../../shared/hooks';
+import { boxShadow } from '../../shared/utils';
 
 const UserImage = () => {
   const theme = useTheme();
   const {
     breakpoints: [isSmUp],
     width,
-  } = breakpointsWithDimensions.up(["sm"]);
+  } = useBreakpointsWithDimensions(['sm'], 'up');
   const avatarWidth = isSmUp ? 120 : 100;
   const styles = makeStyles(theme, avatarWidth);
   const [image, setImage] = useState<string | null>(null);
@@ -27,22 +28,22 @@ const UserImage = () => {
 
   useEffect(() => {
     (async () => {
-      if (Platform.OS !== "web") {
+      if (Platform.OS !== 'web') {
         const { status } =
           await ImagePicker.requestMediaLibraryPermissionsAsync();
         const { status: status1 } =
           await ImagePicker.requestCameraPermissionsAsync();
-        if (status !== "granted" || status1 !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
+        if (status !== 'granted' || status1 !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
         }
       }
     })();
   }, []);
 
-  const pickController = async (role: "camera" | "gallery") => {
+  const pickController = async (role: 'camera' | 'gallery') => {
     setVisible(false);
     setLoading(true);
-    if (role === "gallery") {
+    if (role === 'gallery') {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
@@ -77,12 +78,12 @@ const UserImage = () => {
             <Button
               mode="contained"
               color={theme.colors.palette.secondary.main}
-              onPress={() => pickController("gallery")}
+              onPress={() => pickController('gallery')}
             >
               From gallery
             </Button>
             <Button
-              onPress={() => pickController("camera")}
+              onPress={() => pickController('camera')}
               style={{ marginTop: theme.spacing * 2 }}
               mode="contained"
               color={theme.colors.palette.secondary.main}
@@ -143,9 +144,10 @@ const UserImage = () => {
   );
 };
 
-UserImage.displayName = "User.Image";
+UserImage.displayName = 'User.Image';
 export default UserImage;
 
+// eslint-disable-next-line no-undef
 const makeStyles = (theme: ReactNativePaper.Theme, width: number) => {
   return StyleSheet.create({
     root: {
@@ -153,27 +155,27 @@ const makeStyles = (theme: ReactNativePaper.Theme, width: number) => {
       height: width,
       backgroundColor: theme.colors.palette.background.default,
       borderRadius: width / 2,
-      position: "relative",
+      position: 'relative',
       padding: theme.spacing,
-      alignItems: "center",
-      justifyContent: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
       ...boxShadow(4, 3),
     },
     rootImage: {
       width: width - theme.spacing * 0.5,
       height: width - theme.spacing * 0.5,
       borderRadius: (width - theme.spacing * 0.5) / 2,
-      alignItems: "center",
-      justifyContent: "center",
-      overflow: "hidden",
+      alignItems: 'center',
+      justifyContent: 'center',
+      overflow: 'hidden',
     },
     rootAction: {
-      position: "absolute",
+      position: 'absolute',
       bottom: theme.spacing * 0.5,
       right: theme.spacing * 0.5,
       borderRadius: theme.spacing * 2,
-      alignItems: "center",
-      justifyContent: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
       zIndex: 10,
     },
     rootActionIcon: {

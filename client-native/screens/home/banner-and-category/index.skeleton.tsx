@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import Skeleton from '../../../components/skeleton';
-import { deviceRange } from '../../../shared/utils';
+import { useDeviceRange } from '../../../shared/hooks';
 
 export const BannerAndCategorySkeleton = () => {
-  const { range } = deviceRange();
+  const { range } = useDeviceRange();
   const theme = useTheme();
   const styles = makeStyles(theme);
   const isSmUp = range !== 'xs';

@@ -1,16 +1,17 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
+// eslint-disable-next-line no-undef
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     main: {
       flex: 1,
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap",
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'wrap',
     },
     info: {
       backgroundColor: theme.colors.palette.accent,
-      display: "flex",
+      display: 'flex',
     },
     infoTitle: {
       color: theme.colors.palette.primary.main,

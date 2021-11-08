@@ -1,12 +1,13 @@
-import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { Image, StyleSheet, View } from "react-native";
-import { TouchableRipple, useTheme } from "react-native-paper";
-import Typography from "../../../components/typography";
-import { RootNavigationProps } from "../../../shared/routes";
-import { breakpointsWithDimensions } from "../../../shared/utils";
-import { IProduct } from "../../../shared/utils/interfaces";
+/* eslint-disable react-native/no-inline-styles */
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { Image, StyleSheet, View } from 'react-native';
+import { TouchableRipple, useTheme } from 'react-native-paper';
+import Typography from '../../../components/typography';
+import { useBreakpointsWithDimensions } from '../../../shared/hooks';
+import { RootNavigationProps } from '../../../shared/routes';
+import { IProduct } from '../../../shared/utils/interfaces';
 
 interface Props {
   product: IProduct;
@@ -18,15 +19,14 @@ const FilteredProduct = ({ product }: Props) => {
   const styles = makeStyles(theme);
   const {
     breakpoints: [isSmUp],
-    width,
-  } = breakpointsWithDimensions.up(["sm"]);
+  } = useBreakpointsWithDimensions(['sm'], 'up');
 
   const imageWidth = isSmUp ? 190 : 120;
   const imageHeight = (imageWidth / 16) * 9;
   return (
     <TouchableRipple
       onPress={() =>
-        navigate("Detail", {
+        navigate('Detail', {
           categoryId: product.category.id,
           productId: product.id,
           title: product.title,
@@ -44,11 +44,11 @@ const FilteredProduct = ({ product }: Props) => {
         />
         <View style={styles.content}>
           <Typography
-            variant={isSmUp ? "h6" : "body2"}
+            variant={isSmUp ? 'h6' : 'body2'}
             textTransform="capitalize"
             style={{
               color: theme.colors.palette.text.primary,
-              fontWeight: "700",
+              fontWeight: '700',
             }}
             numberOfLines={2}
           >
@@ -61,7 +61,7 @@ const FilteredProduct = ({ product }: Props) => {
               {Array.from({ length: 5 }).map((_, index) => (
                 <AntDesign
                   key={index}
-                  name={product.totalRatings >= index + 1 ? "star" : "staro"}
+                  name={product.totalRatings >= index + 1 ? 'star' : 'staro'}
                   size={isSmUp ? 14 : 10}
                   color={
                     product.totalRatings >= index + 1
@@ -71,28 +71,28 @@ const FilteredProduct = ({ product }: Props) => {
                 />
               ))}
               <Typography
-                variant={isSmUp ? "body2" : "caption"}
+                variant={isSmUp ? 'body2' : 'caption'}
                 style={{ color: theme.colors.palette.text.secondary }}
               >
-                {" "}
+                {' '}
                 ({product.totalRatings})
               </Typography>
             </View>
           </View>
           <Typography
-            variant={isSmUp ? "h5" : "body1"}
+            variant={isSmUp ? 'h5' : 'body1'}
             style={{
               color: theme.colors.palette.primary.main,
-              fontWeight: "700",
+              fontWeight: '700',
             }}
           >
-            {typeof product.price !== "number"
+            {typeof product.price !== 'number'
               ? `${product.price.small}৳ - ${product.price.extraLarge}৳`
-              : `${product.price}৳`}{" "}
+              : `${product.price}৳`}{' '}
             <Typography
-              variant={isSmUp ? "body1" : "caption"}
+              variant={isSmUp ? 'body1' : 'caption'}
               style={{
-                textDecorationLine: "line-through",
+                textDecorationLine: 'line-through',
                 color: theme.colors.palette.text.secondary,
               }}
             >
@@ -111,22 +111,23 @@ const FilteredProduct = ({ product }: Props) => {
   );
 };
 
-FilteredProduct.displayName = "FilteredProduct";
+FilteredProduct.displayName = 'FilteredProduct';
 export default FilteredProduct;
 
+// eslint-disable-next-line no-undef
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     root: {
-      flexDirection: "row",
-      flexWrap: "wrap",
+      flexDirection: 'row',
+      flexWrap: 'wrap',
     },
     content: {
       paddingHorizontal: theme.spacing,
       flex: 1,
     },
     ratingBox: {
-      flexDirection: "row",
-      alignItems: "center",
+      flexDirection: 'row',
+      alignItems: 'center',
     },
   });
 };

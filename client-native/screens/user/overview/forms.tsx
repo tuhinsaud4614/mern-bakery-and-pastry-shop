@@ -1,17 +1,18 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import { Divider, useTheme } from "react-native-paper";
-import Typography from "../../../components/typography";
-import { breakpointsWithDimensions } from "../../../shared/utils";
-import PersonalInfoForm from "./personal-info-form";
-import ShippingDetailForm from "./shipping-detail-form";
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Divider, useTheme } from 'react-native-paper';
+import Typography from '../../../components/typography';
+import { useBreakpointsWithDimensions } from '../../../shared/hooks';
+import PersonalInfoForm from './personal-info-form';
+import ShippingDetailForm from './shipping-detail-form';
 
 const OverviewForms = () => {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const {
     breakpoints: [isSmUp, isMdUp],
-  } = breakpointsWithDimensions.up(["sm", "md"]);
+  } = useBreakpointsWithDimensions(['sm', 'md'], 'up');
 
   return (
     <View
@@ -25,9 +26,9 @@ const OverviewForms = () => {
     >
       <View style={styles.header}>
         <Typography
-          variant={isMdUp ? "h4" : "h5"}
+          variant={isMdUp ? 'h4' : 'h5'}
           style={{ color: theme.colors.palette.primary.main }}
-          textAlign={!isSmUp ? "center" : undefined}
+          textAlign={!isSmUp ? 'center' : undefined}
         >
           Personal Information
         </Typography>
@@ -43,9 +44,9 @@ const OverviewForms = () => {
       />
       <View style={styles.header}>
         <Typography
-          variant={isMdUp ? "h4" : "h5"}
+          variant={isMdUp ? 'h4' : 'h5'}
           style={{ color: theme.colors.palette.primary.main }}
-          textAlign={!isSmUp ? "center" : undefined}
+          textAlign={!isSmUp ? 'center' : undefined}
         >
           Shipping Address
         </Typography>
@@ -57,9 +58,10 @@ const OverviewForms = () => {
   );
 };
 
-OverviewForms.displayName = "Overview.Forms";
+OverviewForms.displayName = 'Overview.Forms';
 export default OverviewForms;
 
+// eslint-disable-next-line no-undef
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     root: {

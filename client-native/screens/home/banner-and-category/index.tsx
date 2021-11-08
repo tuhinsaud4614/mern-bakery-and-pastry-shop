@@ -3,14 +3,14 @@ import { Image, StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import Carousel from '../../../components/carousel';
 import { dummyCategories } from '../../../dummy-data';
-import { breakpointsWithDimensions } from '../../../shared/utils';
+import { useBreakpointsWithDimensions } from '../../../shared/hooks';
 import CategorySidebar from '../category-sidebar';
 
 const BannerAndCategory = () => {
   const {
     breakpoints: [isSmUp, isMdUp, isLgUp],
     width,
-  } = breakpointsWithDimensions.up(['sm', 'md', 'lg']);
+  } = useBreakpointsWithDimensions(['sm', 'md', 'lg'], 'up');
 
   let imageSize: 'small' | 'medium' | 'large';
 

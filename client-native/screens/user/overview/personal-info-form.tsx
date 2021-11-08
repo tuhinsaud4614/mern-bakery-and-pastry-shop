@@ -1,19 +1,19 @@
-import { Formik, FormikHelpers } from "formik";
-import React, { Fragment } from "react";
-import { StyleSheet, View } from "react-native";
-import { Button, TextInput, useTheme } from "react-native-paper";
-import DatePicker from "../../../components/date-picker";
-import Input from "../../../components/input";
-import PickerBox from "../../../components/picker-box";
-import { breakpointsWithDimensions } from "../../../shared/utils";
-import { userInfoSchema } from "../../../shared/utils/validations.schema";
+import { Formik, FormikHelpers } from 'formik';
+import React, { Fragment } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Button, TextInput, useTheme } from 'react-native-paper';
+import DatePicker from '../../../components/date-picker';
+import Input from '../../../components/input';
+import PickerBox from '../../../components/picker-box';
+import { useBreakpointsWithDimensions } from '../../../shared/hooks';
+import { userInfoSchema } from '../../../shared/utils/validations.schema';
 
-type GenderType = "male" | "female" | "other";
+type GenderType = 'male' | 'female' | 'other';
 
 const gender: { title: string; value: GenderType }[] = [
-  { title: "Male", value: "male" },
-  { title: "Female", value: "female" },
-  { title: "Other", value: "other" },
+  { title: 'Male', value: 'male' },
+  { title: 'Female', value: 'female' },
+  { title: 'Other', value: 'other' },
 ];
 
 interface IFormState {
@@ -29,14 +29,14 @@ const PersonalInfoForm = () => {
   const styles = makeStyles(theme);
   const {
     breakpoints: [isSmUp, isMdUp],
-  } = breakpointsWithDimensions.up(["sm", "md"]);
+  } = useBreakpointsWithDimensions(['sm', 'md'], 'up');
 
   const initialState: IFormState = {
-    firstName: "",
-    lastName: "",
+    firstName: '',
+    lastName: '',
     dob: null,
     gender: null,
-    mobile: "",
+    mobile: '',
   };
 
   const onsubmitHandler = async (
@@ -68,14 +68,14 @@ const PersonalInfoForm = () => {
 
         return (
           <Fragment>
-            <View style={isMdUp && { flexDirection: "row" }}>
+            <View style={isMdUp && { flexDirection: 'row' }}>
               <Input
                 classes={{ root: styles.input }}
                 mode="outlined"
                 label="First Name"
                 value={values.firstName}
-                onChangeText={handleChange("firstName")}
-                onBlur={handleBlur("firstName")}
+                onChangeText={handleChange('firstName')}
+                onBlur={handleBlur('firstName')}
                 error={!!touched.firstName && !!errors.firstName}
                 helperText={
                   !!touched.firstName && !!errors.firstName
@@ -91,8 +91,8 @@ const PersonalInfoForm = () => {
                 label="Last Name"
                 value={values.lastName}
                 outlineColor={theme.colors.palette.primary.light}
-                onChangeText={handleChange("lastName")}
-                onBlur={handleBlur("lastName")}
+                onChangeText={handleChange('lastName')}
+                onBlur={handleBlur('lastName')}
                 error={!!touched.lastName && !!errors.lastName}
                 helperText={
                   !!touched.lastName && !!errors.lastName
@@ -107,8 +107,8 @@ const PersonalInfoForm = () => {
               mode="outlined"
               label="Mobile"
               value={values.mobile}
-              onBlur={handleBlur("mobile")}
-              onChangeText={handleChange("mobile")}
+              onBlur={handleBlur('mobile')}
+              onChangeText={handleChange('mobile')}
               keyboardType="phone-pad"
               left={<TextInput.Affix text="+88" />}
               error={!!touched.mobile && !!errors.mobile}
@@ -117,12 +117,12 @@ const PersonalInfoForm = () => {
               }
               classes={{ root: styles.input }}
             />
-            <View style={isMdUp && { flexDirection: "row" }}>
+            <View style={isMdUp && { flexDirection: 'row' }}>
               <View style={[{ flex: 1, paddingHorizontal: theme.spacing }]}>
                 <PickerBox
                   options={gender}
-                  onChange={(value) => setFieldValue("gender", value)}
-                  selectedValue={values.gender || ""}
+                  onChange={(value) => setFieldValue('gender', value)}
+                  selectedValue={values.gender || ''}
                   label="Gender"
                   mode="outlined"
                   defaultText="Select Gender"
@@ -131,7 +131,7 @@ const PersonalInfoForm = () => {
               <DatePicker
                 classes={{ root: { padding: theme.spacing } }}
                 value={values.dob}
-                onChange={(value) => setFieldValue("dob", value)}
+                onChange={(value) => setFieldValue('dob', value)}
                 label="Date of Birth"
               />
             </View>
@@ -155,9 +155,10 @@ const PersonalInfoForm = () => {
   );
 };
 
-PersonalInfoForm.displayName = "PersonalInfo.Form";
+PersonalInfoForm.displayName = 'PersonalInfo.Form';
 export default PersonalInfoForm;
 
+// eslint-disable-next-line no-undef
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     input: {

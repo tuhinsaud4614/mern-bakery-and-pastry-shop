@@ -1,22 +1,24 @@
-import React from "react";
-import { ColorValue, StyleSheet, View } from "react-native";
-import { useTheme } from "react-native-paper";
-import Typography from "../../../components/typography";
-import { breakpointsWithDimensions } from "../../../shared/utils";
-import { OrderStatusType } from "../../../shared/utils/types";
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
+import { ColorValue, StyleSheet, View } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import Typography from '../../../components/typography';
+import { useBreakpointsWithDimensions } from '../../../shared/hooks';
+import { OrderStatusType } from '../../../shared/utils/types';
 
 const statusStyle = (
   status: OrderStatusType,
+  // eslint-disable-next-line no-undef
   theme: ReactNativePaper.Theme
 ): ColorValue => {
   switch (status) {
-    case "shipping":
+    case 'shipping':
       return theme.colors.palette.warning.dark;
 
-    case "processing":
+    case 'processing':
       return theme.colors.palette.info.main;
 
-    case "delivered":
+    case 'delivered':
       return theme.colors.palette.success.main;
 
     default:
@@ -38,15 +40,15 @@ const StepperItem = ({
 
   const {
     breakpoints: [isSmUp],
-  } = breakpointsWithDimensions.up(["sm"]);
+  } = useBreakpointsWithDimensions(['sm'], 'up');
 
   return (
     <View style={styles.stepperBox}>
-      <View style={{ alignItems: "center", marginBottom: theme.spacing }}>
+      <View style={{ alignItems: 'center', marginBottom: theme.spacing }}>
         <View
           style={{
-            alignItems: "center",
-            justifyContent: "center",
+            alignItems: 'center',
+            justifyContent: 'center',
             width: isSmUp ? 30 : 22,
             height: isSmUp ? 30 : 22,
             backgroundColor: active
@@ -57,9 +59,9 @@ const StepperItem = ({
           }}
         >
           <Typography
-            variant={isSmUp ? "h6" : "body1"}
+            variant={isSmUp ? 'h6' : 'body1'}
             style={{
-              color: theme.colors.palette.common[active ? "white" : "black"],
+              color: theme.colors.palette.common[active ? 'white' : 'black'],
             }}
           >
             {index}
@@ -67,12 +69,12 @@ const StepperItem = ({
         </View>
       </View>
       <Typography
-        variant={isSmUp ? "h6" : "body1"}
+        variant={isSmUp ? 'h6' : 'body1'}
         style={{
           color: active
             ? statusStyle(status, theme)
             : theme.colors.palette.text.secondary,
-          textTransform: "capitalize",
+          textTransform: 'capitalize',
         }}
       >
         {status}
@@ -91,7 +93,7 @@ const Line = ({
   const theme = useTheme();
   const {
     breakpoints: [isSmUp],
-  } = breakpointsWithDimensions.up(["sm"]);
+  } = useBreakpointsWithDimensions(['sm'], 'up');
   return (
     <View
       style={{
@@ -124,46 +126,46 @@ const OrderStatus = ({ status }: { status: OrderStatusType }) => {
       <View style={styles.stepperWrapper}>
         <View style={styles.stepper}>
           <StepperItem
-            status={"pending"}
+            status={'pending'}
             active={
-              status === "pending" ||
-              status === "processing" ||
-              status === "shipping" ||
-              status === "delivered"
+              status === 'pending' ||
+              status === 'processing' ||
+              status === 'shipping' ||
+              status === 'delivered'
             }
             index={1}
           />
           <Line
             active={
-              status === "processing" ||
-              status === "shipping" ||
-              status === "delivered"
+              status === 'processing' ||
+              status === 'shipping' ||
+              status === 'delivered'
             }
-            status={"processing"}
+            status={'processing'}
           />
           <StepperItem
-            status={"processing"}
+            status={'processing'}
             active={
-              status === "processing" ||
-              status === "shipping" ||
-              status === "delivered"
+              status === 'processing' ||
+              status === 'shipping' ||
+              status === 'delivered'
             }
             index={2}
           />
 
           <Line
-            active={status === "shipping" || status === "delivered"}
-            status={"shipping"}
+            active={status === 'shipping' || status === 'delivered'}
+            status={'shipping'}
           />
           <StepperItem
-            status={"shipping"}
-            active={status === "shipping" || status === "delivered"}
+            status={'shipping'}
+            active={status === 'shipping' || status === 'delivered'}
             index={3}
           />
-          <Line active={status === "delivered"} status={"delivered"} />
+          <Line active={status === 'delivered'} status={'delivered'} />
           <StepperItem
-            status={"delivered"}
-            active={status === "delivered"}
+            status={'delivered'}
+            active={status === 'delivered'}
             index={3}
           />
         </View>
@@ -172,9 +174,10 @@ const OrderStatus = ({ status }: { status: OrderStatusType }) => {
   );
 };
 
-OrderStatus.displayName = "OrderStatus";
+OrderStatus.displayName = 'OrderStatus';
 export default OrderStatus;
 
+// eslint-disable-next-line no-undef
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     root: { marginTop: theme.spacing * 2 },
@@ -185,18 +188,18 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
       borderTopRightRadius: theme.spacing * 0.5,
     },
     stepperWrapper: {
-      alignItems: "center",
+      alignItems: 'center',
       paddingVertical: theme.spacing * 2,
     },
     stepper: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      width: "100%",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: '100%',
       maxWidth: 600,
     },
     stepperBox: {
-      alignItems: "center",
-      justifyContent: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   });
 };

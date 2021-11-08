@@ -1,11 +1,11 @@
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
-const CategoryBanner = ({ width }: { width: number }) => {
+const CategoryBanner = ({ width, image }: { width: number; image: string }) => {
   const styles = makeStyles(width);
   return (
     <View style={styles.root}>
-      <Image source={require('../../assets/cake.jpeg')} style={styles.img} />
+      <Image source={image as any} style={styles.img} />
     </View>
   );
 };

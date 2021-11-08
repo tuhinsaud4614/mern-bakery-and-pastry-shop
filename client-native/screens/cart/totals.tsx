@@ -1,28 +1,30 @@
-import React, { useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
-import { Button, Divider, useTheme } from "react-native-paper";
-import Typography from "../../components/typography";
-import { boxShadow, breakpointsWithDimensions } from "../../shared/utils";
-import { typographyStyles } from "../../shared/utils/common.styles";
+/* eslint-disable react-native/no-inline-styles */
+import React, { useState } from 'react';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { Button, Divider, useTheme } from 'react-native-paper';
+import Typography from '../../components/typography';
+import { useBreakpointsWithDimensions } from '../../shared/hooks';
+import { boxShadow } from '../../shared/utils';
+import { typographyStyles } from '../../shared/utils/common.styles';
 
 const CartTotals = () => {
   const theme = useTheme();
   const styles = makeStyles(theme);
-  const [discountCode, setDiscountCode] = useState<string>("");
+  const [discountCode, setDiscountCode] = useState<string>('');
   const {
     breakpoints: [isSmUp],
-  } = breakpointsWithDimensions.up(["sm"]);
+  } = useBreakpointsWithDimensions(['sm'], 'up');
   return (
     <View style={styles.root}>
       <Typography
-        variant={isSmUp ? "h6" : "body1"}
-        style={{ color: theme.colors.palette.primary.main, fontWeight: "500" }}
+        variant={isSmUp ? 'h6' : 'body1'}
+        style={{ color: theme.colors.palette.primary.main, fontWeight: '500' }}
       >
         Total Items (10)
       </Typography>
       <View style={[styles.textBox, { marginTop: theme.spacing }]}>
         <Typography
-          variant={"h6"}
+          variant={'h6'}
           style={{
             color: theme.colors.palette.text.secondary,
           }}
@@ -30,7 +32,7 @@ const CartTotals = () => {
           Subtotal:
         </Typography>
         <Typography
-          variant={"h6"}
+          variant={'h6'}
           style={{ color: theme.colors.palette.text.secondary }}
         >
           120৳
@@ -38,13 +40,13 @@ const CartTotals = () => {
       </View>
       <View style={[styles.textBox, { marginTop: theme.spacing }]}>
         <Typography
-          variant={"h6"}
+          variant={'h6'}
           style={{ color: theme.colors.palette.info.main }}
         >
           VAT (%):
         </Typography>
         <Typography
-          variant={"h6"}
+          variant={'h6'}
           style={{ color: theme.colors.palette.info.dark }}
         >
           10
@@ -52,7 +54,7 @@ const CartTotals = () => {
       </View>
       <View style={[styles.textBox, { marginTop: theme.spacing }]}>
         <Typography
-          variant={"h6"}
+          variant={'h6'}
           style={{ color: theme.colors.palette.success.main }}
         >
           Discount:
@@ -67,7 +69,7 @@ const CartTotals = () => {
       <Divider style={{ marginVertical: theme.spacing }} />
       <View style={styles.textBox}>
         <Typography
-          variant={"h5"}
+          variant={'h5'}
           style={{ color: theme.colors.palette.primary.main }}
         >
           Total:
@@ -84,7 +86,7 @@ const CartTotals = () => {
           mode="contained"
           labelStyle={typographyStyles.h6}
           color={theme.colors.palette.secondary.main}
-          onPress={() => console.log("Pressed")}
+          onPress={() => console.log('Pressed')}
         >
           Proceed to checkout
         </Button>
@@ -93,9 +95,10 @@ const CartTotals = () => {
   );
 };
 
-CartTotals.displayName = "Cart.Totals";
+CartTotals.displayName = 'Cart.Totals';
 export default CartTotals;
 
+// eslint-disable-next-line no-undef
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     root: {
@@ -104,10 +107,10 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
       ...boxShadow(4, 3),
     },
     textBox: {
-      flexDirection: "row",
-      alignItems: "center",
-      flexWrap: "wrap",
-      justifyContent: "space-between",
+      flexDirection: 'row',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
     },
     discountInput: {
       ...typographyStyles.body2,

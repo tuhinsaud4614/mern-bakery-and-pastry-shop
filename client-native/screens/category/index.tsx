@@ -1,29 +1,42 @@
 import { useHeaderHeight } from '@react-navigation/elements';
+import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import Container from '../../components/container';
 import Spacer from '../../components/spacer';
-import { breakpointsWithDimensions } from '../../shared/utils';
+import { useBreakpointsWithDimensions } from '../../shared/hooks';
+import { CategoryScreenRouteProp } from '../../shared/routes';
 import Aside from './aside';
 import CategoryBanner from './banner';
 import CategoryContainer from './container';
 
 const CategoryScreen = () => {
-  // const {
-  //   params: { id, title },
-  // } = useRoute<CategoryScreenRouteProp>();
+  const {
+    params: { image },
+  } = useRoute<CategoryScreenRouteProp>();
   const theme = useTheme();
   const styles = makeStyles(theme);
-  const {
-    breakpoints: [isMdUp],
-    height,
-    width,
-  } = breakpointsWithDimensions.up(['md']);
-  const bannerWidth = isMdUp
-    ? width - theme.spacing * 6 - theme.spacing * 32
-    : width - theme.spacing * 4;
   const headerHeight = useHeaderHeight();
+  const {
+    breakpoints: [isMdUp, isLgUp],
+    width,
+    height,
+  } = useBreakpointsWithDimensions(['sm', 'md', 'lg'], 'up');
+
+  const bannerWidth = isMdUp
+    ? width - theme.spacing * 6 - theme.spacing * 31
+    : width - theme.spacing * 4;
+
+  let imageSize: string;
+
+  if (isMdUp) {
+    imageSize = image.medium;
+  } else if (isLgUp) {
+    imageSize = image.large;
+  } else {
+    imageSize = image.small;
+  }
 
   return (
     <Container>
@@ -41,7 +54,7 @@ const CategoryScreen = () => {
         <View
           style={[styles.content, isMdUp && { paddingLeft: theme.spacing * 2 }]}
         >
-          <CategoryBanner width={bannerWidth} />
+          <CategoryBanner width={bannerWidth} image={imageSize} />
           <Spacer direction="vertical" weight={24} />
           <CategoryContainer />
         </View>
@@ -60,7 +73,7 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
       flexDirection: 'row',
     },
     aside: {
-      width: theme.spacing * 32,
+      width: theme.spacing * 31,
       flexShrink: 0,
       backgroundColor: theme.colors.palette.accent,
     },
