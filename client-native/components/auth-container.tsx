@@ -103,7 +103,7 @@ const makeStyles = (theme: ReactNativePaper.Theme, isSmUp: boolean) => {
     root: {
       maxWidth: 600,
       width: '100%',
-      marginTop: theme.spacing * 4,
+      marginTop: theme.spacing * 6,
     },
     header: {
       width: '100%',

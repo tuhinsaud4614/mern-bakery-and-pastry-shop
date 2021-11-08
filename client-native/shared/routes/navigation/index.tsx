@@ -36,11 +36,23 @@ const RootStackNavigator = () => {
         name="Register"
         component={RegisterScreen}
         options={() => ({ header: () => null })}
+        // options={() => ({
+        //   headerTintColor: theme.colors.palette.secondary.main,
+        //   headerTransparent: true,
+        //   headerShadowVisible: false,
+        //   headerTitle: () => null,
+        // })}
       />
       <RootStack.Screen
         name="Login"
         component={LoginScreen}
         options={() => ({ header: () => null })}
+        // options={() => ({
+        //   headerTintColor: theme.colors.palette.secondary.main,
+        //   headerTransparent: true,
+        //   headerShadowVisible: false,
+        //   headerTitle: () => null,
+        // })}
       />
     </RootStack.Navigator>
   );
