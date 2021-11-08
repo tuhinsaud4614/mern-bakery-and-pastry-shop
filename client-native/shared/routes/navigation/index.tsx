@@ -12,7 +12,7 @@ export const RootStack = createNativeStackNavigator<RootStackParamList>();
 const RootStackNavigator = () => {
   const theme = useTheme();
   return (
-    <RootStack.Navigator initialRouteName="Category">
+    <RootStack.Navigator initialRouteName="Tabs">
       <RootStack.Screen
         name="Tabs"
         component={TabBarContainer}
@@ -21,7 +21,7 @@ const RootStackNavigator = () => {
       <RootStack.Screen
         name="Category"
         component={CategoryScreen}
-        initialParams={{ id: '123', title: 'hello' }}
+        // initialParams={{ id: '123', title: 'hello', }}
         options={() => detailNavigationOptions(theme, 'Category')}
       />
       <RootStack.Screen

@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { List, useTheme } from 'react-native-paper';
 import Accordion from '../../../components/accordion';
 import Typography from '../../../components/typography';
-import { dummyProducts } from '../../../dummy-data';
+import { dummyCategories, dummyProducts } from '../../../dummy-data';
 import { RootNavigationProps } from '../../../shared/routes';
 import AsideProductItem from './product-item';
 
@@ -36,16 +36,11 @@ const Aside = () => {
           />
         )}
       >
-        {Array.from({ length: 5 }).map((_, item) => (
+        {dummyCategories.map((category) => (
           <List.Item
-            key={item}
-            title={`Category - ${item + 1}`}
-            onPress={() =>
-              navigate('Category', {
-                id: (item + 1).toString(),
-                title: `Category - ${item + 1}`,
-              })
-            }
+            key={category.id}
+            title={category.title}
+            onPress={() => navigate('Category', category)}
           />
         ))}
       </Accordion>
