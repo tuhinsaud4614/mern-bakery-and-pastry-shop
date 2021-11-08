@@ -1,9 +1,9 @@
-import React from "react";
-import { StyleProp, View, ViewStyle } from "react-native";
-import { HelperText, TextInput } from "react-native-paper";
-import { TextInputProps } from "react-native-paper/lib/typescript/components/TextInput/TextInput";
+import React from 'react';
+import { StyleProp, View, ViewStyle } from 'react-native';
+import { HelperText, TextInput } from 'react-native-paper';
+import { TextInputProps } from 'react-native-paper/lib/typescript/components/TextInput/TextInput';
 
-interface Props {
+export interface InputProps extends TextInputProps {
   helperText?: string;
   classes?: {
     root?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
@@ -11,12 +11,7 @@ interface Props {
   };
 }
 
-const Input = ({
-  classes,
-  helperText,
-  theme,
-  ...rest
-}: Props & TextInputProps) => {
+const Input = ({ classes, helperText, theme, ...rest }: InputProps) => {
   return (
     <View style={classes?.root}>
       <TextInput
@@ -39,5 +34,5 @@ const Input = ({
   );
 };
 
-Input.displayName = "Input";
+Input.displayName = 'Input';
 export default Input;

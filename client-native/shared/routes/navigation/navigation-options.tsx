@@ -6,7 +6,6 @@ import { boxShadow } from '../../utils';
 
 const detailNavigationOptions = (
   theme: ReactNativePaper.Theme,
-  // eslint-disable-next-line prettier/prettier
   title: string
 ): NativeStackNavigationOptions => {
   return {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   NativeSyntheticEvent,
   StyleProp,
@@ -9,11 +9,11 @@ import {
   TextStyle,
   View,
   ViewStyle,
-} from "react-native";
-import { HelperText, useTheme } from "react-native-paper";
-import { typographyStyles } from "../shared/utils/common.styles";
+} from 'react-native';
+import { HelperText, useTheme } from 'react-native-paper';
+import { typographyStyles } from '../shared/utils/common.styles';
 
-interface Props {
+export interface Input2Props {
   helperText?: string;
   error?: boolean;
   classes?: {
@@ -30,16 +30,16 @@ const Input2 = ({
   onBlur,
   onFocus,
   ...rest
-}: Props & TextInputProps) => {
+}: Input2Props & TextInputProps) => {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const [focus, setFocus] = useState(false);
 
   const focusHandler = (
     e: NativeSyntheticEvent<TextInputFocusEventData>,
-    type: "focus" | "blur"
+    type: 'focus' | 'blur'
   ) => {
-    if (type === "focus") {
+    if (type === 'focus') {
       setFocus(true);
       onFocus && onFocus(e);
     } else {
@@ -55,13 +55,13 @@ const Input2 = ({
         style={StyleSheet.flatten([
           styles.root,
           {
-            borderColor: theme.colors.palette.primary[focus ? "light" : "main"],
+            borderColor: theme.colors.palette.primary[focus ? 'light' : 'main'],
           },
           error && { borderColor: theme.colors.palette.secondary.main },
           classes?.root,
         ])}
-        onFocus={(e) => focusHandler(e, "focus")}
-        onBlur={(e) => focusHandler(e, "blur")}
+        onFocus={(e) => focusHandler(e, 'focus')}
+        onBlur={(e) => focusHandler(e, 'blur')}
       />
       {!!helperText && (
         <HelperText style={classes?.helper} type="error">
@@ -72,9 +72,10 @@ const Input2 = ({
   );
 };
 
-Input2.displayName = "Input2";
+Input2.displayName = 'Input2';
 export default Input2;
 
+// eslint-disable-next-line no-undef
 const makeStyles = (theme: ReactNativePaper.Theme) => {
   return StyleSheet.create({
     root: {

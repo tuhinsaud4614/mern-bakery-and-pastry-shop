@@ -19,6 +19,7 @@ export type RootStackParamList = {
   Tabs: NavigatorScreenParams<BottomTabParamList>;
   Category: ICategory;
   Detail: { productId?: string; title?: string; categoryId?: string };
+  Register: undefined;
 };
 export type RootNavigationProps = NavigationProp<RootStackParamList>;
 export type TabsNavigationProps = NativeStackScreenProps<
@@ -37,3 +38,8 @@ export type CategoryNavigationProps = NativeStackScreenProps<
 >;
 
 export type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;
+
+export type RegisterNavigationProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Register'
+>;
