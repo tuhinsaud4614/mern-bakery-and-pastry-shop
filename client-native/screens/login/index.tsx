@@ -2,26 +2,26 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import AuthContainer from '../../components/auth-container';
 import { RootNavigationProps } from '../../shared/routes';
-import RegisterForm from './form';
+import LoginForm from './form';
 
-const RegisterScreen = () => {
+const LoginScreen = () => {
   const { navigate } = useNavigation<RootNavigationProps>();
   return (
     <AuthContainer
       memberProps={{
-        text: 'Already a member',
-        title: 'Login',
+        text: 'Not a member',
+        title: 'Register now',
         pressHandler() {
-          navigate('Login');
+          navigate('Register');
         },
       }}
-      title="Registration"
+      title="Login"
       facebookBtnHandler={() => {}}
       googleBtnHandler={() => {}}
     >
-      <RegisterForm />
+      <LoginForm />
     </AuthContainer>
   );
 };
 
-export default RegisterScreen;
+export default LoginScreen;

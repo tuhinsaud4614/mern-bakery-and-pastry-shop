@@ -67,3 +67,10 @@ export const registerFormSchema = Yup.object({
     .required('Confirm password is required')
     .oneOf([Yup.ref('password'), null], 'Password must be matched!'),
 });
+
+export const loginFormSchema = Yup.object({
+  email: Yup.string()
+    .email('This is not valid email.')
+    .required('Email is required.'),
+  password: Yup.string().required('Password is required'),
+});

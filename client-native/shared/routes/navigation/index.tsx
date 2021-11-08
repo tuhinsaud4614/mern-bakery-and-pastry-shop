@@ -4,6 +4,7 @@ import { useTheme } from 'react-native-paper';
 import { RootStackParamList } from '..';
 import CategoryScreen from '../../../screens/category';
 import DetailScreen from '../../../screens/detail';
+import LoginScreen from '../../../screens/login';
 import RegisterScreen from '../../../screens/register';
 import detailNavigationOptions from './navigation-options';
 import TabBarContainer from './tab-bar';
@@ -13,7 +14,7 @@ export const RootStack = createNativeStackNavigator<RootStackParamList>();
 const RootStackNavigator = () => {
   const theme = useTheme();
   return (
-    <RootStack.Navigator initialRouteName="Register">
+    <RootStack.Navigator initialRouteName="Login">
       <RootStack.Screen
         name="Tabs"
         component={TabBarContainer}
@@ -34,6 +35,11 @@ const RootStackNavigator = () => {
       <RootStack.Screen
         name="Register"
         component={RegisterScreen}
+        options={() => ({ header: () => null })}
+      />
+      <RootStack.Screen
+        name="Login"
+        component={LoginScreen}
         options={() => ({ header: () => null })}
       />
     </RootStack.Navigator>

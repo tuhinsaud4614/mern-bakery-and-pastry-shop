@@ -20,6 +20,7 @@ export type RootStackParamList = {
   Category: ICategory;
   Detail: { productId?: string; title?: string; categoryId?: string };
   Register: undefined;
+  Login: undefined;
 };
 export type RootNavigationProps = NavigationProp<RootStackParamList>;
 export type TabsNavigationProps = NativeStackScreenProps<
@@ -42,4 +43,9 @@ export type CategoryScreenRouteProp = RouteProp<RootStackParamList, 'Category'>;
 export type RegisterNavigationProps = NativeStackScreenProps<
   RootStackParamList,
   'Register'
+>;
+
+export type LoginNavigationProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Login'
 >;
