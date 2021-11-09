@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Button, useTheme } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 import Container from '../../components/container';
 import Stepper from '../../components/stepper';
+import ShippingContainer from './shipping-container';
 
 const CheckoutScreen = () => {
   const [current, setCurrent] = useState(0);
@@ -11,25 +12,10 @@ const CheckoutScreen = () => {
     <Container>
       <Stepper
         current={current}
-        items={Array.from({ length: 4 }).map(
-          () => 'Lorem ipsum dolor sit amet'
-        )}
+        items={['Shipping address', 'Payment', 'place order']}
         activeColor={theme.colors.palette.primary.main}
       />
-      <Button
-        onPress={() => {
-          setCurrent((prev) => (prev > 0 ? --prev : prev));
-        }}
-      >
-        Previous
-      </Button>
-      <Button
-        onPress={() => {
-          setCurrent((prev) => (prev < 3 ? ++prev : prev));
-        }}
-      >
-        Next
-      </Button>
+      <ShippingContainer onComplete={() => setCurrent(1)} />
     </Container>
   );
 };

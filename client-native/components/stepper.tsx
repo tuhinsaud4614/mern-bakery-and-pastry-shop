@@ -123,11 +123,8 @@ const makeStyles = (theme: ReactNativePaper.Theme) => {
     root: {
       width: '100%',
     },
-
     container: {
       flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
     },
     item: {
       flex: 1,

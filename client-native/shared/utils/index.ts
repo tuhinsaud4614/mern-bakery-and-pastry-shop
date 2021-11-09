@@ -26,3 +26,7 @@ export const convertToLocalDate = (date: Date) => {
   dayjs.extend(localizedFormat);
   return dayjs(date).format('ll');
 };
+
+export enum AppConstraints {
+  currency = '৳',
+}

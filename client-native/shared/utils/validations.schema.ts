@@ -74,3 +74,18 @@ export const loginFormSchema = Yup.object({
     .required('Email is required.'),
   password: Yup.string().required('Password is required'),
 });
+
+export const checkoutAddressSchema = Yup.object({
+  address: Yup.string().required('Address is required.'),
+  mobile: Yup.string()
+    .required('Mobile is required.')
+    .matches(
+      /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8,9})$/,
+      'Mobile should valid BD mobile number.'
+    ),
+  area: Yup.string().required('Area is required.'),
+  city: Yup.string().required('City is required.'),
+  zip: Yup.string()
+    .required('Zip is required.')
+    .matches(/^[0-9]+$/, 'Zip Code can only contain number.'),
+});
