@@ -19,6 +19,7 @@ export type RootStackParamList = {
   Tabs: NavigatorScreenParams<BottomTabParamList>;
   Category: ICategory;
   Detail: { productId?: string; title?: string; categoryId?: string };
+  Checkout: undefined;
   Register: undefined;
   Login: undefined;
 };
@@ -48,4 +49,9 @@ export type RegisterNavigationProps = NativeStackScreenProps<
 export type LoginNavigationProps = NativeStackScreenProps<
   RootStackParamList,
   'Login'
+>;
+
+export type CheckoutNavigationProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Checkout'
 >;
