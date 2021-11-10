@@ -50,7 +50,6 @@ const SummaryItem = ({
 const OrderSummary = memo(() => {
   const theme = useTheme();
   const styles = makeStyles(theme);
-  console.log('order ');
 
   return (
     <View style={styles.summary}>
