@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import { Formik } from 'formik';
-import React, { memo } from 'react';
+import React, { Fragment, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, TextInput, useTheme } from 'react-native-paper';
 import Input from '../../components/input';
@@ -9,6 +9,12 @@ import { useBreakpointsWithDimensions } from '../../shared/hooks';
 import { checkoutAddressSchema } from '../../shared/utils/validations.schema';
 
 const cityOptions: { title: string; value: string }[] = [
+  { title: 'Dhaka', value: 'dhaka' },
+  { title: 'Chittagong', value: 'chittagong' },
+  { title: 'Rajshahi', value: 'rajshahi' },
+];
+
+const areaOptions: { title: string; value: string }[] = [
   { title: 'Dhaka', value: 'dhaka' },
   { title: 'Chittagong', value: 'chittagong' },
   { title: 'Rajshahi', value: 'rajshahi' },
@@ -64,7 +70,7 @@ const ShippingAddress = memo(({ onComplete }: { onComplete(): void }) => {
         setFieldValue,
       }) => {
         return (
-          <View>
+          <Fragment>
             <View style={isSmUp && styles.formGroup}>
               <Input
                 classes={{
@@ -137,7 +143,7 @@ const ShippingAddress = memo(({ onComplete }: { onComplete(): void }) => {
               </View>
               <View style={{ flex: 1, paddingHorizontal: theme.spacing }}>
                 <PickerBox
-                  options={[]}
+                  options={areaOptions}
                   onChange={(value) => setFieldValue('area', value)}
                   selectedValue={values.area || ''}
                   label="Area"
@@ -159,7 +165,7 @@ const ShippingAddress = memo(({ onComplete }: { onComplete(): void }) => {
                 Next
               </Button>
             </View>
-          </View>
+          </Fragment>
         );
       }}
     </Formik>
