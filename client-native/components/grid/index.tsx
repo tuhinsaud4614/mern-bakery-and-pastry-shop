@@ -1,9 +1,6 @@
-import React, { ReactNode } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { useTheme } from "react-native-paper";
-import GridProvider, { GridContext, GridPartitionValueType } from "./context";
-
-const getGridWidth = () => {};
+import React, { ReactNode } from 'react';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import GridProvider, { GridContext, GridPartitionValueType } from './context';
 
 interface Props {
   xs?: GridPartitionValueType;
@@ -26,8 +23,7 @@ const Grid = ({
   children,
   style,
 }: Props) => {
-  const theme = useTheme();
-  const styles = makeStyles(theme);
+  const styles = makeStyles();
 
   if (item) {
     return (
@@ -53,15 +49,16 @@ const Grid = ({
   );
 };
 
-Grid.displayName = "Grid";
+Grid.displayName = 'Grid';
 export default Grid;
 
-const makeStyles = (theme: ReactNativePaper.Theme) => {
+// eslint-disable-next-line no-undef
+const makeStyles = () => {
   return StyleSheet.create({
     root: {
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap",
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'wrap',
     },
     item: {
       flexGrow: 0,

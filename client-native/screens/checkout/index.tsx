@@ -5,12 +5,12 @@ import Container from '../../components/container';
 import Grid from '../../components/grid';
 import Spacer from '../../components/spacer';
 import Stepper from '../../components/stepper';
+import OrderPlace from './order-place';
 import OrderSummary from './order-summary';
-import OrderPayment from './payment';
 import ShippingAddress from './shipping-address';
 
 const CheckoutScreen = () => {
-  const [current, setCurrent] = useState(1);
+  const [current, setCurrent] = useState(2);
   const theme = useTheme();
 
   return (
@@ -32,8 +32,19 @@ const CheckoutScreen = () => {
             {current === 0 && (
               <ShippingAddress onComplete={() => setCurrent(1)} />
             )}
-            {current === 1 && (
+            {/* {current === 1 && (
               <OrderPayment
+                onComplete={(action) => {
+                  if (action === 'next') {
+                    setCurrent(2);
+                  } else {
+                    setCurrent(0);
+                  }
+                }}
+              />
+            )} */}
+            {current === 2 && (
+              <OrderPlace
                 onComplete={(action) => {
                   if (action === 'next') {
                     setCurrent(2);
