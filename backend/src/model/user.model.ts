@@ -64,8 +64,12 @@ const UserSchema = new Schema(
     },
     mobile: {
       type: String,
+      required: false,
+      index: {
+        unique: true,
+        partialFilterExpression: { mobile: { $type: "string" } },
+      },
       default: null,
-      unique: true,
     },
     address: {
       type: String,
