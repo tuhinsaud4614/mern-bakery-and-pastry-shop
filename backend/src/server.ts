@@ -16,8 +16,6 @@ import router from "./routes";
 
 // .env configure
 config();
-// Database Connected
-connectToMongoDb();
 const HOST = process.env.HOST || "localhost";
 const PORT = process.env.PORT || 8000;
 
@@ -57,4 +55,8 @@ app.use((error: any, _: Request, res: Response, next: NextFunction) => {
 
 app.listen(PORT, () => {
   logger.info(`The application running on http://${HOST}:${PORT}`);
+  // Database Connected
+  connectToMongoDb();
 });
+
+export default app;

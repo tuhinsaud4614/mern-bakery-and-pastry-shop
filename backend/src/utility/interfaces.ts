@@ -13,3 +13,11 @@ export interface ISuccessResponse {
   timeStamp: Date;
   data: any;
 }
+
+// When request for register need this in the body object
+export interface IRegisterRequestBody {
+  firstName: string | null;
+  lastName: string | null;
+  email: string;
+  password: string;
+}
