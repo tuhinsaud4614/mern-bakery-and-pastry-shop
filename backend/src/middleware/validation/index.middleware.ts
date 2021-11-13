@@ -11,11 +11,14 @@ export const validateRequest = (schema: AnySchema, code: number = 500) => {
         query: req.query,
         params: req.params,
       });
-      return next();
+      next();
+      return;
     } catch (er) {
       const { message } = er as ValidationError;
       logger.error(message);
-      return next(new HttpError(message, code));
+      const error = new HttpError(message, code);
+      next(error);
+      return error;
     }
   };
 };

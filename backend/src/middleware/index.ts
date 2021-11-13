@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import logger from "../logger";
 import User from "../model/user.model";
 import { HttpError } from "../model/utility.model";
 
@@ -16,17 +17,20 @@ export const userExistenceValidate = (
 
       if (errorWhen === "exist") {
         if (currentUser) {
-          return next(new HttpError("User already exist.", code));
+          const error = new HttpError("User already exist.", code);
+          return next(error);
         }
       } else {
         if (!currentUser) {
-          return next(new HttpError("User not exist.", code));
+          const error = new HttpError("User not exist.", code);
+          return next(error);
         }
         // @ts-ignore
         req.user = currentUser;
       }
       return next();
     } catch (error) {
+      logger.error(error);
       return next(new HttpError("Something went wrong.", 500));
     }
   };
