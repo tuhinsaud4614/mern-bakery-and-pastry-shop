@@ -1,3 +1,5 @@
+import { ImageExtType } from "./types";
+
 export interface IErrorResponse {
   code: number;
   success: boolean;
@@ -20,4 +22,10 @@ export interface IRegisterRequestBody {
   lastName: string | null;
   email: string;
   password: string;
+}
+
+export interface IImageProps {
+  name: string;
+  ext: ImageExtType;
+  uri: string;
 }

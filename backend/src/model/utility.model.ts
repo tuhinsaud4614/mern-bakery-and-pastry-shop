@@ -1,4 +1,5 @@
-import { IErrorResponse } from "../utility/interfaces";
+import { Schema, SchemaDefinitionProperty, Types } from "mongoose";
+import { IErrorResponse, IImageProps } from "../utility/interfaces";
 
 export class HttpError extends Error {
   readonly error: string;
@@ -56,3 +57,37 @@ export class HttpError extends Error {
     };
   }
 }
+
+export interface IImage extends Types.Subdocument {
+  main: IImageProps;
+  smWebp: IImageProps;
+  mdWebp: IImageProps;
+  lgWebp: IImageProps;
+  sm: IImageProps;
+  md: IImageProps;
+  lg: IImageProps;
+}
+
+const schemaDefinition: SchemaDefinitionProperty<IImageProps> = {
+  name: { type: String, required: true },
+  ext: {
+    type: String,
+    required: true,
+    enum: {
+      values: ["jpeg", "jpg", "png", "gif", "svg", "webp"],
+      message:
+        "{VALUE} must be valid image extension like (jpeg , jpg , png , gif , svg , webp)",
+    },
+  },
+  uri: { type: String, required: true, unique: true },
+};
+
+export const ImageSchema = new Schema<IImage>({
+  main: schemaDefinition,
+  smWebp: schemaDefinition,
+  mdWebp: schemaDefinition,
+  lgWebp: schemaDefinition,
+  sm: schemaDefinition,
+  md: schemaDefinition,
+  lg: schemaDefinition,
+});
