@@ -34,3 +34,12 @@ export const registerRequestBodySchema = yup.object().shape({
       ),
   }),
 });
+
+// Admin Category validations
+export const categoryRequestBodySchema = yup.object().shape({
+  body: yup.object().shape({
+    title: yup.string().trim().required("Title is required."),
+    slug: yup.string().trim().required("Slug is required."),
+  }),
+  file: yup.mixed().required("File is required."),
+});

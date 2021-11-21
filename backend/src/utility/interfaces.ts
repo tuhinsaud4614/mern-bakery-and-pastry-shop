@@ -1,5 +1,3 @@
-import { ImageExtType } from "./types";
-
 export interface IErrorResponse {
   code: number;
   success: boolean;
@@ -16,6 +14,13 @@ export interface ISuccessResponse {
   data: any;
 }
 
+export interface IImageProps {
+  name: string;
+  uri: string;
+  ext: string;
+  baseName: string;
+}
+
 // When request for register need this in the body object
 export interface IRegisterRequestBody {
   firstName: string | null;
@@ -24,8 +29,8 @@ export interface IRegisterRequestBody {
   password: string;
 }
 
-export interface IImageProps {
-  name: string;
-  ext: ImageExtType;
-  uri: string;
+// When request for category creation need this in the body object
+export interface ICategoryCreateRequestBody {
+  title: string;
+  slug: string;
 }

@@ -1,14 +1,21 @@
 import { Router } from "express";
-import path from "path";
 import createCategory from "../controller/admin/category/create.controller";
 import imageUpload from "../middleware/image-upload.middleware";
-import { ROOT_PATH } from "../utility";
+import resizeImages from "../middleware/resize-images.middleware";
+import {
+  categorySlugIsUnique,
+  validateRequest,
+} from "../middleware/validation/index.middleware";
+import { categoryRequestBodySchema } from "../schema/validation.schema";
 
 const router = Router();
 
 router.post(
   "/create",
-  imageUpload(path.join(ROOT_PATH, "public", "images")).single("image"),
+  imageUpload().single("image"),
+  validateRequest(categoryRequestBodySchema, 422),
+  categorySlugIsUnique,
+  resizeImages,
   createCategory
 );
 

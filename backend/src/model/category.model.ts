@@ -1,10 +1,11 @@
 import { model, Schema } from "mongoose";
-import { IImage, ImageSchema } from "./utility.model";
+import { ImageSchemaDefinition } from "../schema/utility.schema";
+import { IImageProps } from "../utility/interfaces";
 
 export interface ICategory extends Document {
   title: string;
   slug: string;
-  image: IImage;
+  image: IImageProps[];
 }
 
 const CategorySchema = new Schema(
@@ -18,8 +19,9 @@ const CategorySchema = new Schema(
       required: true,
       unique: true,
     },
-    image: ImageSchema,
+    image: [ImageSchemaDefinition],
   },
+
   { timestamps: true }
 );
 

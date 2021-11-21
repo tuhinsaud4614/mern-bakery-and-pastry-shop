@@ -8,11 +8,13 @@ import express, {
   Response,
   urlencoded,
 } from "express";
+import { MulterError } from "multer";
 import path from "path";
 import connectToMongoDb from "./db-connect";
 import logger from "./logger";
 import { HttpError } from "./model/utility.model";
 import router from "./routes";
+import { IErrorResponse } from "./utility/interfaces";
 
 // .env configure
 config();
@@ -42,6 +44,18 @@ app.use((error: any, _: Request, res: Response, next: NextFunction) => {
   if (res.headersSent) {
     logger.warn("Header already sent.");
     return next(error);
+  }
+
+  if (error instanceof MulterError) {
+    logger.error(error.message);
+    return res.status(422).json({
+      success: false,
+      detail: null,
+      message: error.message,
+      error: "Unprocessable Entity",
+      timeStamp: new Date(),
+      code: 422,
+    } as IErrorResponse);
   }
 
   if (error instanceof HttpError) {
