@@ -1,5 +1,6 @@
 import { Router } from "express";
 import createCategory from "../controller/admin/category/create.controller";
+import deleteCategory from "../controller/admin/category/delete.controller";
 import allCategories, {
   categoryByIdOrSlug,
 } from "../controller/admin/category/read.controller";
@@ -25,5 +26,6 @@ router.post(
 );
 
 router.get(`/:${CATEGORY_ID_OR_SLUG}`, categoryByIdOrSlug);
+router.delete(`/:${CATEGORY_ID_OR_SLUG}`, deleteCategory);
 
 export default router;

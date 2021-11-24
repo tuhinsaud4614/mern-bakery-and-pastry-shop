@@ -12,7 +12,7 @@ const allCategories: RequestHandler = async (_, res, next) => {
   } catch (error) {
     console.log(error);
     logger.error("Something went wrong.");
-    return next(new HttpError("Something went wrong.", 404));
+    return next(new HttpError("Something went wrong.", 500));
   }
 };
 
@@ -30,7 +30,7 @@ export const categoryByIdOrSlug: RequestHandler = async (req, res, next) => {
         },
       ],
     })
-      .select("-__v")
+      .select("-__v -image._id")
       .exec();
 
     if (!category) {

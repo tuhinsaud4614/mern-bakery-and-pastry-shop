@@ -18,4 +18,5 @@ git commit -m "Backend:Controller
 
 Specific category read controller added:
 -- Admin can get a category by Id 
+-- Admin can also a category by slug
 "
