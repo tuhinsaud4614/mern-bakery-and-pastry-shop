@@ -7,6 +7,7 @@ import { imageResize, ROOT_PATH, uniqueId } from "../utility";
 const resizeImages: RequestHandler = async (req, __, next) => {
   const imageName = uniqueId();
   const location = path.join(ROOT_PATH, "public", "images");
+
   try {
     const result = await Promise.all([
       ...imageResize(imageName, req.file!.buffer, location, "jpeg", [

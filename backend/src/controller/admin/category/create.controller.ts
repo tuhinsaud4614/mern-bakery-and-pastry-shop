@@ -5,6 +5,7 @@ import { HttpError } from "../../../model/utility.model";
 import { removeAllSpaces } from "../../../utility";
 import {
   ICategoryCreateRequestBody,
+  IImageProps,
   ISuccessResponse,
 } from "../../../utility/interfaces";
 
@@ -14,7 +15,8 @@ const createCategory: RequestHandler = async (req, res, next) => {
   const trimmedTitle = removeAllSpaces(title);
 
   // @ts-ignore
-  const result = req.images as IResizeImage[];
+  const result = req.images as IImageProps[];
+
   try {
     const newCategory = await new Category({
       title: trimmedTitle,

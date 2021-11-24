@@ -1,5 +1,26 @@
 import { errorAccordingStatusCode } from "../utility";
-import { IErrorResponse } from "../utility/interfaces";
+import { IErrorResponse, ISuccessResponse } from "../utility/interfaces";
+
+export class HttpSuccess {
+  readonly _success: boolean;
+  readonly _code: number;
+  readonly _data: number;
+
+  constructor(data: any, code: number) {
+    this._code = code;
+    this._success = code >= 301 && code <= 500 ? false : true;
+    this._data = data;
+  }
+
+  toObject(): ISuccessResponse {
+    return {
+      success: this._success,
+      timeStamp: new Date(),
+      code: this._code,
+      data: this._data,
+    };
+  }
+}
 
 export class HttpError extends Error {
   readonly error: string;
@@ -26,60 +47,3 @@ export class HttpError extends Error {
     };
   }
 }
-
-// export class CustomMulterError {
-//   readonly success: boolean;
-//   readonly message: string;
-
-//   constructor(
-//     public error: MulterError,
-//     public statusCode: number,
-//     public detail?: string
-//   ) {
-//     this.success = statusCode >= 301 && statusCode <= 500 ? false : true;
-//     this.error = errorAccordingStatusCode(statusCode);
-//     this.message = this._checkMessage(error.code);
-//   }
-
-//   private _checkMessage(code: ErrorCode) {
-//     switch (code) {
-//       case "LIMIT_FILE_SIZE":
-//         return "File is too larg";
-//       case 400:
-//         return "Bad Request";
-//       case 401:
-//         return "Unauthorized";
-//       case 402:
-//         return "Payment Required";
-//       case 403:
-//         return "Forbidden";
-//       case 404:
-//         return "Not Found";
-//       case 415:
-//         // The request entity has a media type which the server or resource does not support. For example, the client uploads an image as image/svg+xml, but the server requires that images use a different format.[49]
-//         return "Unsupported Media Type";
-//       case 422:
-//         // Invalid Inputs
-//         return "Unprocessable Entity";
-//       case 429:
-//         return "Too Many Requests";
-//       case 431:
-//         return "Request Header Fields Too Large";
-//       case 500:
-//         return "Internal Server Error";
-//       default:
-//         return "An unknown error occurred";
-//     }
-//   }
-
-//   toObject(): IErrorResponse {
-//     return {
-//       success: this.success,
-//       detail: this.detail || null,
-//       message: this.message,
-//       error: this.error,
-//       timeStamp: new Date(),
-//       code: this.code,
-//     };
-//   }
-// }

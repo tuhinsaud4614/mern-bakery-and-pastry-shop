@@ -1,3 +1,4 @@
+import compression from "compression";
 import cors from "cors";
 import { config } from "dotenv";
 import express, {
@@ -8,12 +9,15 @@ import express, {
   Response,
   urlencoded,
 } from "express";
+import helmet from "helmet";
+import { Server } from "http";
 import { MulterError } from "multer";
 import path from "path";
 import connectToMongoDb from "./db-connect";
 import logger from "./logger";
 import { HttpError } from "./model/utility.model";
 import router from "./routes";
+import { ROOT_PATH } from "./utility";
 import { IErrorResponse } from "./utility/interfaces";
 
 // .env configure
@@ -24,11 +28,23 @@ const PORT = process.env.PORT || 8000;
 // App created
 const app: Application = express();
 
-// Middleware:Core
-app.use(cors());
-app.use(express.static(path.join(__dirname, "..", "/public")));
+// set security HTTP headers
+app.use(helmet());
+
+// parse json & urlencoded request body
 app.use(json());
 app.use(urlencoded({ extended: false }));
+
+// gzip compression
+app.use(compression());
+
+// Middleware:Core
+app.use(cors());
+// @ts-ignore
+app.options("*", cors());
+
+// Middleware:Static
+app.use(express.static(path.join(ROOT_PATH, "/public")));
 
 // Middleware:Routes
 app.use("/api/v1", router);
@@ -67,10 +83,42 @@ app.use((error: any, _: Request, res: Response, next: NextFunction) => {
     .json(new HttpError("Something went wrong.", 500).toObject());
 });
 
-app.listen(PORT, () => {
-  logger.info(`The application running on http://${HOST}:${PORT}`);
-  // Database Connected
-  connectToMongoDb();
+let server: Server;
+// Database Connected
+connectToMongoDb()
+  .then(() => {
+    server = app.listen(PORT, () => {
+      logger.info(`The application running on http://${HOST}:${PORT}`);
+    });
+  })
+  .catch((error) => {
+    logger.error(`Database connection failed and err is: ${error}`);
+  });
+
+const exitHandler = () => {
+  if (server) {
+    server.close(() => {
+      logger.info("Server closed.");
+      process.exit(1);
+    });
+  } else {
+    process.exit(1);
+  }
+};
+
+const unexpectedErrorHandler = (error: Error) => {
+  logger.error(error);
+  exitHandler();
+};
+
+process.on("uncaughtException", unexpectedErrorHandler);
+process.on("unhandledRejection", unexpectedErrorHandler);
+
+process.on("SIGTERM", () => {
+  logger.info("SIGTERM received");
+  if (server) {
+    server.close();
+  }
 });
 
 export default app;

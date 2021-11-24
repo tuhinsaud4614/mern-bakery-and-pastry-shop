@@ -8,7 +8,7 @@ async function connectToMongoDb() {
     );
     logger.info(`Database connected successfully.`);
   } catch (error) {
-    logger.error(`Database connection failed and err is: ${error}`);
+    throw error;
   }
 }
 
