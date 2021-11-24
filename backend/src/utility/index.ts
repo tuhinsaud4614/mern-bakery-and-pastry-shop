@@ -93,3 +93,6 @@ export const imageResize = (
     };
   });
 };
+
+// Admin category routes: categoryByIdOrSlug params
+export const CATEGORY_ID_OR_SLUG = "idOrSlug";

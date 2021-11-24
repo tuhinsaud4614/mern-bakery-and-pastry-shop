@@ -4,3 +4,18 @@ git commit -m "Backend:Logger" -m "Details..."
 git commit -m "Backend:Testing" -m "Details"
 git commit -m "Backend:Router" -m "BaseRouter:Functionality..."
 -------------------
+
+best git commit format
+Subject=concise summary of what happened
+Body = more detailed explanation
+-- What is now different than before?
+-- What's the reason for the change?
+-- I there anything to watch out for / anything particularly remarkable?
+
+example:
+
+git commit -m "Backend:Controller
+
+Specific category read controller added:
+-- Admin can get a category by Id 
+"
