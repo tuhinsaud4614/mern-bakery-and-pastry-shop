@@ -26,7 +26,7 @@ const createCategory: RequestHandler = async (req, res, next) => {
 
     res.status(201).json({
       code: 201,
-      data: newCategory.toJSON({ getters: true }),
+      data: newCategory,
       success: true,
       timeStamp: new Date(),
     } as ISuccessResponse);

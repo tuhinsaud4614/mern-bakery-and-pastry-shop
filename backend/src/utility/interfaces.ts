@@ -34,3 +34,8 @@ export interface ICategoryCreateRequestBody {
   title: string;
   slug: string;
 }
+
+export interface ICategoryUpdateRequestBody {
+  title?: string;
+  slug?: string;
+}

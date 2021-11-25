@@ -16,9 +16,11 @@ const allCategories: RequestHandler = async (_, res, next) => {
   }
 };
 
-export const categoryByIdOrSlug: RequestHandler = async (req, res, next) => {
+export const categoryByIdOrSlug: RequestHandler<{
+  [CATEGORY_ID_OR_SLUG]: string;
+}> = async (req, res, next) => {
   try {
-    const idOrSlug = req.params[CATEGORY_ID_OR_SLUG] as string;
+    const idOrSlug = req.params[CATEGORY_ID_OR_SLUG];
     const category = await Category.findOne({
       $or: [
         { slug: idOrSlug },

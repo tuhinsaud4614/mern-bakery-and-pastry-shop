@@ -1,7 +1,9 @@
 import { randomBytes } from "crypto";
-import { existsSync, mkdirSync } from "fs";
+import { existsSync, mkdirSync, unlink } from "fs";
 import path from "path";
 import sharp, { FormatEnum } from "sharp";
+import logger from "../logger";
+import { IImageProps } from "./interfaces";
 import { ImageExtType, ImageMIMEType } from "./types";
 
 export const errorAccordingStatusCode = (code: number) => {
@@ -96,3 +98,13 @@ export const imageResize = (
 
 // Admin category routes: categoryByIdOrSlug params
 export const CATEGORY_ID_OR_SLUG = "idOrSlug";
+
+export const removeImagesFromDir = (images: IImageProps[]) => {
+  images.forEach((img) => {
+    unlink(path.join(ROOT_PATH, "/public", img.uri), (err) => {
+      if (err) {
+        logger.error(`${img.name}: file not remove`);
+      }
+    });
+  });
+};

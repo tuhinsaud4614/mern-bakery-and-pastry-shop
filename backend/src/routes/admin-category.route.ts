@@ -4,6 +4,7 @@ import deleteCategory from "../controller/admin/category/delete.controller";
 import allCategories, {
   categoryByIdOrSlug,
 } from "../controller/admin/category/read.controller";
+import updateCategory from "../controller/admin/category/update.controller";
 import imageUpload from "../middleware/image-upload.middleware";
 import resizeImages from "../middleware/resize-images.middleware";
 import {
@@ -26,6 +27,13 @@ router.post(
 );
 
 router.get(`/:${CATEGORY_ID_OR_SLUG}`, categoryByIdOrSlug);
+router.put(
+  `/:${CATEGORY_ID_OR_SLUG}`,
+  imageUpload().single("image"),
+  categorySlugIsUnique,
+  resizeImages,
+  updateCategory
+);
 router.delete(`/:${CATEGORY_ID_OR_SLUG}`, deleteCategory);
 
 export default router;

@@ -8,7 +8,7 @@ export class HttpSuccess {
 
   constructor(data: any, code: number) {
     this._code = code;
-    this._success = code >= 301 && code <= 500 ? false : true;
+    this._success = true;
     this._data = data;
   }
 
