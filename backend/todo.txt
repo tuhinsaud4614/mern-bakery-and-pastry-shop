@@ -14,8 +14,8 @@ Body = more detailed explanation
 
 example:
 
-git commit -m "Backend:Controller
-Category delete controller added:
--- Admin can delete a category by Id 
--- Admin also can delete a category by slug
+git commit -m "Backend:Controller" -m "Category update controller created:
+-- Admin can update a category by Id 
+-- Admin also can update a category by slug
+-- Admin can change the slug, title and image
 "

@@ -1,9 +1,8 @@
 import { RequestHandler } from "express";
-import { Types } from "mongoose";
 import logger from "../../../logger";
 import Category from "../../../model/category.model";
 import { HttpError, HttpSuccess } from "../../../model/utility.model";
-import { CATEGORY_ID_OR_SLUG } from "../../../utility";
+import { PARAMS_CATEGORY_ID } from "../../../utility/constants";
 
 const allCategories: RequestHandler = async (_, res, next) => {
   try {
@@ -16,21 +15,14 @@ const allCategories: RequestHandler = async (_, res, next) => {
   }
 };
 
-export const categoryByIdOrSlug: RequestHandler<{
-  [CATEGORY_ID_OR_SLUG]: string;
+export const categoryById: RequestHandler<{
+  [PARAMS_CATEGORY_ID]: string;
 }> = async (req, res, next) => {
   try {
-    const idOrSlug = req.params[CATEGORY_ID_OR_SLUG];
+    const id = req.params[PARAMS_CATEGORY_ID];
+
     const category = await Category.findOne({
-      $or: [
-        { slug: idOrSlug },
-        {
-          // Create a demo id if not valid id
-          _id: new Types.ObjectId(
-            idOrSlug.length < 12 ? "123456789012" : idOrSlug
-          ),
-        },
-      ],
+      _id: id,
     })
       .select("-__v -image._id")
       .exec();

@@ -1,53 +1,57 @@
 import { RequestHandler } from "express";
-import { isValidObjectId } from "mongoose";
 import logger from "../../../logger";
 import Category from "../../../model/category.model";
 import { HttpError, HttpSuccess } from "../../../model/utility.model";
 import {
-  CATEGORY_ID_OR_SLUG,
+  multipleImagesResize,
   removeAllSpaces,
   removeImagesFromDir,
 } from "../../../utility";
-import { ICategoryUpdateRequestBody } from "../../../utility/interfaces";
+import { PARAMS_CATEGORY_ID } from "../../../utility/constants";
+import {
+  ICategoryUpdateRequestBody,
+  IImageProps,
+} from "../../../utility/interfaces";
 
-const updateCategory: RequestHandler<{ [CATEGORY_ID_OR_SLUG]: string }> =
-  async (req, res, next) => {
-    const idOrSlug = req.params[CATEGORY_ID_OR_SLUG];
-    const { slug, title } = req.body as ICategoryUpdateRequestBody;
-    const trimmedSlug = slug ? removeAllSpaces(slug) : undefined;
-    const trimmedTitle = title ? removeAllSpaces(title) : undefined;
+const updateCategory: RequestHandler<{ [PARAMS_CATEGORY_ID]: string }> = async (
+  req,
+  res,
+  next
+) => {
+  const id = req.params[PARAMS_CATEGORY_ID];
+  const { slug, title } = req.body as ICategoryUpdateRequestBody;
+  const trimmedSlug = slug ? removeAllSpaces(slug) : undefined;
+  const trimmedTitle = title ? removeAllSpaces(title) : undefined;
 
-    // @ts-ignore
-    const result = req.images as IImageProps[] | undefined;
+  try {
+    const category = await Category.findOne({
+      _id: id,
+    }).exec();
 
-    try {
-      const category = await Category.findOneAndUpdate(
-        {
-          $or: [
-            { slug: idOrSlug },
-            {
-              _id: isValidObjectId(idOrSlug) ? idOrSlug : undefined,
-            },
-          ],
-        },
-        { title: trimmedTitle, slug: trimmedSlug, image: result }
-      ).exec();
-
-      if (!category) {
-        return next(new HttpError("Category not exist.", 404));
-      }
-
-      if (result) {
-        removeImagesFromDir(category.image);
-      }
-
-      res.status(201).json(new HttpSuccess(category._id, 201).toObject());
-    } catch (error) {
-      console.log(error);
-
-      logger.error("Something went wrong.");
-      return next(new HttpError("Something went wrong.", 500));
+    if (!category) {
+      return next(new HttpError("Category not exist.", 404));
     }
-  };
+
+    if (trimmedTitle) category.title = trimmedTitle;
+    if (trimmedSlug) category.slug = trimmedSlug;
+
+    let oldImage: IImageProps[] | undefined;
+
+    if (req.file) {
+      oldImage = category.image;
+      category.image = await multipleImagesResize(req.file);
+    }
+
+    const updatedCategory = await category.save();
+    if (oldImage) removeImagesFromDir(oldImage);
+
+    res.status(201).json(new HttpSuccess(updatedCategory, 200).toObject());
+  } catch (error) {
+    console.log(error);
+
+    logger.error("Something went wrong.");
+    return next(new HttpError("Something went wrong.", 500));
+  }
+};
 
 export default updateCategory;

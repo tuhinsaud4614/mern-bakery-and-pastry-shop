@@ -1,3 +1,4 @@
+import { isValidObjectId } from "mongoose";
 import * as yup from "yup";
 
 export const registerRequestBodySchema = yup.object().shape({
@@ -43,3 +44,12 @@ export const categoryRequestBodySchema = yup.object().shape({
   }),
   file: yup.mixed().required("File is required."),
 });
+
+export const paramsIsValidObjectIdSchema = (key: string, message: string) =>
+  yup.object().shape({
+    params: yup.object().shape({
+      [key]: yup
+        .string()
+        .test("is-ObjectID", message, (value) => isValidObjectId(value)),
+    }),
+  });

@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, unlink } from "fs";
 import path from "path";
 import sharp, { FormatEnum } from "sharp";
 import logger from "../logger";
+import { ROOT_PATH } from "./constants";
 import { IImageProps } from "./interfaces";
 import { ImageExtType, ImageMIMEType } from "./types";
 
@@ -40,8 +41,6 @@ export const errorAccordingStatusCode = (code: number) => {
 export const removeAllSpaces = (value: string): string => {
   return value.replace(/\s+/g, " ").trim();
 };
-
-export const ROOT_PATH = path.join(__dirname, "..", "..");
 
 export const IMAGE_MIME_TYPE: { [key in ImageMIMEType]: ImageExtType } = {
   "image/gif": "gif",
@@ -96,13 +95,32 @@ export const imageResize = (
   });
 };
 
-// Admin category routes: categoryByIdOrSlug params
-export const CATEGORY_ID_OR_SLUG = "idOrSlug";
+export const multipleImagesResize = async (file: Express.Multer.File) => {
+  const imageName = uniqueId();
+  const location = path.join(ROOT_PATH, "public", "images");
+
+  const result = await Promise.all([
+    ...imageResize(imageName, file.buffer, location, "jpeg", [
+      { height: null, width: null, baseName: "main" },
+      { height: (640 / 16) * 9, width: 640, baseName: "sm" },
+      { height: (768 / 16) * 9, width: 768, baseName: "md" },
+      { height: (1280 / 16) * 9, width: 1280, baseName: "lg" },
+    ]),
+    ...imageResize(imageName, file.buffer, location, "webp", [
+      { height: (640 / 16) * 9, width: 640, baseName: "sm" },
+      { height: (768 / 16) * 9, width: 768, baseName: "md" },
+      { height: (1280 / 16) * 9, width: 1280, baseName: "lg" },
+    ]),
+  ]);
+
+  return result;
+};
 
 export const removeImagesFromDir = (images: IImageProps[]) => {
   images.forEach((img) => {
     unlink(path.join(ROOT_PATH, "/public", img.uri), (err) => {
       if (err) {
+        console.log(err);
         logger.error(`${img.name}: file not remove`);
       }
     });

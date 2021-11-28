@@ -17,7 +17,7 @@ import connectToMongoDb from "./db-connect";
 import logger from "./logger";
 import { HttpError } from "./model/utility.model";
 import router from "./routes";
-import { ROOT_PATH } from "./utility";
+import { ROOT_PATH } from "./utility/constants";
 import { IErrorResponse } from "./utility/interfaces";
 
 // .env configure
