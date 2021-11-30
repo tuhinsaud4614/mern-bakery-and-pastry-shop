@@ -1,0 +1,326 @@
+{
+  "apiVersion": "1.0.0",
+  "swagger": "2.0",
+  "title": "Pastry & Bakery",
+  "info": {
+    "title": "Pastry & Bakery REST API",
+    "description": "This is a Pastry & Bakery <b>Backend</b> server"
+  },
+  "schemes": ["http", "https"],
+  "tags": [
+    {
+      "name": "admin-category",
+      "description": "Everything about admin category"
+    }
+  ],
+  "paths": {
+    "/api/v1/admin/category": {
+      "get": {
+        "tags": ["admin-category"],
+        "summary": "Get all the categories",
+        "description": "This routes return all the categories for admin.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "allOf": [
+                { "$ref": "#/definitions/Success" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/Category"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["admin-category"],
+        "summary": "Add a new category",
+        "description": "This route will create a new category.",
+        "consumes": ["multipart/form-data"],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "Category title",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slug",
+            "in": "formData",
+            "description": "Category slug",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "Category Image",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "schema": {
+              "allOf": [
+                { "$ref": "#/definitions/Success" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/Category"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/category/{id}": {
+      "get": {
+        "tags": ["admin-category"],
+        "summary": "Get a category by id",
+        "description": "This route return a single category by id for admin.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Category ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "allOf": [
+                { "$ref": "#/definitions/Success" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/Category"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Category not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["admin-category"],
+        "summary": "Delete a category by id",
+        "description": "This route will delete a category by id for admin.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Category ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "allOf": [
+                { "$ref": "#/definitions/Success" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Category not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["admin-category"],
+        "summary": "Update a category by id",
+        "description": "This route will update a category by id for admin.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Category ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "Category title",
+            "type": "string"
+          },
+          {
+            "name": "slug",
+            "in": "formData",
+            "description": "Category slug",
+            "type": "string"
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "Category Image",
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "allOf": [
+                { "$ref": "#/definitions/Success" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Category not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Image": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "ext": { "type": "string" },
+        "uri": { "type": "string" },
+        "baseName": { "type": "string", "enum": ["main", "sm", "md", "lg"] },
+        "_id": { "type": "string" }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "detail": { "type": "string", "default": null },
+        "message": { "type": "string" },
+        "error": { "type": "string" },
+        "success": { "type": "boolean", "default": false },
+        "timeStamp": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Success": {
+      "type": "object",
+      "properties": {
+        "success": { "type": "boolean" },
+        "timeStamp": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "_id": { "type": "string" },
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "image": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Image"
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

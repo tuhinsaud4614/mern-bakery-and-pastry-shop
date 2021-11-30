@@ -1,12 +1,9 @@
 import { RequestHandler } from "express";
 import logger from "../../../logger";
 import Category from "../../../model/category.model";
-import { HttpError } from "../../../model/utility.model";
+import { HttpError, HttpSuccess } from "../../../model/utility.model";
 import { multipleImagesResize, removeAllSpaces } from "../../../utility";
-import {
-  ICategoryCreateRequestBody,
-  ISuccessResponse,
-} from "../../../utility/interfaces";
+import { ICategoryCreateRequestBody } from "../../../utility/interfaces";
 
 const createCategory: RequestHandler = async (req, res, next) => {
   const { slug, title } = req.body as ICategoryCreateRequestBody;
@@ -21,12 +18,7 @@ const createCategory: RequestHandler = async (req, res, next) => {
       image: images,
     }).save();
 
-    res.status(201).json({
-      code: 201,
-      data: newCategory,
-      success: true,
-      timeStamp: new Date(),
-    } as ISuccessResponse);
+    res.status(201).json(new HttpSuccess(newCategory).toObject());
   } catch (error) {
     logger.error("Something went wrong.", error);
     return next(new HttpError("Something went wrong.", 500));

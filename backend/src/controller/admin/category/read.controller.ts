@@ -7,7 +7,7 @@ import { PARAMS_CATEGORY_ID } from "../../../utility/constants";
 const allCategories: RequestHandler = async (_, res, next) => {
   try {
     const categories = await Category.find().select("-__v").exec();
-    res.status(200).json(new HttpSuccess(categories, 200).toObject());
+    res.status(200).json(new HttpSuccess(categories).toObject());
   } catch (error) {
     console.log(error);
     logger.error("Something went wrong.");
@@ -30,7 +30,7 @@ export const categoryById: RequestHandler<{
     if (!category) {
       return next(new HttpError("Category not found.", 404));
     }
-    res.status(200).json(new HttpSuccess(category, 200).toObject());
+    res.status(200).json(new HttpSuccess(category).toObject());
   } catch (error) {
     return next(new HttpError("Something went wrong.", 500));
   }

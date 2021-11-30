@@ -21,7 +21,7 @@ const router = Router();
 router.get("/", allCategories);
 
 router.post(
-  "/create",
+  "/",
   imageUpload().single("image"),
   validateRequest(categoryRequestBodySchema, 422),
   categorySlugIsUnique,
@@ -32,7 +32,7 @@ router.get(
   `/:${PARAMS_CATEGORY_ID}`,
   validateRequest(
     paramsIsValidObjectIdSchema(PARAMS_CATEGORY_ID, "Category not exists."),
-    404
+    400
   ),
   categoryById
 );
@@ -42,7 +42,7 @@ router.put(
   imageUpload().single("image"),
   validateRequest(
     paramsIsValidObjectIdSchema(PARAMS_CATEGORY_ID, "Category not exists."),
-    404
+    400
   ),
   categorySlugIsUnique,
   updateCategory
@@ -52,7 +52,7 @@ router.delete(
   `/:${PARAMS_CATEGORY_ID}`,
   validateRequest(
     paramsIsValidObjectIdSchema(PARAMS_CATEGORY_ID, "Category not exists."),
-    404
+    400
   ),
   deleteCategory
 );

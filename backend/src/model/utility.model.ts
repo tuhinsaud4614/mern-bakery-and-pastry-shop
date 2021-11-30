@@ -3,11 +3,10 @@ import { IErrorResponse, ISuccessResponse } from "../utility/interfaces";
 
 export class HttpSuccess {
   readonly _success: boolean;
-  readonly _code: number;
+
   readonly _data: number;
 
-  constructor(data: any, code: number) {
-    this._code = code;
+  constructor(data: any) {
     this._success = true;
     this._data = data;
   }
@@ -16,7 +15,6 @@ export class HttpSuccess {
     return {
       success: this._success,
       timeStamp: new Date(),
-      code: this._code,
       data: this._data,
     };
   }
@@ -43,7 +41,6 @@ export class HttpError extends Error {
       message: this.message,
       error: this.error,
       timeStamp: new Date(),
-      code: this.code,
     };
   }
 }

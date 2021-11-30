@@ -45,7 +45,7 @@ const updateCategory: RequestHandler<{ [PARAMS_CATEGORY_ID]: string }> = async (
     const updatedCategory = await category.save();
     if (oldImage) removeImagesFromDir(oldImage);
 
-    res.status(201).json(new HttpSuccess(updatedCategory, 200).toObject());
+    res.status(200).json(new HttpSuccess(updatedCategory).toObject());
   } catch (error) {
     console.log(error);
 

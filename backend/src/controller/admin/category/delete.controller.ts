@@ -19,7 +19,7 @@ const deleteCategory: RequestHandler<{ [PARAMS_CATEGORY_ID]: string }> = async (
       return next(new HttpError("Category not exist.", 404));
     }
     removeImagesFromDir(category.image);
-    res.status(200).json(new HttpSuccess(category.id, 200).toObject());
+    res.status(200).json(new HttpSuccess(category.id).toObject());
   } catch (error) {
     console.log(error);
     return next(new HttpError("Something went wrong.", 500));

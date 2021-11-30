@@ -13,10 +13,12 @@ import helmet from "helmet";
 import { Server } from "http";
 import { MulterError } from "multer";
 import path from "path";
+import swagger from "swagger-ui-express";
 import connectToMongoDb from "./db-connect";
 import logger from "./logger";
 import { HttpError } from "./model/utility.model";
 import router from "./routes";
+import swaggerDocument from "./swagger.json";
 import { ROOT_PATH } from "./utility/constants";
 import { IErrorResponse } from "./utility/interfaces";
 
@@ -46,6 +48,9 @@ app.options("*", cors());
 // Middleware:Static
 app.use(express.static(path.join(ROOT_PATH, "/public")));
 
+// Middleware:Swagger Docs
+app.use("/api-docs", swagger.serve, swagger.setup(swaggerDocument));
+
 // Middleware:Routes
 app.use("/api/v1", router);
 
@@ -70,7 +75,6 @@ app.use((error: any, _: Request, res: Response, next: NextFunction) => {
       message: error.message,
       error: "Unprocessable Entity",
       timeStamp: new Date(),
-      code: 422,
     } as IErrorResponse);
   }
 

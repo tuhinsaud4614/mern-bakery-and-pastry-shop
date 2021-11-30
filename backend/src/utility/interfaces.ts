@@ -1,5 +1,4 @@
 export interface IErrorResponse {
-  code: number;
   success: boolean;
   detail: string | null;
   message: string;
@@ -8,7 +7,6 @@ export interface IErrorResponse {
 }
 
 export interface ISuccessResponse {
-  code: number;
   success: boolean;
   timeStamp: Date;
   data: any;
